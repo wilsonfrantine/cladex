@@ -2,16 +2,25 @@ import { useEffect, useState } from 'react'
 import Home from './pages/Home'
 import Tutorial from './pages/Tutorial'
 import Training from './pages/Training'
+import { useCladexStore } from './store'
 
 type Page = 'home' | 'tutorial' | 'training'
 
 function App() {
   const [page, setPage]     = useState<Page>('home')
   const [module, setModule] = useState<string>('')
+  const theme = useCladexStore((s) => s.theme)
 
   useEffect(() => {
-    document.documentElement.classList.add('dark')
-  }, [])
+    const html = document.documentElement
+    if (theme === 'light') {
+      html.classList.remove('dark')
+      html.classList.add('theme-light')
+    } else {
+      html.classList.add('dark')
+      html.classList.remove('theme-light')
+    }
+  }, [theme])
 
   const startTraining = (mod: string) => {
     setModule(mod)

@@ -15,6 +15,8 @@ const MODULE_LABELS: Record<string, string> = {
   'annelida': 'Annelida',
   'chordata-basal': 'Chordata Basal',
   'invertebrados-gerais': 'Invertebrados Gerais',
+  'amniota': 'Amniota',
+  'arthropoda': 'Arthropoda',
   'custom': 'Newick Customizado',
 };
 
@@ -48,15 +50,21 @@ function makeRound(mod: string, totalAttempts: number): Round {
 type EnvState = 'neutral' | 'correct' | 'incorrect';
 
 const CLADE_OPTIONS = [
-  { value: 'monophyletic', label: 'Monofilético', desc: 'Ancestral + todos os descendentes', cls: 'bg-emerald-900/50 hover:bg-emerald-800/70 border-emerald-700/50' },
-  { value: 'paraphyletic', label: 'Parafilético',  desc: 'Ancestral + alguns descendentes',  cls: 'bg-amber-900/50  hover:bg-amber-800/70  border-amber-700/50'  },
-  { value: 'polyphyletic', label: 'Polifilético',  desc: 'Sem ancestral exclusivo',           cls: 'bg-rose-900/50   hover:bg-rose-800/70   border-rose-700/50'   },
+  { value: 'monophyletic', label: 'Monofilético', desc: 'Ancestral + todos os descendentes', key: '1', cls: 'bg-emerald-900/50 hover:bg-emerald-800/70 border-emerald-700/50' },
+  { value: 'paraphyletic', label: 'Parafilético',  desc: 'Ancestral + alguns descendentes',  key: '2', cls: 'bg-amber-900/50  hover:bg-amber-800/70  border-amber-700/50'  },
+  { value: 'polyphyletic', label: 'Polifilético',  desc: 'Sem ancestral exclusivo',           key: '3', cls: 'bg-rose-900/50   hover:bg-rose-800/70   border-rose-700/50'   },
 ];
+
+function getLevel(total: number): { label: string; style: string } {
+  if (total < 10) return { label: 'Nível 1 · Cotovelo', style: 'text-zinc-600' };
+  if (total < 25) return { label: 'Nível 2 · Diagonal', style: 'text-indigo-500' };
+  return { label: 'Nível 3 · Livre', style: 'text-emerald-600' };
+}
 
 // ─── Componente principal ─────────────────────────────────────────────────────
 
 export default function Training({ module, onBack }: TrainingProps) {
-  const { sessionStats, allTimeStats, recordAnswer, saveTree } = useCladexStore();
+  const { sessionStats, allTimeStats, recordAnswer, saveTree, theme } = useCladexStore();
 
   const [round, setRound] = useState<Round>(() =>
     makeRound(module, useCladexStore.getState().allTimeStats.treesAttempted),
@@ -171,6 +179,23 @@ export default function Training({ module, onBack }: TrainingProps) {
     [round.exercise, feedback, recordAnswer],
   );
 
+  // ── Atalhos de teclado ───────────────────────────────────────────────────────
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.target as HTMLElement).tagName === 'TEXTAREA') return;
+      if (feedback) {
+        if (e.key === 'Enter') nextRound();
+        return;
+      }
+      if (round.exercise?.type !== 'clade-classification') return;
+      if (e.key === '1') handleAnswer('monophyletic');
+      if (e.key === '2') handleAnswer('paraphyletic');
+      if (e.key === '3') handleAnswer('polyphyletic');
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [feedback, round.exercise, handleAnswer, nextRound]);
+
   // ── Salvar / Baixar ──────────────────────────────────────────────────────────
   const newickAtual = customTree ?? round.tree?.newick ?? '';
 
@@ -201,41 +226,41 @@ export default function Training({ module, onBack }: TrainingProps) {
   };
 
   // ── Classes de ambiente ──────────────────────────────────────────────────────
-  const envBg = envState === 'correct' ? 'bg-emerald-950' : envState === 'incorrect' ? 'bg-rose-950' : 'bg-zinc-950';
   const envBorder = envState === 'correct' ? 'border-emerald-900/50' : envState === 'incorrect' ? 'border-rose-900/50' : 'border-zinc-800/60';
+  const treeGlowClass = envState === 'correct' ? 'tree-glow-correct' : envState === 'incorrect' ? 'tree-glow-incorrect' : '';
 
   const displayNewick = newickAtual;
   const highlightTaxa = round.clade?.taxaInGroup ?? [];
 
   return (
-    <div className={`flex flex-col flex-1 overflow-hidden transition-colors duration-700 ${envBg} relative`}>
+    <div className="flex flex-col flex-1 overflow-hidden bg-zinc-950 relative">
 
-      {/* ── Flash de resposta — overlay instantâneo ── */}
-      {envState !== 'neutral' && (
-        <div
-          key={rippleKey}
-          className={`answer-flash ${envState === 'correct' ? 'answer-flash-correct' : 'answer-flash-incorrect'}`}
-        />
-      )}
-
-      {/* ── Barra de navegação mínima ── */}
+      {/* ── Barra de navegação ── */}
       <div className={`shrink-0 flex items-center gap-3 px-4 py-2.5 border-b transition-colors duration-700 ${envBorder} relative z-10`}>
+
+        {/* Logo */}
+        <span className="text-xs font-black tracking-tighter text-zinc-600 select-none">CladeX</span>
+
         <button
           onClick={onBack}
-          className="flex items-center gap-1.5 text-zinc-500 hover:text-zinc-200 transition-colors"
+          className="flex items-center text-zinc-500 hover:text-zinc-200 transition-colors"
         >
           <ArrowLeft size={15} />
-          <span className="text-sm hidden sm:inline">Voltar</span>
         </button>
 
         <span className="text-sm font-medium text-zinc-400 truncate flex-1">{MODULE_LABELS[module] ?? module}</span>
 
-        {/* Placar */}
-        <span className="text-sm tabular-nums">
-          <span className="text-emerald-400 font-bold">{sessionStats.correct}</span>
-          <span className="text-zinc-700 mx-1">·</span>
-          <span className="text-rose-400 font-bold">{sessionStats.incorrect}</span>
-        </span>
+        {/* Nível */}
+        {module !== 'custom' && (() => {
+          const total = allTimeStats.treesAttempted + sessionStats.correct + sessionStats.incorrect;
+          const lv = getLevel(total);
+          return <span className={`text-[10px] font-semibold uppercase tracking-wider hidden sm:inline ${lv.style}`}>{lv.label}</span>;
+        })()}
+
+        {/* Donut de acerto */}
+        {module !== 'custom' && (
+          <DonutScore correct={sessionStats.correct} total={sessionStats.correct + sessionStats.incorrect} />
+        )}
 
         {newickAtual && (
           <>
@@ -270,22 +295,12 @@ export default function Training({ module, onBack }: TrainingProps) {
         </div>
       )}
 
-      {/* ── Pergunta ── */}
-      {round.exercise && (
-        <div className="shrink-0 px-5 pt-4 pb-2 relative z-10">
-          <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-1">
-            Classificação de clado
-          </p>
-          <p className="text-lg sm:text-xl text-zinc-100 leading-snug font-medium">
-            {round.exercise.question}
-          </p>
-        </div>
-      )}
 
       {/* ── Área da árvore — flex-1, zoom+pan isolados ── */}
       <div
+        key={`tree-${rippleKey}`}
         ref={treeContainerRef}
-        className={`flex-1 min-h-0 relative overflow-hidden transition-all duration-700 border-y ${envBorder} cursor-grab active:cursor-grabbing`}
+        className={`flex-1 min-h-0 relative overflow-hidden border-y ${envBorder} cursor-grab active:cursor-grabbing ${treeGlowClass}`}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -296,25 +311,6 @@ export default function Training({ module, onBack }: TrainingProps) {
         onDoubleClick={resetZoom}
         title="Scroll para zoom · Arraste para mover · Duplo clique para resetar"
       >
-
-        {/* Parallax: CladeX em background, move a 25% da velocidade do pan */}
-        <div
-          aria-hidden
-          className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
-          style={{ zIndex: 0 }}
-        >
-          <span
-            className="font-black text-zinc-100/[0.045] tracking-tighter whitespace-nowrap"
-            style={{
-              fontSize: 'clamp(64px, 14vw, 160px)',
-              transform: `translate(${pan.x * 0.25}px, ${pan.y * 0.25}px)`,
-              transition: isDragging.current ? 'none' : 'transform 0.35s ease',
-            }}
-          >
-            CladeX
-          </span>
-        </div>
-
         {displayNewick ? (
           <div
             style={{
@@ -334,6 +330,8 @@ export default function Training({ module, onBack }: TrainingProps) {
               containerHeight={containerDims.h}
               treeStyle={round.treeStyle}
               taxonAnnotations={round.tree?.taxonAnnotations}
+              showAnswerFeedback={!!feedback}
+              theme={theme}
             />
           </div>
         ) : (
@@ -353,15 +351,36 @@ export default function Training({ module, onBack }: TrainingProps) {
         </div>
       </div>
 
-      {/* ── Respostas / Feedback ── */}
+      {/* ── Zona inferior: pergunta + respostas / feedback ── */}
       <div
         key={`panel-${rippleKey}`}
-        className={`shrink-0 px-4 py-3 relative z-10 transition-colors duration-700 border-t ${envBorder}${envState === 'incorrect' ? ' shake-once' : ''}`}
+        className={`shrink-0 relative z-10 border-t ${envBorder}${envState === 'incorrect' ? ' shake-once' : ''}`}
       >
-        {!feedback
-          ? <AnswerButtons module={module} exercise={round.exercise} onAnswer={handleAnswer} />
-          : <FeedbackPanel feedback={feedback} onNext={nextRound} />
-        }
+        {!feedback ? (
+          <>
+            {/* Pergunta — imediatamente acima dos botões */}
+            {round.exercise && (
+              <div
+                key={`q-${round.tree?.id}-${round.clade?.id}`}
+                className="px-5 pt-3 pb-1 question-enter"
+              >
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500 mb-0.5">
+                  Classificação de clado
+                </p>
+                <p className="text-base sm:text-lg text-zinc-100 leading-snug font-medium">
+                  {round.exercise.question}
+                </p>
+              </div>
+            )}
+            <div className="px-4 pb-3 pt-2">
+              <AnswerButtons module={module} exercise={round.exercise} onAnswer={handleAnswer} />
+            </div>
+          </>
+        ) : (
+          <div className="px-4 py-3">
+            <FeedbackPanel feedback={feedback} onNext={nextRound} />
+          </div>
+        )}
       </div>
 
     </div>
@@ -400,7 +419,10 @@ function HintableOptions({ onAnswer }: { onAnswer: (a: string) => void }) {
         {CLADE_OPTIONS.map(opt => (
           <button key={opt.value} onClick={() => onAnswer(opt.value)}
             className={`border rounded-xl px-3 py-3 text-left transition-colors ${opt.cls}`}>
-            <span className="block font-semibold text-white text-base leading-tight">{opt.label}</span>
+            <div className="flex items-start justify-between gap-1">
+              <span className="font-semibold text-white text-base leading-tight">{opt.label}</span>
+              <span className="text-[10px] text-zinc-500 font-mono shrink-0 mt-0.5">[{opt.key}]</span>
+            </div>
             {hint && (
               <span className="block text-xs text-zinc-300 mt-1 leading-tight">{opt.desc}</span>
             )}
@@ -424,20 +446,26 @@ function HintableOptions({ onAnswer }: { onAnswer: (a: string) => void }) {
 
 function FeedbackPanel({ feedback, onNext }: { feedback: Feedback; onNext: () => void }) {
   return (
-    <div className="space-y-2">
-      <div className="flex items-center gap-2">
+    <div className="slide-up">
+      {/* Ícone + resultado + botão na mesma linha */}
+      <div className="flex items-center gap-3 mb-2">
         {feedback.correct
-          ? <CheckCircle className="text-emerald-400 shrink-0" size={18} />
-          : <XCircle className="text-rose-400 shrink-0" size={18} />}
-        <span className={`font-semibold text-base ${feedback.correct ? 'text-emerald-300' : 'text-rose-300'}`}>
+          ? <CheckCircle className="text-emerald-400 shrink-0" size={28} />
+          : <XCircle className="text-rose-400 shrink-0" size={28} />}
+        <span className={`font-bold text-lg flex-1 ${feedback.correct ? 'text-emerald-300' : 'text-rose-300'}`}>
           {feedback.message}
         </span>
-        <button onClick={onNext}
-          className="ml-auto bg-zinc-700 hover:bg-zinc-600 px-4 py-1.5 rounded-lg text-sm font-medium transition-colors shrink-0">
-          Próxima →
+        {/* Botão ghost — subordinado ao conteúdo didático */}
+        <button
+          onClick={onNext}
+          className="pulse-next shrink-0 px-4 py-1.5 rounded-lg border border-zinc-600 hover:border-zinc-400 text-zinc-400 hover:text-zinc-200 text-sm font-medium transition-colors"
+        >
+          Próxima <span className="text-xs text-zinc-600 ml-0.5">↵</span>
         </button>
       </div>
-      <p className="text-sm text-zinc-300 leading-relaxed"
+
+      {/* Explicação — protagonista do feedback */}
+      <p className="text-base md:text-lg text-zinc-200 leading-relaxed"
         dangerouslySetInnerHTML={{ __html: renderBold(feedback.explanation) }} />
     </div>
   );
@@ -445,4 +473,34 @@ function FeedbackPanel({ feedback, onNext }: { feedback: Feedback; onNext: () =>
 
 function renderBold(text: string): string {
   return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
+// ─── Donut de acerto ─────────────────────────────────────────────────────────
+
+function DonutScore({ correct, total }: { correct: number; total: number }) {
+  const r = 11;
+  const circ = 2 * Math.PI * r;
+  const pct = total > 0 ? correct / total : 0;
+  const arc = pct * circ;
+  const color = pct >= 0.7 ? '#10b981' : pct >= 0.5 ? '#f59e0b' : total === 0 ? '#3f3f46' : '#f87171';
+  return (
+    <svg width="30" height="30" viewBox="0 0 30 30" aria-label={total > 0 ? `${correct}/${total} corretas` : 'Sem respostas'}>
+      {/* Trilha */}
+      <circle cx="15" cy="15" r={r} fill="none" stroke="#27272a" strokeWidth="3.5" />
+      {/* Arco de acerto */}
+      {total > 0 && (
+        <circle
+          cx="15" cy="15" r={r} fill="none"
+          stroke={color} strokeWidth="3.5"
+          strokeDasharray={`${arc} ${circ}`}
+          strokeDashoffset={circ / 4}
+          strokeLinecap="round"
+        />
+      )}
+      {/* Número total no centro */}
+      <text x="15" y="19" textAnchor="middle" fontSize="8" fill="#a1a1aa" fontWeight="700">
+        {total > 0 ? total : '—'}
+      </text>
+    </svg>
+  );
 }

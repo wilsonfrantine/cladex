@@ -49,11 +49,13 @@ interface CladexState {
   sessionStats: SessionStats;
   allTimeStats: SessionStats;
   savedTrees: SavedTree[];
+  theme: 'dark' | 'light';
 
   recordAnswer: (type: ExerciseType, correct: boolean) => void;
   resetSession: () => void;
   saveTree: (newick: string, moduleId: string, label: string) => void;
   removeSavedTree: (id: string) => void;
+  toggleTheme: () => void;
 }
 
 export const useCladexStore = create<CladexState>()(
@@ -62,6 +64,7 @@ export const useCladexStore = create<CladexState>()(
       sessionStats: emptyStats(),
       allTimeStats: emptyStats(),
       savedTrees: [],
+      theme: 'dark',
 
       recordAnswer: (type, correct) => {
         const update = (s: SessionStats): SessionStats => ({
@@ -94,12 +97,16 @@ export const useCladexStore = create<CladexState>()(
 
       removeSavedTree: (id) =>
         set((s) => ({ savedTrees: s.savedTrees.filter((t) => t.id !== id) })),
+
+      toggleTheme: () =>
+        set((s) => ({ theme: s.theme === 'dark' ? 'light' : 'dark' })),
     }),
     {
       name: 'cladex-storage',
       partialize: (s) => ({
         savedTrees: s.savedTrees,
         allTimeStats: s.allTimeStats,
+        theme: s.theme,
       }),
     },
   ),

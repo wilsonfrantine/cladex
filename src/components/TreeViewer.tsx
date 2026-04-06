@@ -18,6 +18,10 @@ export interface TreeViewerProps {
   treeStyle?: 'elbow' | 'diagonal';
   /** Anotações de classificação tradicional por nome de folha */
   taxonAnnotations?: Record<string, { abbr: string; color: string }>;
+  /** Quando true (pós-resposta): ativa pulse nos ramos e marca nós MRCA */
+  showAnswerFeedback?: boolean;
+  /** Tema visual */
+  theme?: 'dark' | 'light';
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -39,6 +43,29 @@ function getAllLeafNames(node: D3Data): string[] {
   return node.children.flatMap(getAllLeafNames);
 }
 
+/**
+ * Um link deve pulsar (pós-resposta) se todos os descendentes-folha do nó-alvo
+ * estão no conjunto destacado — traça precisamente o clado.
+ * Para grupos polifiléticos, só as arestas terminais de cada folha pulsam.
+ */
+function isLinkHighlighted(targetNode: d3.HierarchyNode<D3Data>, highlightSet: Set<string>): boolean {
+  if (!highlightSet.size) return false;
+  const leaves = getAllLeafNames(targetNode.data);
+  return leaves.length > 0 && leaves.every(l => highlightSet.has(l));
+}
+
+/**
+ * Marca os nós onde pelo menos dois ramos filhos distintos contêm táxons
+ * destacados — esses são os pontos de divergência reais do clado (MRCA).
+ */
+function isMrcaNode(node: d3.HierarchyNode<D3Data>, highlightSet: Set<string>): boolean {
+  if (!node.children || highlightSet.size < 2) return false;
+  const childrenWithHighlights = node.children.filter(child =>
+    getAllLeafNames(child.data).some(l => highlightSet.has(l)),
+  );
+  return childrenWithHighlights.length >= 2;
+}
+
 // Estimativa de largura de texto em SVG (fonte itálica sistema)
 // ~0.58 × fontSize por caractere é uma boa heurística para fontes do sistema
 function estimateTextWidth(label: string, fontSize: number): number {
@@ -56,7 +83,28 @@ export default function TreeViewer({
   onInternalNodeClick,
   treeStyle = 'elbow',
   taxonAnnotations,
+  showAnswerFeedback = false,
+  theme = 'dark',
 }: TreeViewerProps) {
+
+  // Paleta de cores conforme o tema
+  const C = theme === 'light'
+    ? {
+        branch:        '#6b5843',
+        leafNode:      '#9b8770',
+        internalNode:  '#7a6854',
+        leafLabel:     '#5a4e3c',
+        internalLabel: '#3c3020',
+        labelBg:       'rgba(245,240,228,0.88)',
+      }
+    : {
+        branch:        '#3f3f46',
+        leafNode:      '#71717a',
+        internalNode:  '#52525b',
+        leafLabel:     '#a1a1aa',
+        internalLabel: '#71717a',
+        labelBg:       '#09090b',
+      };
 
   const layout = useMemo(() => {
     try {
@@ -136,14 +184,16 @@ export default function TreeViewer({
           const d = treeStyle === 'diagonal'
             ? `M${sx},${sy} L${tx},${ty}`
             : `M${sx},${sy} L${sx},${ty} L${tx},${ty}`;
+          const lit = showAnswerFeedback && isLinkHighlighted(lk.target, highlightSet);
           return (
             <path
               key={i}
               d={d}
               fill="none"
-              stroke="#3f3f46"
-              strokeWidth={1.8}
+              stroke={lit ? highlightColor : C.branch}
+              strokeWidth={lit ? 3 : 1.8}
               strokeLinejoin="round"
+              className={lit ? 'branch-highlight' : undefined}
             />
           );
         })}
@@ -154,6 +204,14 @@ export default function TreeViewer({
           const nx = node.y as number;
           const ny = node.x as number;
           const hi = isLeaf && highlightSet.has(node.data.name);
+          const isMrca = showAnswerFeedback && isMrcaNode(node, highlightSet);
+
+          // Raio do nó: folha destacada 10% maior; MRCA pós-resposta também maior
+          const baseR = isLeaf ? 4 : 3;
+          const nodeR = hi ? baseR * 1.1 : baseR;
+
+          // Fonte dos labels internos: 15% maior que antes (era 0.72)
+          const labelFontSize = Math.max(7, fontSize * 0.83);
 
           return (
             <g
@@ -164,13 +222,27 @@ export default function TreeViewer({
                 : undefined}
               style={{ cursor: !isLeaf && onInternalNodeClick ? 'pointer' : 'default' }}
             >
+              {/* Anel de MRCA pós-resposta */}
+              {isMrca && (
+                <circle
+                  r={nodeR + 5}
+                  fill="none"
+                  stroke={highlightColor}
+                  strokeWidth={1.5}
+                  opacity={0.5}
+                  strokeDasharray="3 2"
+                />
+              )}
+
               <circle
-                r={isLeaf ? 4 : 3}
-                fill={hi ? highlightColor : isLeaf ? '#71717a' : '#52525b'}
+                r={nodeR}
+                fill={hi ? highlightColor : isMrca ? highlightColor : isLeaf ? C.leafNode : C.internalNode}
+                opacity={isMrca ? 0.85 : 1}
               />
 
+              {/* Halo da folha destacada */}
               {hi && (
-                <circle r={7} fill="none" stroke={highlightColor} strokeWidth={1.5} opacity={0.35} />
+                <circle r={nodeR + 4} fill="none" stroke={highlightColor} strokeWidth={1.5} opacity={0.3} />
               )}
 
               {/* Label folha */}
@@ -180,7 +252,7 @@ export default function TreeViewer({
                   dominantBaseline="middle"
                   fontSize={fontSize}
                   fontStyle="italic"
-                  fill={hi ? highlightColor : '#a1a1aa'}
+                  fill={hi ? highlightColor : C.leafLabel}
                   fontWeight={hi ? 600 : 400}
                 >
                   {node.data.name}
@@ -212,18 +284,34 @@ export default function TreeViewer({
                 );
               })()}
 
-              {/* Label nó interno nomeado */}
-              {!isLeaf && node.data.name && (
-                <text
-                  x={4}
-                  y={-7}
-                  fontSize={Math.max(7, fontSize * 0.72)}
-                  fill="#52525b"
-                  fontStyle="italic"
-                >
-                  {node.data.name}
-                </text>
-              )}
+              {/* Label nó interno nomeado — fundo para evitar sobreposição */}
+              {!isLeaf && node.data.name && (() => {
+                const lw = Math.ceil(node.data.name.length * labelFontSize * 0.55);
+                const lh = labelFontSize * 1.3;
+                const lx = 4;
+                const ly = -labelFontSize - 3;
+                return (
+                  <g>
+                    <rect
+                      x={lx - 2} y={ly}
+                      width={lw + 4} height={lh}
+                      rx={2}
+                      fill={C.labelBg}
+                      opacity={0.75}
+                    />
+                    <text
+                      x={lx}
+                      y={ly + lh * 0.78}
+                      fontSize={labelFontSize}
+                      fill={isMrca ? highlightColor : C.internalLabel}
+                      fontStyle="italic"
+                      fontWeight={isMrca ? 700 : 400}
+                    >
+                      {node.data.name}
+                    </text>
+                  </g>
+                );
+              })()}
             </g>
           );
         })}

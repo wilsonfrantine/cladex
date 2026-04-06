@@ -136,6 +136,93 @@ export const modules: ModuleData[] = [
     ],
   },
   {
+    id: 'amniota',
+    label: 'Amniota',
+    taxa: [
+      { id: 'amphibia',   name: 'Amphibia',   commonName: 'anfíbios' },
+      { id: 'mammalia',   name: 'Mammalia',   commonName: 'mamíferos' },
+      { id: 'squamata',   name: 'Squamata',   commonName: 'lagartos e serpentes' },
+      { id: 'testudines', name: 'Testudines', commonName: 'tartarugas e quelônios' },
+      { id: 'crocodilia', name: 'Crocodilia', commonName: 'crocodilos e jacarés' },
+      { id: 'aves',       name: 'Aves',       commonName: 'pássaros' },
+    ],
+    characters: [
+      {
+        id: 'amnio',
+        description: 'Âmnio (membrana extra-embrionária)',
+        presentIn: ['mammalia', 'squamata', 'testudines', 'crocodilia', 'aves'],
+        type: 'synapomorphy',
+      },
+      {
+        id: 'penas',
+        description: 'Penas',
+        presentIn: ['aves'],
+        type: 'autapomorphy',
+      },
+      {
+        id: 'pelos',
+        description: 'Pelos e glândulas mamárias',
+        presentIn: ['mammalia'],
+        type: 'autapomorphy',
+      },
+      {
+        id: 'janelas_temporais',
+        description: 'Fenestras temporais',
+        presentIn: ['squamata', 'crocodilia', 'aves', 'mammalia'],
+        type: 'synapomorphy',
+      },
+      {
+        id: 'endotermia',
+        description: 'Endotermia (regulação interna da temperatura)',
+        presentIn: ['crocodilia', 'aves', 'mammalia'],
+        type: 'synapomorphy',
+      },
+    ],
+  },
+  {
+    id: 'arthropoda',
+    label: 'Arthropoda',
+    taxa: [
+      { id: 'onychophora', name: 'Onychophora', commonName: 'perípatos' },
+      { id: 'chelicerata', name: 'Chelicerata', commonName: 'aranhas e escorpiões' },
+      { id: 'myriapoda',   name: 'Myriapoda',   commonName: 'centopeias e milípedes' },
+      { id: 'crustacea',   name: 'Crustacea',   commonName: 'caranguejos e camarões', traditionalGroup: 'Crustacea', traditionalGroupAbbr: 'Cru' },
+      { id: 'insecta',     name: 'Insecta',     commonName: 'insetos',                traditionalGroup: 'Crustacea', traditionalGroupAbbr: 'Cru' },
+    ],
+    characters: [
+      {
+        id: 'exoesqueleto_articulado',
+        description: 'Exoesqueleto articulado com apêndices',
+        presentIn: ['chelicerata', 'myriapoda', 'crustacea', 'insecta'],
+        type: 'synapomorphy',
+      },
+      {
+        id: 'mandibulas_arthro',
+        description: 'Mandíbulas (apêndices bucais modificados)',
+        presentIn: ['myriapoda', 'crustacea', 'insecta'],
+        type: 'synapomorphy',
+      },
+      {
+        id: 'antenas',
+        description: 'Antenas (1 par)',
+        presentIn: ['myriapoda', 'crustacea', 'insecta'],
+        type: 'synapomorphy',
+      },
+      {
+        id: 'traqueias',
+        description: 'Sistema traqueal aéreo',
+        presentIn: ['myriapoda', 'insecta'],
+        type: 'synapomorphy',
+      },
+      {
+        id: 'seis_patas',
+        description: 'Seis patas locomotoras e tórax tripartido',
+        presentIn: ['insecta'],
+        type: 'autapomorphy',
+      },
+    ],
+  },
+  {
     id: 'invertebrados-gerais',
     label: 'Invertebrados Gerais',
     taxa: [

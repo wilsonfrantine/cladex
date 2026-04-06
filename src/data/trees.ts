@@ -178,6 +178,145 @@ const chordataTrees: CuratedTree[] = [
   },
 ];
 
+// ─── Amniota ──────────────────────────────────────────────────────────────────
+// Baseado em Gauthier et al. 1988; Lee 2013; Hickman et al. 2022, Cap. 25–28.
+// Sauropsida = Lepidosauria (Squamata) + Archelosauria (Testudines + Archosauria).
+// Archosauria = Crocodilia + Aves. Mammalia é grupo-irmão de Sauropsida.
+// "Reptilia" tradicional (excluindo Aves) é PARAFILÉTICO.
+
+const AMNIOTA_TRADITIONAL: Record<string, { abbr: string; color: string }> = {
+  Squamata:   { abbr: 'Rep', color: '#a3e635' },
+  Testudines: { abbr: 'Rep', color: '#a3e635' },
+  Crocodilia: { abbr: 'Rep', color: '#a3e635' },
+};
+
+const amniota_newick =
+  '(Amphibia,(Mammalia,(Squamata,(Testudines,(Crocodilia,Aves)Archosauria)Archelosauria)Sauropsida)Amniota);';
+
+const amniota_trees: CuratedTree[] = [
+  {
+    id: 'amniota-geral',
+    label: 'Amniota — relações dos tetrápodos',
+    moduleId: 'amniota',
+    newick: amniota_newick,
+    source: 'Gauthier et al. 1988; Lee 2013; Hickman et al. 2022',
+    taxonAnnotations: AMNIOTA_TRADITIONAL,
+    clades: [
+      {
+        id: 'reptilia-trad-para',
+        taxaInGroup: ['Squamata', 'Testudines', 'Crocodilia'],
+        type: 'paraphyletic',
+        traditionalGroupContext: 'Reptilia',
+        explanation:
+          '**Reptilia** tradicional (Squamata + Testudines + Crocodilia) é **parafilético**: o ancestral comum desse agrupamento é também ancestral das Aves, que foram excluídas. Crocodilia é grupo-irmão de Aves em Archosauria, não de Squamata ou Testudines. A "reptilidade" é definida por plesiomorfias (ectotermia, escamas), não sinapomorfias exclusivas.',
+      },
+      {
+        id: 'sauropsida-mono',
+        taxaInGroup: ['Squamata', 'Testudines', 'Crocodilia', 'Aves'],
+        type: 'monophyletic',
+        explanation:
+          '**Sauropsida** (Squamata + Testudines + Crocodilia + Aves) é **monofilético**: inclui todos os répteis senso lato mais as aves. A sinapomorfia do clado é a fenestra antorbital e detalhes do crânio. Quando Aves é incluída, o grupo torna-se um clado natural.',
+      },
+      {
+        id: 'archosauria-mono',
+        taxaInGroup: ['Crocodilia', 'Aves'],
+        type: 'monophyletic',
+        explanation:
+          '**Archosauria** (Crocodilia + Aves) é **monofilético**: crocodilos e pássaros são parentes mais próximos entre si do que com quaisquer outros répteis. Sinapomorfias incluem fenestra antorbital, dentes tecodontes (nos ancestrais) e cuidado parental elaborado. Este é um resultado contraintuitivo mas bem corroborado.',
+      },
+      {
+        id: 'amniota-mono',
+        taxaInGroup: ['Mammalia', 'Squamata', 'Testudines', 'Crocodilia', 'Aves'],
+        type: 'monophyletic',
+        explanation:
+          '**Amniota** é **monofilético**: todos os tetrápodos que produzem ovos amnióticos (ou retêm o âmnio internamente). A sinapomorfia é o **âmnio**, membrana extra-embrionária que envolve o embrião em líquido. Inclui répteis, aves e mamíferos.',
+      },
+      {
+        id: 'archelosauria-mono',
+        taxaInGroup: ['Testudines', 'Crocodilia', 'Aves'],
+        type: 'monophyletic',
+        explanation:
+          '**Archelosauria** (Testudines + Archosauria) é **monofilético**: tartarugas são grupo-irmão de Archosauria, não de Lepidosauria. Dado molecular surpreendente — morfologicamente tartarugas pareciam basais, mas filogenia molecular as posiciona como parentes de crocodilos e pássaros.',
+      },
+      {
+        id: 'ectotherms-poli',
+        taxaInGroup: ['Amphibia', 'Squamata', 'Testudines'],
+        type: 'polyphyletic',
+        explanation:
+          'Anfíbios, lagartos/serpentes e quelônios agrupados como "ectotérmicos" formam um grupo **polifilético**: Amphibia é outgroup de Amniota, Squamata está em Lepidosauria, e Testudines está em Archelosauria (mais próxima de Crocodilia e Aves). A ectotermia é um caráter primitivo retido (plesiomorfia), não sinapomorfia.',
+      },
+    ],
+  },
+];
+
+// ─── Arthropoda ───────────────────────────────────────────────────────────────
+// Baseado em Regier et al. 2010 (Nature); Giribet & Edgecombe 2012.
+// Mandibulata = Myriapoda + Pancrustacea; Pancrustacea = Crustacea + Hexapoda.
+// "Crustacea" tradicional (sem Insecta) é PARAFILÉTICO — Insecta é grupo-irmão
+// de Malacostraca (Regier et al. 2010), portanto aninhado dentro de Crustacea.
+
+const ARTHROPODA_TRADITIONAL: Record<string, { abbr: string; color: string }> = {
+  Crustacea: { abbr: 'Cru', color: '#fb923c' },
+  Insecta:   { abbr: 'Cru', color: '#fb923c' },
+};
+
+const arthropoda_trees: CuratedTree[] = [
+  {
+    id: 'arthropoda-geral',
+    label: 'Arthropoda — filogenia dos grandes grupos',
+    moduleId: 'arthropoda',
+    newick:
+      '(Onychophora,(Chelicerata,(Myriapoda,(Crustacea,Insecta)Pancrustacea)Mandibulata));',
+    source: 'Regier et al. 2010; Giribet & Edgecombe 2012; Hickman et al. 2022',
+    taxonAnnotations: ARTHROPODA_TRADITIONAL,
+    clades: [
+      {
+        id: 'arthropoda-mono',
+        taxaInGroup: ['Chelicerata', 'Myriapoda', 'Crustacea', 'Insecta'],
+        type: 'monophyletic',
+        explanation:
+          '**Arthropoda** (excluindo o outgroup Onychophora) é **monofilético**: o clado inclui todos os animais com exoesqueleto articulado quitinoso. Sinapomorfias: apêndices articulados, exoesqueleto quitinoso com ecdise e sistema nervoso ganglionar.',
+      },
+      {
+        id: 'mandibulata-mono',
+        taxaInGroup: ['Myriapoda', 'Crustacea', 'Insecta'],
+        type: 'monophyletic',
+        explanation:
+          '**Mandibulata** (Myriapoda + Pancrustacea) é **monofilético**: definido pela presença de **mandíbulas** verdadeiras e antenas. Evidências moleculares e morfológicas unem esses três grupos em oposição a Chelicerata, que tem quelíceras em lugar de mandíbulas.',
+      },
+      {
+        id: 'pancrustacea-mono',
+        taxaInGroup: ['Crustacea', 'Insecta'],
+        type: 'monophyletic',
+        explanation:
+          '**Pancrustacea** (Crustacea + Insecta) é **monofilético** e um dos resultados mais surpreendentes da filogenia molecular de artrópodos. Os insetos estão mais proximamente relacionados aos crustáceos do que às centopeias. Sinapomorfias incluem olhos compostos com estrutura específica e neuromorfologia do protocerebro.',
+      },
+      {
+        id: 'crustacea-trad-para',
+        taxaInGroup: ['Crustacea'],
+        type: 'paraphyletic',
+        traditionalGroupContext: 'Crustacea',
+        explanation:
+          '**Crustacea** tradicional (sem Insecta) é **parafilético**: os insetos estão aninhados dentro de Pancrustacea como grupo-irmão de Malacostraca. Portanto, o ancestral comum de todos os crustáceos é também ancestral dos insetos. A "crustacea" clássica é um grupo de caráter (10 patas, brânquias), não um clado.',
+      },
+      {
+        id: 'chelicerata-crustacea-poli',
+        taxaInGroup: ['Chelicerata', 'Crustacea'],
+        type: 'polyphyletic',
+        explanation:
+          'Chelicerata e Crustacea como "artrópodos aquáticos" formam um grupo **polifilético**: Chelicerata está na base de Arthropoda, enquanto Crustacea está em Pancrustacea dentro de Mandibulata. O hábito aquático é uma plesiomorfia e convergência, não sinapomorfia.',
+      },
+      {
+        id: 'hexapoda-myriapoda-poli',
+        taxaInGroup: ['Insecta', 'Myriapoda'],
+        type: 'polyphyletic',
+        explanation:
+          '"Traquados" (Insecta + Myriapoda) é um grupo **polifilético**: embora ambos tenham sistema traqueal para respiração aérea, a evidência molecular mostra que a traqueia surgiu **convergentemente**. Insecta está em Pancrustacea (com Crustacea) e Myriapoda é grupo-irmão de Pancrustacea.',
+      },
+    ],
+  },
+];
+
 // ─── Invertebrados Gerais ─────────────────────────────────────────────────────
 // Baseado em Halanych 2004; Dunn et al. 2008; Hickman et al. 2022, Cap. 9–10.
 // Ecdysozoa e Lophotrochozoa como clados de Protostomia.
@@ -243,6 +382,8 @@ const invertebradosTrees: CuratedTree[] = [
 export const allTrees: CuratedTree[] = [
   ...annelidaTrees,
   ...chordataTrees,
+  ...amniota_trees,
+  ...arthropoda_trees,
   ...invertebradosTrees,
 ];
 
