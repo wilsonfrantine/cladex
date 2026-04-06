@@ -111,7 +111,7 @@ export default function TreePulse({ theme = 'dark' }: TreePulseProps) {
     <svg
       viewBox="0 0 720 960"
       style={{ width: '100%', height: '100%' }}
-      preserveAspectRatio="xMidYMin meet"
+      preserveAspectRatio="xMidYMid slice"
       aria-hidden
     >
       <defs>

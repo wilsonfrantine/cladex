@@ -44,14 +44,29 @@ function getAllLeafNames(node: D3Data): string[] {
 }
 
 /**
- * Um link deve pulsar (pós-resposta) se todos os descendentes-folha do nó-alvo
- * estão no conjunto destacado — traça precisamente o clado.
- * Para grupos polifiléticos, só as arestas terminais de cada folha pulsam.
+ * Um link deve pulsar (pós-resposta) se estiver estritamente DENTRO do clado.
+ * O link que chega ao MRCA do grupo não deve ser destacado, pois representa
+ * a linhagem ancestral comum.
  */
-function isLinkHighlighted(targetNode: d3.HierarchyNode<D3Data>, highlightSet: Set<string>): boolean {
+function isLinkHighlighted(
+  lk: d3.HierarchyLink<D3Data>,
+  highlightSet: Set<string>,
+  allNodes: d3.HierarchyNode<D3Data>[]
+): boolean {
   if (!highlightSet.size) return false;
-  const leaves = getAllLeafNames(targetNode.data);
-  return leaves.length > 0 && leaves.every(l => highlightSet.has(l));
+
+  // 1. O nó de destino (target) deve conter apenas folhas destacadas (ser parte do clado)
+  const targetLeaves = getAllLeafNames(lk.target.data);
+  const targetIsPart = targetLeaves.length > 0 && targetLeaves.every(l => highlightSet.has(l));
+  if (!targetIsPart) return false;
+
+  // 2. O nó de origem (source) também deve conter apenas folhas destacadas.
+  // Se o source contiver folhas NÃO destacadas, significa que o link lk é o
+  // "link de entrada" no clado (conecta o MRCA ao resto da árvore).
+  const sourceLeaves = getAllLeafNames(lk.source.data);
+  const sourceIsPart = sourceLeaves.every(l => highlightSet.has(l));
+
+  return sourceIsPart;
 }
 
 /**
@@ -184,7 +199,7 @@ export default function TreeViewer({
           const d = treeStyle === 'diagonal'
             ? `M${sx},${sy} L${tx},${ty}`
             : `M${sx},${sy} L${sx},${ty} L${tx},${ty}`;
-          const lit = showAnswerFeedback && isLinkHighlighted(lk.target, highlightSet);
+          const lit = showAnswerFeedback && isLinkHighlighted(lk, highlightSet, nodes);
           return (
             <path
               key={i}

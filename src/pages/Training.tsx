@@ -14,9 +14,7 @@ interface TrainingProps { module: string; onBack: () => void }
 const MODULE_LABELS: Record<string, string> = {
   'annelida': 'Annelida',
   'chordata-basal': 'Chordata Basal',
-  'invertebrados-gerais': 'Invertebrados Gerais',
-  'amniota': 'Amniota',
-  'arthropoda': 'Arthropoda',
+  'metazoa': 'Metazoa',
   'custom': 'Newick Customizado',
 };
 

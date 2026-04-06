@@ -123,15 +123,38 @@ const annelidaTrees: CuratedTree[] = [
 // Cephalochordata basal em relação a Olfactores (Urochordata + Vertebrata).
 // Hemichordata como outgroup de Chordata.
 
+const CHORDATA_TRADITIONAL: Record<string, { abbr: string; color: string }> = {
+  Cephalochordata: { abbr: 'Protoc.', color: '#60a5fa' },
+  Urochordata:     { abbr: 'Protoc.', color: '#60a5fa' },
+  Myxini:          { abbr: 'Agnat.',  color: '#4ade80' },
+  Petromyzontida:  { abbr: 'Agnat.',  color: '#4ade80' },
+};
+
 const chordataTrees: CuratedTree[] = [
   {
     id: 'chordata-basal-geral',
     label: 'Chordata Basal — relações gerais',
     moduleId: 'chordata-basal',
     newick:
-      '(Hemichordata,(Cephalochordata,(Urochordata,(Myxini,(Petromyzontida,(Chondrichthyes,Actinopterygii)Gnathostomata)Vertebrata)Olfactores)));',
+      '((Hemichordata,Echinodermata)Ambulacraria,(Cephalochordata,(Urochordata,(Myxini,(Petromyzontida,(Chondrichthyes,Actinopterygii)Gnathostomata)Vertebrata)))Chordata);',
     source: 'Delsuc et al. 2006; Hickman et al. 2022',
+    taxonAnnotations: CHORDATA_TRADITIONAL,
     clades: [
+      {
+        id: 'protochordata-para',
+        taxaInGroup: ['Cephalochordata', 'Urochordata'],
+        type: 'paraphyletic',
+        traditionalGroupContext: 'Protochordata',
+        explanation:
+          '**Protochordata** (Cephalochordata + Urochordata) é um grupo **parafilético**: o ancestral comum desses dois grupos é também o ancestral de todos os Vertebrata, que foram excluídos. "Protochordata" é um agrupamento de conveniência didática para descrever cordados sem crânio ou coluna vertebral.',
+      },
+      {
+        id: 'chordata-mono',
+        taxaInGroup: ['Cephalochordata', 'Urochordata', 'Myxini', 'Petromyzontida', 'Chondrichthyes', 'Actinopterygii'],
+        type: 'monophyletic',
+        explanation:
+          '**Chordata** é um clado monofilético. Suas sinapomorfias exclusivas (ao menos na fase larval) são: **notocorda**, **cordão nervoso dorsal oco**, **fendas faringeanas**, **endóstilo** (ou glândula tireoide) e **cauda pós-anal muscular**.',
+      },
       {
         id: 'gnathostomata-mono',
         taxaInGroup: ['Chondrichthyes', 'Actinopterygii'],
@@ -143,36 +166,23 @@ const chordataTrees: CuratedTree[] = [
         id: 'agnatha-para',
         taxaInGroup: ['Myxini', 'Petromyzontida'],
         type: 'paraphyletic',
+        traditionalGroupContext: 'Agnatha',
         explanation:
-          '**Agnatha** (vertebrados sem mandíbula) é um grupo **parafilético**: Myxini e Petromyzontida compartilham o ancestral com Gnathostomata, que foi excluída do agrupamento. A **ausência de mandíbula** é uma plesiomorfia — caráter primitivo retido, não uma sinapomorfia que os una exclusivamente.',
+          '**Agnatha** (vertebrados sem mandíbula) é um grupo **parafilético**: nesta hipótese clássica, Petromyzontida (lampreias) compartilha um ancestral mais recente com Gnathostomata do que com Myxini (feiticeiras). O agrupamento exclui os mandibulados, sendo definido pela ausência de mandíbulas (plesiomorfia), não por sinapomorfias exclusivas.',
       },
       {
         id: 'vertebrata-mono',
         taxaInGroup: ['Myxini', 'Petromyzontida', 'Chondrichthyes', 'Actinopterygii'],
         type: 'monophyletic',
         explanation:
-          '**Vertebrata** é um clado monofilético que inclui todos os vertebrados, com ou sem mandíbula. As sinapomorfias incluem **crânio** (cartilaginoso ou ósseo) e **coluna vertebral** (ou notocorda persistente em Myxini).',
+          '**Vertebrata** é um clado monofilético que inclui todos os vertebrados, com ou sem mandíbula. As sinapomorfias incluem **crânio** (cartilaginoso ou ósseo) e elementos esqueléticos que protegem o cordão nervoso.',
       },
       {
-        id: 'olfactores-mono',
-        taxaInGroup: ['Urochordata', 'Myxini', 'Petromyzontida', 'Chondrichthyes', 'Actinopterygii'],
+        id: 'ambulacraria-mono',
+        taxaInGroup: ['Hemichordata', 'Echinodermata'],
         type: 'monophyletic',
         explanation:
-          '**Olfactores** (Urochordata + Vertebrata) é um resultado surpreendente da filogenia molecular (Delsuc et al. 2006): os tunicados são os parentes vivos **mais próximos dos vertebrados**, não o anfioxo. O nome vem de estruturas olfativas compartilhadas. Este grupo é monofilético.',
-      },
-      {
-        id: 'hemichordata-cephalochordata-poli',
-        taxaInGroup: ['Hemichordata', 'Cephalochordata'],
-        type: 'polyphyletic',
-        explanation:
-          'Hemichordata e Cephalochordata são um grupo **polifilético** nesta hipótese: estão em ramos muito distantes. O ancestral comum mais recente deles inclui também Urochordata e todos os Vertebrata. Morfologicamente ambos têm fendas faringeanas, mas isso é plesiomorfia, não sinapomorfia exclusiva.',
-      },
-      {
-        id: 'hemichordata-urochordata-para',
-        taxaInGroup: ['Hemichordata', 'Cephalochordata', 'Urochordata'],
-        type: 'paraphyletic',
-        explanation:
-          'Este grupo de "protocordados" é **parafilético**: o ancestral comum de Hemichordata, Cephalochordata e Urochordata é também ancestral de todos os Vertebrata, que foram excluídos. "Protochordata" é um agrupamento de conveniência didática, não um clado natural.',
+          '**Ambulacraria** (Hemichordata + Echinodermata) é um clado monofilético sustentado por dados moleculares e semelhanças nas larvas (dipleurula). Embora Hemichordata tenha fendas faringeanas como os cordados, ele é mais próximo dos equinodermos.',
       },
     ],
   },
@@ -321,16 +331,29 @@ const arthropoda_trees: CuratedTree[] = [
 // Baseado em Halanych 2004; Dunn et al. 2008; Hickman et al. 2022, Cap. 9–10.
 // Ecdysozoa e Lophotrochozoa como clados de Protostomia.
 // Porifera basal; Cnidaria sister de Bilateria.
-
 const invertebradosTrees: CuratedTree[] = [
   {
-    id: 'invertebrados-geral',
-    label: 'Invertebrados — árvore dos grandes filos',
-    moduleId: 'invertebrados-gerais',
+    id: 'metazoa-geral',
+    label: 'Metazoa — principais grupos',
+    moduleId: 'metazoa',
     newick:
-      '(Porifera,(Cnidaria,(((Platyhelminthes,(Mollusca,Annelida))Lophotrochozoa,(Nematoda,Arthropoda)Ecdysozoa)Protostomia,Echinodermata)Bilateria));',
+      '(Porifera,(Cnidaria,(((Platyhelminthes,(Mollusca,Annelida))Lophotrochozoa,(Nematoda,Arthropoda)Ecdysozoa)Protostomia,(Echinodermata,Chordata)Deuterostomia)Bilateria));',
     source: 'Hickman et al. 2022; Halanych 2004; Dunn et al. 2008',
     clades: [
+      {
+        id: 'deuterostomia-mono',
+        taxaInGroup: ['Echinodermata', 'Chordata'],
+        type: 'monophyletic',
+        explanation:
+          '**Deuterostomia** (Echinodermata + Chordata) é um clado monofilético definido pelo desenvolvimento embrionário: o blastóporo dá origem ao ânus (o que dá nome ao grupo) e a clivagem é radial e indeterminada.',
+      },
+      {
+        id: 'protostomia-para-incompleto',
+        taxaInGroup: ['Platyhelminthes', 'Mollusca', 'Annelida', 'Nematoda', 'Arthropoda'],
+        type: 'monophyletic',
+        explanation:
+          '**Protostomia** (Lophotrochozoa + Ecdysozoa) é um clado monofilético. Sinapomorfias incluem o destino do blastóporo (geralmente formando a boca) e o sistema nervoso ventral. É o grupo-irmão de Deuterostomia dentro de Bilateria.',
+      },
       {
         id: 'mollusca-annelida-mono',
         taxaInGroup: ['Mollusca', 'Annelida'],

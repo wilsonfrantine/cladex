@@ -36,21 +36,22 @@ const modules = [
     icon: '🐟',
   },
   {
-    id: 'invertebrados-gerais',
-    name: 'Invertebrados Gerais',
-    sub: 'Zoologia geral',
-    icon: '🦀',
+    id: 'metazoa',
+    name: 'Metazoa',
+    sub: 'Principais grupos',
+    icon: '🌳',
   },
 ]
 
-function dailyIndex(): number {
-  return Math.floor(Date.now() / 86_400_000) % modules.length
-}
-
 export default function Home({ onStartTraining, onOpenTutorial }: HomeProps) {
-  const dailyMod = useMemo(() => modules[dailyIndex()], [])
+  const dailyMod = useMemo(() => modules.find(m => m.id === 'metazoa')!, [])
   const [modulesOpen, setModulesOpen] = useState(false)
   const { theme, toggleTheme } = useCladexStore()
+
+  // Módulos do Treino Livre — Annelida e Chordata Basal
+  const freeTrainingModules = useMemo(() => 
+    modules.filter(m => ['annelida', 'chordata-basal'].includes(m.id)), []
+  )
 
   return (
     <div className="relative h-dvh overflow-hidden flex flex-col">
@@ -115,7 +116,7 @@ export default function Home({ onStartTraining, onOpenTutorial }: HomeProps) {
                   Treino livre
                 </p>
                 <p className="text-xs text-zinc-400 mt-1 truncate">
-                  {modules.map(m => m.name).join(' · ')}
+                  {freeTrainingModules.map(m => m.name).join(' · ')}
                 </p>
               </div>
               <div className="shrink-0 w-9 h-9 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center group-hover:bg-emerald-500/25 transition-colors mt-0.5">
@@ -127,7 +128,7 @@ export default function Home({ onStartTraining, onOpenTutorial }: HomeProps) {
           {/* Lista de módulos — expande abaixo de Escolher Grupo */}
           {modulesOpen && (
             <div className="flex flex-col gap-2 -mt-1">
-              {modules.map((mod) => (
+              {freeTrainingModules.map((mod) => (
                 <button
                   key={mod.id}
                   onClick={() => onStartTraining(mod.id)}
