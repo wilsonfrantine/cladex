@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+html, body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #09090b;
+  color: #f4f4f5;
+  min-height: 100%;
+}
+
+/* ── Ocultar scrollbar mantendo funcionalidade de scroll ──────────────── */
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Tutorial: layout adaptativo para paisagem em smartphones ─────────── */
+.tutorial-slide {
+  flex-direction: column;
+}
+.tutorial-diagram-area {
+  flex: 1;
+  min-height: 0;
+}
+.tutorial-text-area {
+  flex-shrink: 0;
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .tutorial-slide {
+    flex-direction: row;
+  }
+  .tutorial-diagram-area {
+    flex: 0 0 48%;
+    border-right: 1px solid rgba(39, 39, 42, 0.5);
+    border-top: none;
+    height: 100%;
+    overflow: hidden;
+  }
+  .tutorial-text-area {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: none;
+    border-top: none;
+  }
+  .tutorial-text-area::-webkit-scrollbar { display: none; }
+}
+
+/* ── TreePulse: luz viajante percorrendo os ramos ────────────────────── */
+/*
+  Com pathLength="1", o ramo é normalizado para comprimento 1.
+  stroke-dasharray: 0.4 1 → dash de 40% do ramo, gap de 100%.
+
+  Geometria do dash (offset X, comprimento 0.4):
+    leading edge = -X + 0.4  (entra no ramo quando = 0, i.e., X = 0.4)
+    trailing edge = -X        (entra no ramo quando = 0, i.e., X = 0)
+    leading edge sai quando -X + 0.4 = 1, i.e., X = -0.6
+    trailing edge sai quando -X = 1,       i.e., X = -1.0
+
+  Velocidade constante de X=1.4 até X=-1.0 ao longo de 24% do ciclo:
+    X=1.4 @ 0%     → início (invisível, antes do ramo)
+    X=0.4 @ 9.2%   → leading entra no ramo → começa fade-in
+    X=0.0 @ 12.9%  → trailing entra no ramo → luz completamente dentro
+    X=-0.6 @ 18.3% → leading sai do ramo → começa fade-out
+    X=-1.0 @ 22%   → trailing sai do ramo → luz invisível
+*/
+@keyframes dashTravel {
+  0%     { stroke-dashoffset: 1.4;  opacity: 0; }
+  9.2%   { stroke-dashoffset: 0.4;  opacity: 0; }   /* leading toca início */
+  12.9%  { stroke-dashoffset: 0.0;  opacity: 0.88; } /* dash completamente no ramo */
+  18.3%  { stroke-dashoffset: -0.6; opacity: 0.88; } /* leading toca o fim */
+  22%    { stroke-dashoffset: -1.0; opacity: 0; }   /* trailing sai */
+  99%    { stroke-dashoffset: -1.0; opacity: 0; }   /* silêncio */
+  100%   { stroke-dashoffset: 1.4;  opacity: 0; }   /* reset invisível */
+}
+
+.pulse-dash {
+  stroke-dasharray: 0.4 1;
+  stroke-dashoffset: 1.4;
+  opacity: 0;
+  animation-name: dashTravel;
+  animation-timing-function: linear;   /* velocidade constante = fade suave nas bordas */
+  animation-iteration-count: infinite;
+}
+
+/* ── Feedback flash — overlay instantâneo de acerto/erro ────────────── */
+@keyframes flashCorrect {
+  0%   { opacity: 0.22; }
+  100% { opacity: 0; }
+}
+@keyframes flashIncorrect {
+  0%   { opacity: 0.28; }
+  100% { opacity: 0; }
+}
+
+.answer-flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+.answer-flash-correct   { background: #10b981; animation-name: flashCorrect;   }
+.answer-flash-incorrect { background: #ef4444; animation-name: flashIncorrect; }
+
+/* ── Shake — tremor no painel de respostas erradas ──────────────────── */
+@keyframes shakeX {
+  0%,100% { transform: translateX(0); }
+  14%     { transform: translateX(-10px); }
+  28%     { transform: translateX(10px); }
+  42%     { transform: translateX(-7px); }
+  57%     { transform: translateX(7px); }
+  71%     { transform: translateX(-4px); }
+  85%     { transform: translateX(4px); }
+}
+.shake-once { animation: shakeX 0.45s ease-out; }
