@@ -13,31 +13,31 @@ interface HomeProps {
 const modules = [
   {
     id: 'amniota',
-    name: 'Amniota',
+    name: 'Clado Amniota',
     sub: 'Mammalia · Reptilia · Aves · Amphibia',
     icon: '🦎',
   },
   {
     id: 'arthropoda',
-    name: 'Arthropoda',
+    name: 'Filo Arthropoda',
     sub: 'Chelicerata · Myriapoda · Crustacea · Insecta',
     icon: '🦋',
   },
   {
     id: 'annelida',
-    name: 'Annelida',
+    name: 'Filo Annelida',
     sub: 'Polychaeta · Oligochaeta · Hirudinea',
     icon: '🪱',
   },
   {
     id: 'chordata-basal',
-    name: 'Chordata Basal',
+    name: 'Filo Chordata Basal',
     sub: 'Urochordata · Cephalochordata · Agnatha',
     icon: '🐟',
   },
   {
     id: 'metazoa',
-    name: 'Metazoa',
+    name: 'Reino Metazoa',
     sub: 'Principais grupos',
     icon: '🌳',
   },
@@ -74,101 +74,110 @@ export default function Home({ onStartTraining, onOpenTutorial }: HomeProps) {
       <div className="relative z-10 flex-1 overflow-y-auto scrollbar-none flex flex-col">
 
         {/* Wordmark */}
-        <div className="pt-10 pb-4 px-6 text-center select-none">
-          <h1 className="text-[clamp(3.5rem,18vw,10rem)] font-black tracking-tighter leading-none text-zinc-100">
-            CladeX
+        <div className="pt-10 pb-6 px-6 text-center select-none">
+          <h1 className={`text-[clamp(3.5rem,18vw,8rem)] font-black tracking-tighter leading-none ${theme === 'light' ? 'text-zinc-200' : 'text-zinc-100'}`}>
+            Clade<span className="text-emerald-500">X</span>
           </h1>
-          <p className="text-xs uppercase tracking-[0.25em] text-zinc-600 mt-2">
+          <p className={`text-xs uppercase tracking-[0.25em] mt-3 font-semibold ${theme === 'light' ? 'text-zinc-600' : 'text-zinc-500'}`}>
             Filogenia · Biodiversidade
           </p>
         </div>
 
         {/* Cards */}
-        <div className="flex-1 flex flex-col w-full max-w-sm mx-auto px-5 gap-3">
+        <div className="flex-1 flex flex-col w-full max-w-sm mx-auto px-5 gap-4">
 
-          {/* Tutorial — secundário, 25% mais alto */}
+          {/* Tutorial — Estilo Glassmorphism secundário */}
           <button
             onClick={onOpenTutorial}
-            className="group w-full rounded-xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 hover:bg-zinc-800/60 backdrop-blur-sm transition-colors duration-150 px-4 py-[0.85rem] text-left flex items-center gap-3"
+            className="btn-juicy group w-full rounded-2xl bg-zinc-900/40 border border-zinc-800/50 hover:border-zinc-700 hover:bg-zinc-800/40 backdrop-blur-md transition-all duration-300 px-4 py-4 text-left flex items-center gap-4"
           >
-            <div className="w-7 h-7 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0">
-              <BookOpen className="w-3.5 h-3.5 text-zinc-400" />
+            <div className="w-9 h-9 rounded-xl bg-zinc-800/80 border border-zinc-700/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+              <BookOpen className="w-4 h-4 text-zinc-400" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-zinc-400 group-hover:text-zinc-200 transition-colors">
-                Tutorial — conceitos básicos
+              <p className="text-sm font-semibold text-zinc-400 group-hover:text-zinc-200 transition-colors">
+                Tutorial de Conceitos
               </p>
+              <p className="text-[10px] text-zinc-600 uppercase tracking-wider mt-0.5">Fundamentos da Sistemática</p>
             </div>
-            <ChevronRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-zinc-400 shrink-0 transition-colors" />
+            <ChevronRight className="w-4 h-4 text-zinc-700 group-hover:text-zinc-400 shrink-0 transition-transform group-hover:translate-x-1" />
           </button>
 
-          {/* Escolher Grupo — primário, destaque esmeralda */}
+          {/* Escolher Grupo — Estilo Cyber-Emerald */}
           <button
             onClick={() => setModulesOpen(o => !o)}
-            className="group w-full rounded-2xl bg-emerald-950/80 border border-emerald-700/50 hover:border-emerald-500 hover:bg-emerald-900/70 backdrop-blur-sm transition-colors duration-200 p-5 text-left"
+            className="btn-juicy group w-full rounded-3xl bg-emerald-950/40 border border-emerald-500/20 hover:border-emerald-500/50 hover:bg-emerald-900/40 backdrop-blur-xl transition-all duration-500 p-6 text-left relative overflow-hidden"
           >
-            <div className="flex items-start justify-between gap-4">
+            {/* Efeito de luz interna */}
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-colors" />
+            
+            <div className="flex items-start justify-between gap-4 relative z-10">
               <div className="min-w-0">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-400 block mb-1.5">
-                  Escolher Grupo
-                </span>
-                <p className="text-xl font-bold text-zinc-100 leading-tight">
-                  Treino livre
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400/80">
+                    Módulos Ativos
+                  </span>
+                </div>
+                <p className="text-2xl font-black text-zinc-100 tracking-tight leading-none">
+                  Treino Livre
                 </p>
-                <p className="text-xs text-zinc-400 mt-1 truncate">
-                  {freeTrainingModules.map(m => m.name).join(' · ')}
+                <p className="text-xs text-emerald-400/60 mt-2 font-medium">
+                  {freeTrainingModules.length} Categorias Disponíveis
                 </p>
               </div>
-              <div className="shrink-0 w-9 h-9 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center group-hover:bg-emerald-500/25 transition-colors mt-0.5">
-                <ChevronRight className={`w-3.5 h-3.5 text-emerald-400 transition-transform duration-200 ${modulesOpen ? 'rotate-90' : ''}`} />
+              <div className="shrink-0 w-11 h-11 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center group-hover:bg-emerald-500/20 transition-all group-hover:rotate-6">
+                <ChevronRight className={`w-5 h-5 text-emerald-400 transition-transform duration-500 ${modulesOpen ? 'rotate-90' : ''}`} />
               </div>
             </div>
           </button>
 
-          {/* Lista de módulos — expande abaixo de Escolher Grupo */}
+          {/* Lista de módulos — Expansão com staggered animation feel */}
           {modulesOpen && (
-            <div className="flex flex-col gap-2 -mt-1">
+            <div className="flex flex-col gap-2.5 -mt-1 px-1">
               {freeTrainingModules.map((mod) => (
                 <button
                   key={mod.id}
                   onClick={() => onStartTraining(mod.id)}
-                  className="group w-full rounded-2xl bg-zinc-900/80 border border-zinc-800 hover:border-emerald-700/50 hover:bg-zinc-800/70 backdrop-blur-sm transition-colors duration-150 px-4 py-3.5 text-left flex items-center gap-3"
+                  className="btn-juicy group w-full rounded-2xl bg-zinc-900/60 border border-zinc-800/80 hover:border-emerald-500/40 hover:bg-emerald-950/20 backdrop-blur-md transition-all duration-200 px-5 py-4 text-left flex items-center gap-4"
                 >
-                  <span className="text-xl leading-none shrink-0" role="img" aria-label={mod.name}>
+                  <span className="text-2xl filter grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-125" role="img" aria-label={mod.name}>
                     {mod.icon}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-zinc-200 group-hover:text-zinc-100 transition-colors truncate">
+                    <p className="text-base font-bold text-zinc-200 group-hover:text-emerald-400 transition-colors">
                       {mod.name}
                     </p>
-                    <p className="text-xs text-zinc-500 mt-0.5 truncate">{mod.sub}</p>
+                    <p className="text-[11px] text-zinc-500 mt-0.5 font-mono opacity-80">{mod.sub}</p>
                   </div>
-                  <Play className="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 shrink-0 transition-colors" />
+                  <Play className="w-4 h-4 text-zinc-700 group-hover:text-emerald-400 group-hover:fill-emerald-400/20 shrink-0 transition-all" />
                 </button>
               ))}
             </div>
           )}
 
-          {/* Desafio do Dia — primário, destaque índigo */}
+          {/* Desafio do Dia — Estilo Neon-Indigo */}
           <button
             onClick={() => onStartTraining(dailyMod.id)}
-            className="group w-full rounded-2xl bg-indigo-950/80 border border-indigo-700/50 hover:border-indigo-500 hover:bg-indigo-900/70 backdrop-blur-sm transition-colors duration-200 p-5 text-left"
+            className="btn-juicy group w-full rounded-3xl bg-indigo-950/40 border border-indigo-500/20 hover:border-indigo-500/50 hover:bg-indigo-900/40 backdrop-blur-xl transition-all duration-500 p-6 text-left relative overflow-hidden"
           >
-            <div className="flex items-start justify-between gap-4">
+            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-colors" />
+
+            <div className="flex items-start justify-between gap-4 relative z-10">
               <div className="min-w-0">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <Zap className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-400">
-                    Desafio do Dia
+                <div className="flex items-center gap-2 mb-2">
+                  <Zap className="w-3.5 h-3.5 text-indigo-400 animate-bounce" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400/80">
+                    Daily Challenge
                   </span>
                 </div>
-                <p className="text-xl font-bold text-zinc-100 leading-tight italic truncate">
+                <p className="text-2xl font-black text-zinc-100 tracking-tight italic leading-none">
                   {dailyMod.name}
                 </p>
-                <p className="text-xs text-zinc-400 mt-1 truncate">{dailyMod.sub}</p>
+                <p className="text-xs text-indigo-400/60 mt-2 font-medium">Reset em 14h 22m</p>
               </div>
-              <div className="shrink-0 w-9 h-9 rounded-full bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center group-hover:bg-indigo-500/25 transition-colors mt-0.5">
-                <Play className="w-3.5 h-3.5 text-indigo-400 ml-0.5" />
+              <div className="shrink-0 w-11 h-11 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center group-hover:bg-indigo-500/20 transition-all group-hover:scale-110">
+                <Play className="w-4 h-4 text-indigo-400 fill-indigo-400/10 ml-0.5" />
               </div>
             </div>
           </button>

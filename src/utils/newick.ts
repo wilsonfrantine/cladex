@@ -85,7 +85,7 @@ export function validateNewick(newick: string): ParseResult {
   }
 }
 
-function collectLeafNames(node: NewickNode): string[] {
+export function collectLeafNames(node: NewickNode): string[] {
   if (!node.branchset?.length) return node.name ? [node.name] : [];
   return node.branchset.flatMap(collectLeafNames);
 }

@@ -1,10 +1,12 @@
 import { useState, useCallback, useRef, useLayoutEffect, useEffect } from 'react';
-import { ArrowLeft, BookMarked, Download, Check, CheckCircle, XCircle, HelpCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, XCircle, HelpCircle } from 'lucide-react';
 import TreeViewer from '../components/TreeViewer';
 import { useCladexStore } from '../store';
-import { getRandomTree, getRandomClade, type CuratedTree, type ExerciseClade } from '../data/trees';
-import { cladeToExercise, checkAnswer } from '../utils/exercises';
-import { validateNewick } from '../utils/newick';
+import { getTreesByModule, type CuratedTree, type ExerciseClade } from '../data/trees';
+import { cladeToExercise, homologyToExercise, characterPlacementToExercise, leafPlacementToExercise, checkAnswer } from '../utils/exercises';
+import { validateNewick, parseNewick, collectLeafNames } from '../utils/newick';
+import { PHYLOPIC_STATIC } from '../data/phylopic-cache';
+import { fetchSilhouetteBatch } from '../utils/phylopic';
 import type { Exercise, Feedback } from '../store';
 
 // ─── Props e tipos ────────────────────────────────────────────────────────────
@@ -12,9 +14,9 @@ import type { Exercise, Feedback } from '../store';
 interface TrainingProps { module: string; onBack: () => void }
 
 const MODULE_LABELS: Record<string, string> = {
-  'annelida': 'Annelida',
-  'chordata-basal': 'Chordata Basal',
-  'metazoa': 'Metazoa',
+  'annelida': 'Filo Annelida',
+  'chordata-basal': 'Filo Chordata Basal',
+  'metazoa': 'Reino Metazoa',
   'custom': 'Newick Customizado',
 };
 
@@ -23,6 +25,10 @@ interface Round {
   clade: ExerciseClade | null;
   exercise: Exercise | null;
   treeStyle: 'elbow' | 'diagonal';
+  /** Folhas ocultas para leaf-placement: alvo + 2 decoys */
+  hiddenLeaves?: string[];
+  /** Chave única para rastrear exercícios já usados */
+  key: string;
 }
 
 /**
@@ -37,12 +43,71 @@ function pickTreeStyle(totalAttempts: number): 'elbow' | 'diagonal' {
   return Math.random() < diagProb ? 'diagonal' : 'elbow';
 }
 
-function makeRound(mod: string, totalAttempts: number): Round {
-  if (mod === 'custom') return { tree: null, clade: null, exercise: null, treeStyle: 'elbow' };
-  const tree = getRandomTree(mod);
-  const clade = tree ? getRandomClade(tree) : null;
-  const exercise = clade ? cladeToExercise(clade) : null;
-  return { tree, clade, exercise, treeStyle: pickTreeStyle(totalAttempts) };
+/** Conta o total de exercícios únicos disponíveis para um módulo */
+function countPoolSize(mod: string): number {
+  let n = 0;
+  for (const tree of getTreesByModule(mod)) {
+    for (const clade of tree.clades) {
+      n++; // clade-classification
+      if (clade.characters?.length) n += 2; // homology-type + character-placement
+      if (clade.leafHints?.length) n++;     // leaf-placement
+    }
+  }
+  return n;
+}
+
+/** Gera a próxima rodada evitando repetir exercícios já vistos.
+ *  Retorna `key === '__reset__'` quando o pool foi esgotado (o caller deve limpar usedKeys). */
+function makeRound(mod: string, totalAttempts: number, usedKeys: Set<string>): Round {
+  if (mod === 'custom') return { tree: null, clade: null, exercise: null, treeStyle: 'elbow', key: '' };
+
+  const trees = getTreesByModule(mod);
+  if (!trees.length) return { tree: null, clade: null, exercise: null, treeStyle: 'elbow', key: '' };
+
+  // Constrói lista de todas as combinações (tree × clade × type) ainda não usadas
+  type Candidate = { tree: CuratedTree; clade: ExerciseClade; exercise: Exercise; key: string };
+  const available: Candidate[] = [];
+
+  for (const tree of trees) {
+    for (const clade of tree.clades) {
+      const cladeKey = `${tree.id}-${clade.id}-clade-classification`;
+      if (!usedKeys.has(cladeKey))
+        available.push({ tree, clade, exercise: cladeToExercise(clade), key: cladeKey });
+
+      if (clade.characters?.length) {
+        const char = clade.characters[Math.floor(Math.random() * clade.characters.length)];
+        const homoKey = `${tree.id}-${clade.id}-homology-type`;
+        const charKey  = `${tree.id}-${clade.id}-character-placement`;
+        if (!usedKeys.has(homoKey)) available.push({ tree, clade, exercise: homologyToExercise(char), key: homoKey });
+        if (!usedKeys.has(charKey))  available.push({ tree, clade, exercise: characterPlacementToExercise(char), key: charKey });
+      }
+
+      if (clade.leafHints?.length) {
+        const hint = clade.leafHints[Math.floor(Math.random() * clade.leafHints.length)];
+        const leafKey = `${tree.id}-${clade.id}-leaf-placement`;
+        if (!usedKeys.has(leafKey)) available.push({ tree, clade, exercise: leafPlacementToExercise(hint), key: leafKey });
+      }
+    }
+  }
+
+  // Pool esgotado — sinaliza para o caller reiniciar
+  if (!available.length)
+    return { tree: null, clade: null, exercise: null, treeStyle: 'elbow', key: '__reset__' };
+
+  const { tree, clade, exercise, key } = available[Math.floor(Math.random() * available.length)];
+
+  // Para leaf-placement: ocultar o alvo + 2 decoys aleatórios da mesma árvore
+  let hiddenLeaves: string[] | undefined;
+  if (exercise.type === 'leaf-placement' && exercise.meta?.hiddenLeaf) {
+    const target = exercise.meta.hiddenLeaf;
+    const pool = collectLeafNames(parseNewick(tree.newick)).filter(l => l !== target);
+    const decoys: string[] = [];
+    for (let i = 0; i < 2 && pool.length > 0; i++)
+      decoys.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+    hiddenLeaves = [target, ...decoys];
+  }
+
+  return { tree, clade, exercise, treeStyle: pickTreeStyle(totalAttempts), hiddenLeaves, key };
 }
 
 type EnvState = 'neutral' | 'correct' | 'incorrect';
@@ -51,6 +116,13 @@ const CLADE_OPTIONS = [
   { value: 'monophyletic', label: 'Monofilético', desc: 'Ancestral + todos os descendentes', key: '1', cls: 'bg-emerald-900/50 hover:bg-emerald-800/70 border-emerald-700/50' },
   { value: 'paraphyletic', label: 'Parafilético',  desc: 'Ancestral + alguns descendentes',  key: '2', cls: 'bg-amber-900/50  hover:bg-amber-800/70  border-amber-700/50'  },
   { value: 'polyphyletic', label: 'Polifilético',  desc: 'Sem ancestral exclusivo',           key: '3', cls: 'bg-rose-900/50   hover:bg-rose-800/70   border-rose-700/50'   },
+];
+
+const HOMOLOGY_OPTIONS = [
+  { value: 'sinapomorfia',    label: 'Sinapomorfia',    desc: 'Caráter derivado compartilhado por um clado', key: '1', cls: 'bg-emerald-900/50 hover:bg-emerald-800/70 border-emerald-700/50' },
+  { value: 'autapomorfia',    label: 'Autapomorfia',    desc: 'Caráter derivado exclusivo de um táxon',      key: '2', cls: 'bg-sky-900/50     hover:bg-sky-800/70     border-sky-700/50'     },
+  { value: 'plesiomorfia',    label: 'Plesiomorfia',    desc: 'Caráter ancestral herdado do grupo externo',  key: '3', cls: 'bg-amber-900/50  hover:bg-amber-800/70  border-amber-700/50'  },
+  { value: 'simplesiomorfia', label: 'Simplesiomorfia', desc: 'Plesiomorfia compartilhada por vários táxons', key: '4', cls: 'bg-zinc-800/60   hover:bg-zinc-700/60   border-zinc-600/50'   },
 ];
 
 function getLevel(total: number): { label: string; style: string } {
@@ -62,15 +134,19 @@ function getLevel(total: number): { label: string; style: string } {
 // ─── Componente principal ─────────────────────────────────────────────────────
 
 export default function Training({ module, onBack }: TrainingProps) {
-  const { sessionStats, allTimeStats, recordAnswer, saveTree, theme } = useCladexStore();
+  const { sessionStats, allTimeStats, recordAnswer, theme } = useCladexStore();
 
+  const [usedKeys, setUsedKeys] = useState<Set<string>>(() => new Set());
+  const [poolCycle, setPoolCycle] = useState(0); // incrementa a cada reset do pool
   const [round, setRound] = useState<Round>(() =>
-    makeRound(module, useCladexStore.getState().allTimeStats.treesAttempted),
+    makeRound(module, useCladexStore.getState().allTimeStats.treesAttempted, new Set()),
   );
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [envState, setEnvState] = useState<EnvState>('neutral');
   const [rippleKey, setRippleKey] = useState(0);
-  const [treeSaved, setTreeSaved] = useState(false);
+
+  // Silhuetas PhyloPic — inicia com o cache estático dos 33 táxons curados
+  const [silhouetteUrls, setSilhouetteUrls] = useState<Record<string, string>>(PHYLOPIC_STATIC);
 
   // Custom Newick
   const [customNewick, setCustomNewick] = useState('');
@@ -110,21 +186,36 @@ export default function Training({ module, onBack }: TrainingProps) {
     return () => el.removeEventListener('wheel', onWheel);
   }, []);
 
-  // Pointer: pan via drag
+  // Pointer: pan via drag — capture só começa após threshold para não bloquear cliques filhos
+  const DRAG_THRESHOLD = 5;
+  const hasDragged = useRef(false);
+  const startPos   = useRef({ x: 0, y: 0 });
+
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
-    isDragging.current = true;
+    startPos.current   = { x: e.clientX, y: e.clientY };
     lastPanPos.current = { x: e.clientX, y: e.clientY };
-    (e.currentTarget as Element).setPointerCapture(e.pointerId);
+    hasDragged.current = false;
   };
   const onPointerMove = (e: React.PointerEvent) => {
-    if (!isDragging.current) return;
+    if (!e.buttons) return;
+    if (!isDragging.current) {
+      const dist = Math.hypot(e.clientX - startPos.current.x, e.clientY - startPos.current.y);
+      if (dist < DRAG_THRESHOLD) return;
+      isDragging.current = true;
+      hasDragged.current = true;
+      (e.currentTarget as Element).setPointerCapture(e.pointerId);
+    }
     const dx = e.clientX - lastPanPos.current.x;
     const dy = e.clientY - lastPanPos.current.y;
     lastPanPos.current = { x: e.clientX, y: e.clientY };
     setPan(p => ({ x: p.x + dx, y: p.y + dy }));
   };
   const onPointerUp = () => { isDragging.current = false; };
+  // Impede cliques fantasma após um arraste (o evento click ainda dispara pós-pointerup)
+  const onClickCapture = (e: React.MouseEvent) => {
+    if (hasDragged.current) { e.stopPropagation(); hasDragged.current = false; }
+  };
 
   // Touch: pinch-to-zoom
   const onTouchStart = (e: React.TouchEvent) => {
@@ -152,20 +243,40 @@ export default function Training({ module, onBack }: TrainingProps) {
   // ── Rodadas ──────────────────────────────────────────────────────────────────
   const nextRound = useCallback(() => {
     const total = allTimeStats.treesAttempted + sessionStats.correct + sessionStats.incorrect;
-    setRound(makeRound(module, total));
+
+    // Marca o exercício atual como usado
+    const nextUsed = new Set(usedKeys);
+    if (round.key && round.key !== '__reset__') nextUsed.add(round.key);
+
+    let next = makeRound(module, total, nextUsed);
+
+    // Pool esgotado → reinicia ciclo
+    if (next.key === '__reset__') {
+      const freshSet = new Set<string>();
+      next = makeRound(module, total, freshSet);
+      setUsedKeys(freshSet);
+      setPoolCycle(c => c + 1);
+    } else {
+      setUsedKeys(nextUsed);
+    }
+
+    setRound(next);
     setFeedback(null);
     setEnvState('neutral');
-    setTreeSaved(false);
     setPan({ x: 0, y: 0 });
     setZoom(1);
-  }, [module]);
+  }, [module, allTimeStats.treesAttempted, sessionStats.correct, sessionStats.incorrect, usedKeys, round.key]);
 
   // ── Resposta ─────────────────────────────────────────────────────────────────
   const handleAnswer = useCallback(
     (answer: string) => {
       if (!round.exercise || feedback) return;
       const correct = checkAnswer(round.exercise, answer);
-      recordAnswer(round.exercise.type, correct);
+      recordAnswer(
+        round.exercise.type, correct,
+        round.tree?.moduleId ?? module,
+        round.exercise.question,
+      );
       setFeedback({
         correct,
         message: correct ? 'Correto!' : 'Incorreto.',
@@ -185,33 +296,20 @@ export default function Training({ module, onBack }: TrainingProps) {
         if (e.key === 'Enter') nextRound();
         return;
       }
-      if (round.exercise?.type !== 'clade-classification') return;
-      if (e.key === '1') handleAnswer('monophyletic');
-      if (e.key === '2') handleAnswer('paraphyletic');
-      if (e.key === '3') handleAnswer('polyphyletic');
+      if (round.exercise?.type === 'clade-classification') {
+        if (e.key === '1') handleAnswer('monophyletic');
+        if (e.key === '2') handleAnswer('paraphyletic');
+        if (e.key === '3') handleAnswer('polyphyletic');
+      } else if (round.exercise?.type === 'homology-type') {
+        if (e.key === '1') handleAnswer('sinapomorfia');
+        if (e.key === '2') handleAnswer('autapomorfia');
+        if (e.key === '3') handleAnswer('plesiomorfia');
+        if (e.key === '4') handleAnswer('simplesiomorfia');
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [feedback, round.exercise, handleAnswer, nextRound]);
-
-  // ── Salvar / Baixar ──────────────────────────────────────────────────────────
-  const newickAtual = customTree ?? round.tree?.newick ?? '';
-
-  const handleSave = () => {
-    if (!newickAtual) return;
-    saveTree(newickAtual, module, `${MODULE_LABELS[module] ?? module} — ${new Date().toLocaleDateString('pt-BR')}`);
-    setTreeSaved(true);
-  };
-  const handleDownload = () => {
-    if (!newickAtual) return;
-    const blob = new Blob([newickAtual], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `cladex_${module}_${Date.now()}.newick`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
 
   // ── Custom Newick ────────────────────────────────────────────────────────────
   const handleLoadCustom = () => {
@@ -219,7 +317,7 @@ export default function Training({ module, onBack }: TrainingProps) {
     if (!result.valid) { setCustomError(result.error ?? 'Newick inválido.'); return; }
     setCustomError('');
     setCustomTree(customNewick);
-    setFeedback(null); setEnvState('neutral'); setTreeSaved(false);
+    setFeedback(null); setEnvState('neutral');
     setPan({ x: 0, y: 0 }); setZoom(1);
   };
 
@@ -227,26 +325,72 @@ export default function Training({ module, onBack }: TrainingProps) {
   const envBorder = envState === 'correct' ? 'border-emerald-900/50' : envState === 'incorrect' ? 'border-rose-900/50' : 'border-zinc-800/60';
   const treeGlowClass = envState === 'correct' ? 'tree-glow-correct' : envState === 'incorrect' ? 'tree-glow-incorrect' : '';
 
-  const displayNewick = newickAtual;
-  const highlightTaxa = round.clade?.taxaInGroup ?? [];
+  const displayNewick = module === 'custom' ? customTree : (round.tree?.newick ?? null);
+
+  // Taxa a destacar: suprimir highlight em character-placement (entrega a resposta)
+  const highlightTaxa = (!feedback && round.exercise?.type === 'character-placement')
+    ? []
+    : (round.exercise?.meta?.highlightTaxa ?? (round.clade?.taxaInGroup ?? []));
+
+  // Handlers para exercícios de clique na árvore
+  const handleCharacterAnswer = useCallback((nodeName: string) => {
+    handleAnswer(nodeName);
+  }, [handleAnswer]);
+
+  const handleLeafAnswer = useCallback((leafName: string) => {
+    handleAnswer(leafName);
+  }, [handleAnswer]);
+
+  // Busca silhuetas de táxons de custom Newick não cobertos pelo cache estático
+  useEffect(() => {
+    if (module !== 'custom' || !displayNewick) return;
+    const unknown = collectLeafNames(parseNewick(displayNewick))
+      .filter(n => !PHYLOPIC_STATIC[n]);
+    if (!unknown.length) return;
+    fetchSilhouetteBatch(unknown).then(extra =>
+      setSilhouetteUrls(prev => ({ ...prev, ...extra })),
+    );
+  }, [module, displayNewick]);
 
   return (
     <div className="flex flex-col flex-1 overflow-hidden bg-zinc-950 relative">
 
       {/* ── Barra de navegação ── */}
-      <div className={`shrink-0 flex items-center gap-3 px-4 py-2.5 border-b transition-colors duration-700 ${envBorder} relative z-10`}>
+      <div className={`shrink-0 flex items-center gap-3 px-5 py-3 border-b transition-all duration-700 ${theme === 'light' ? 'bg-zinc-900/5 border-zinc-800/20' : 'bg-zinc-950/50 border-zinc-800/40'} backdrop-blur-md relative z-10`}>
 
         {/* Logo */}
-        <span className="text-xs font-black tracking-tighter text-zinc-600 select-none">CladeX</span>
+        <div className="flex flex-col -space-y-1 select-none">
+          <span className="text-base font-black tracking-tighter text-zinc-100">Clade<span className="text-emerald-500">X</span></span>
+        </div>
+
+        <div className="w-px h-6 bg-zinc-800/50 mx-1" />
 
         <button
           onClick={onBack}
-          className="flex items-center text-zinc-500 hover:text-zinc-200 transition-colors"
+          className="btn-juicy p-1.5 rounded-xl hover:bg-zinc-800/50 text-zinc-500 hover:text-zinc-200 transition-all"
         >
-          <ArrowLeft size={15} />
+          <ArrowLeft size={18} />
         </button>
 
-        <span className="text-sm font-medium text-zinc-400 truncate flex-1">{MODULE_LABELS[module] ?? module}</span>
+        <span className="text-base font-black text-zinc-100 truncate flex-1 tracking-tight">
+          {MODULE_LABELS[module] ?? module}
+        </span>
+
+        {/* Progresso do pool */}
+        {module !== 'custom' && (() => {
+          const poolSize = countPoolSize(module);
+          const done = Math.min(usedKeys.size + 1, poolSize);
+          return (
+            <div className="hidden sm:flex flex-col items-end -space-y-0.5">
+              <span className="text-[10px] text-zinc-500 font-mono tabular-nums">
+                {done}/{poolSize}
+              </span>
+              {poolCycle > 0 && (
+                <span className="text-[9px] text-indigo-500 font-semibold">ciclo {poolCycle + 1}</span>
+              )}
+            </div>
+          );
+        })()}
 
         {/* Nível */}
         {module !== 'custom' && (() => {
@@ -258,19 +402,6 @@ export default function Training({ module, onBack }: TrainingProps) {
         {/* Donut de acerto */}
         {module !== 'custom' && (
           <DonutScore correct={sessionStats.correct} total={sessionStats.correct + sessionStats.incorrect} />
-        )}
-
-        {newickAtual && (
-          <>
-            <button onClick={handleSave} disabled={treeSaved} title={treeSaved ? 'Salva' : 'Salvar'}
-              className="p-1.5 rounded hover:bg-zinc-800 transition-colors text-zinc-600 hover:text-zinc-300 disabled:opacity-30">
-              {treeSaved ? <Check size={14} /> : <BookMarked size={14} />}
-            </button>
-            <button onClick={handleDownload} title="Baixar Newick"
-              className="p-1.5 rounded hover:bg-zinc-800 transition-colors text-zinc-600 hover:text-zinc-300">
-              <Download size={14} />
-            </button>
-          </>
         )}
       </div>
 
@@ -298,11 +429,12 @@ export default function Training({ module, onBack }: TrainingProps) {
       <div
         key={`tree-${rippleKey}`}
         ref={treeContainerRef}
-        className={`flex-1 min-h-0 relative overflow-hidden border-y ${envBorder} cursor-grab active:cursor-grabbing ${treeGlowClass}`}
+        className={`flex-1 min-h-0 relative overflow-hidden border-y ${envBorder} cursor-grab active:cursor-grabbing ${treeGlowClass} select-none`}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
+        onClickCapture={onClickCapture}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         style={{ touchAction: 'none' }}
@@ -329,12 +461,47 @@ export default function Training({ module, onBack }: TrainingProps) {
               treeStyle={round.treeStyle}
               taxonAnnotations={round.tree?.taxonAnnotations}
               showAnswerFeedback={!!feedback}
+              cladeType={round.exercise?.type === 'clade-classification' ? round.exercise.correctAnswer : undefined}
               theme={theme}
+              silhouetteUrls={silhouetteUrls}
+              // Exercícios interativos de clique na árvore
+              onInternalNodeClick={
+                round.exercise?.type === 'character-placement' && !feedback
+                  ? handleCharacterAnswer
+                  : undefined
+              }
+              onLeafClick={
+                round.exercise?.type === 'leaf-placement' && !feedback
+                  ? handleLeafAnswer
+                  : undefined
+              }
+              hiddenLeaves={
+                round.exercise?.type === 'leaf-placement' && !feedback
+                  ? (round.hiddenLeaves ?? [])
+                  : []
+              }
+              nodeClickMode={
+                round.exercise?.type === 'character-placement' ? 'character-placement' :
+                round.exercise?.type === 'leaf-placement'      ? 'leaf-placement' : false
+              }
             />
           </div>
         ) : (
           <div className="h-full flex items-center justify-center text-zinc-600 text-base relative z-10">
             {module === 'custom' ? 'Cole um Newick acima e clique em Carregar' : 'Carregando…'}
+          </div>
+        )}
+
+        {/* Overlay de impacto ✓ / ✗ */}
+        {envState !== 'neutral' && (
+          <div
+            key={`impact-${rippleKey}`}
+            className="absolute inset-0 z-20 flex items-center justify-center impact-overlay"
+          >
+            {envState === 'correct'
+              ? <CheckCircle size={120} strokeWidth={1.5} className={`drop-shadow-2xl ${theme === 'light' ? 'text-emerald-700' : 'text-emerald-400'}`} />
+              : <XCircle    size={120} strokeWidth={1.5} className={`drop-shadow-2xl ${theme === 'light' ? 'text-rose-700'    : 'text-rose-400'}`} />
+            }
           </div>
         )}
 
@@ -363,9 +530,12 @@ export default function Training({ module, onBack }: TrainingProps) {
                 className="px-5 pt-3 pb-1 question-enter"
               >
                 <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500 mb-0.5">
-                  Classificação de clado
+                  {round.exercise.type === 'clade-classification'  && 'Classificação de clado'}
+                  {round.exercise.type === 'homology-type'         && 'Tipo de homologia'}
+                  {round.exercise.type === 'character-placement'   && 'Posicionamento de caráter'}
+                  {round.exercise.type === 'leaf-placement'        && 'Identificação de táxon'}
                 </p>
-                <p className="text-base sm:text-lg text-zinc-100 leading-snug font-medium">
+                <p className="text-base sm:text-lg text-zinc-100 leading-snug font-medium whitespace-pre-line">
                   {round.exercise.question}
                 </p>
               </div>
@@ -399,8 +569,39 @@ function AnswerButtons({ module, exercise, onAnswer }: {
   }
 
   if (exercise.type === 'clade-classification') {
+    return <HintableOptions onAnswer={onAnswer} />;
+  }
+
+  if (exercise.type === 'homology-type') {
     return (
-      <HintableOptions onAnswer={onAnswer} />
+      <div className="grid grid-cols-2 gap-2">
+        {HOMOLOGY_OPTIONS.map(opt => (
+          <button key={opt.value} onClick={() => onAnswer(opt.value)}
+            className={`border rounded-xl px-3 py-2.5 text-left transition-colors ${opt.cls}`}>
+            <div className="flex items-start justify-between gap-1">
+              <span className="font-semibold text-white text-sm leading-tight">{opt.label}</span>
+              <span className="text-[10px] text-zinc-500 font-mono shrink-0 mt-0.5">[{opt.key}]</span>
+            </div>
+            <span className="block text-xs text-zinc-400 mt-0.5 leading-tight">{opt.desc}</span>
+          </button>
+        ))}
+      </div>
+    );
+  }
+
+  if (exercise.type === 'character-placement') {
+    return (
+      <p className="text-zinc-400 text-sm text-center py-1 italic">
+        Clique no nó interno correto da árvore acima ↑
+      </p>
+    );
+  }
+
+  if (exercise.type === 'leaf-placement') {
+    return (
+      <p className="text-zinc-400 text-sm text-center py-1 italic">
+        Clique na folha "?" correta na árvore acima ↑
+      </p>
     );
   }
 
@@ -476,29 +677,34 @@ function renderBold(text: string): string {
 // ─── Donut de acerto ─────────────────────────────────────────────────────────
 
 function DonutScore({ correct, total }: { correct: number; total: number }) {
-  const r = 11;
+  const r = 14;
   const circ = 2 * Math.PI * r;
   const pct = total > 0 ? correct / total : 0;
   const arc = pct * circ;
-  const color = pct >= 0.7 ? '#10b981' : pct >= 0.5 ? '#f59e0b' : total === 0 ? '#3f3f46' : '#f87171';
+  const color = pct >= 0.7 ? '#10b981' : pct >= 0.5 ? '#f59e0b' : total === 0 ? '#52525b' : '#f43f5e';
+  
   return (
-    <svg width="30" height="30" viewBox="0 0 30 30" aria-label={total > 0 ? `${correct}/${total} corretas` : 'Sem respostas'}>
-      {/* Trilha */}
-      <circle cx="15" cy="15" r={r} fill="none" stroke="#27272a" strokeWidth="3.5" />
-      {/* Arco de acerto */}
-      {total > 0 && (
-        <circle
-          cx="15" cy="15" r={r} fill="none"
-          stroke={color} strokeWidth="3.5"
-          strokeDasharray={`${arc} ${circ}`}
-          strokeDashoffset={circ / 4}
-          strokeLinecap="round"
-        />
-      )}
-      {/* Número total no centro */}
-      <text x="15" y="19" textAnchor="middle" fontSize="8" fill="#a1a1aa" fontWeight="700">
-        {total > 0 ? total : '—'}
-      </text>
-    </svg>
+    <div className="flex items-center gap-2 bg-zinc-900/50 px-2 py-1 rounded-full border border-zinc-800/50 shadow-inner">
+      <div className="relative flex items-center justify-center">
+        <svg width="32" height="32" viewBox="0 0 32 32" className="transform -rotate-90 drop-shadow-md">
+          {/* Trilha */}
+          <circle cx="16" cy="16" r={r} fill="none" stroke="currentColor" className="text-zinc-800/80" strokeWidth="4" />
+          {/* Arco de acerto */}
+          {total > 0 && (
+            <circle
+              cx="16" cy="16" r={r} fill="none"
+              stroke={color} strokeWidth="4"
+              strokeDasharray={`${arc} ${circ}`}
+              strokeLinecap="round"
+              className="transition-all duration-700 ease-out drop-shadow-[0_0_3px_rgba(16,185,129,0.5)]"
+            />
+          )}
+        </svg>
+      </div>
+      <div className="flex flex-col -space-y-1 mr-1">
+        <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">XP</span>
+        <span className="text-xs font-black text-zinc-100">{correct}<span className="text-zinc-600 font-medium text-[10px]">/{total}</span></span>
+      </div>
+    </div>
   );
 }

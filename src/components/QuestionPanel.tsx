@@ -29,10 +29,6 @@ const CLADE_OPTIONS = [
   },
 ];
 
-const ROTATION_OPTIONS = [
-  { value: 'no', label: 'Não mudou', colors: 'bg-emerald-800/60 hover:bg-emerald-700/80 border-emerald-600/50' },
-  { value: 'yes', label: 'Mudou', colors: 'bg-rose-800/60 hover:bg-rose-700/80 border-rose-600/50' },
-];
 
 export default function QuestionPanel({ exercise, feedback, onAnswer, onNext }: QuestionPanelProps) {
   if (!exercise) {
@@ -111,26 +107,26 @@ function AnswerOptions({ exercise, onAnswer }: { exercise: Exercise; onAnswer: (
     );
   }
 
-  if (exercise.type === 'rotation') {
+  if (exercise.type === 'homology-type') {
     return (
-      <div className="grid grid-cols-2 gap-2 max-w-xs">
-        {ROTATION_OPTIONS.map((opt) => (
-          <button
-            key={opt.value}
-            onClick={() => onAnswer(opt.value)}
-            className={`border rounded-xl px-4 py-2.5 font-semibold text-sm text-white transition-colors ${opt.colors}`}
-          >
-            {opt.label}
-          </button>
-        ))}
-      </div>
+      <p className="text-zinc-400 text-xs">
+        Identifique o tipo de homologia do caráter destacado na árvore.
+      </p>
     );
   }
 
-  if (exercise.type === 'mrca') {
+  if (exercise.type === 'character-placement') {
     return (
       <p className="text-zinc-400 text-xs">
-        Clique no nó da árvore que representa o ancestral comum mais recente dos táxons destacados.
+        Clique no nó interno da árvore onde este caráter surgiu.
+      </p>
+    );
+  }
+
+  if (exercise.type === 'leaf-placement') {
+    return (
+      <p className="text-zinc-400 text-xs">
+        Clique na folha "?" da árvore que corresponde ao táxon descrito.
       </p>
     );
   }
@@ -143,9 +139,9 @@ function AnswerOptions({ exercise, onAnswer }: { exercise: Exercise; onAnswer: (
 function labelForType(type: Exercise['type']): string {
   const labels: Record<Exercise['type'], string> = {
     'clade-classification': 'Classificação de clado',
-    mrca: 'Ancestral comum (MRCA)',
-    rotation: 'Rotação de ramos',
-    synapomorphy: 'Sinapomorfia',
+    'homology-type':        'Tipo de homologia',
+    'character-placement':  'Posicionamento de caráter',
+    'leaf-placement':       'Identificação de táxon',
   };
   return labels[type];
 }

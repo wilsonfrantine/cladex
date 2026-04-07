@@ -1,13 +1,22 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type ExerciseType = 'clade-classification' | 'mrca' | 'rotation' | 'synapomorphy';
+export type ExerciseType =
+  | 'clade-classification'
+  | 'homology-type'
+  | 'character-placement'
+  | 'leaf-placement';
 
 export interface Exercise {
   type: ExerciseType;
   question: string;
   correctAnswer: string;
   explanation: string;
+  meta?: {
+    highlightTaxa?: string[];
+    hiddenLeaf?: string;
+    cardLabel?: string;
+  };
 }
 
 export interface Feedback {
@@ -21,6 +30,14 @@ export interface SessionStats {
   correct: number;
   incorrect: number;
   byType: Record<ExerciseType, { correct: number; incorrect: number }>;
+  byModule: Partial<Record<string, { correct: number; incorrect: number }>>;
+}
+
+export interface ErrorRecord {
+  ts: number;
+  moduleId: string;
+  type: ExerciseType;
+  question: string;
 }
 
 export interface SavedTree {
@@ -38,10 +55,11 @@ function emptyStats(): SessionStats {
     incorrect: 0,
     byType: {
       'clade-classification': { correct: 0, incorrect: 0 },
-      mrca: { correct: 0, incorrect: 0 },
-      rotation: { correct: 0, incorrect: 0 },
-      synapomorphy: { correct: 0, incorrect: 0 },
+      'homology-type':        { correct: 0, incorrect: 0 },
+      'character-placement':  { correct: 0, incorrect: 0 },
+      'leaf-placement':       { correct: 0, incorrect: 0 },
     },
+    byModule: {},
   };
 }
 
@@ -50,8 +68,9 @@ interface CladexState {
   allTimeStats: SessionStats;
   savedTrees: SavedTree[];
   theme: 'dark' | 'light';
+  errorLog: ErrorRecord[];
 
-  recordAnswer: (type: ExerciseType, correct: boolean) => void;
+  recordAnswer: (type: ExerciseType, correct: boolean, moduleId: string, question: string) => void;
   resetSession: () => void;
   saveTree: (newick: string, moduleId: string, label: string) => void;
   removeSavedTree: (id: string) => void;
@@ -65,8 +84,9 @@ export const useCladexStore = create<CladexState>()(
       allTimeStats: emptyStats(),
       savedTrees: [],
       theme: 'dark',
+      errorLog: [],
 
-      recordAnswer: (type, correct) => {
+      recordAnswer: (type, correct, moduleId, question) => {
         const update = (s: SessionStats): SessionStats => ({
           treesAttempted: s.treesAttempted + 1,
           correct: s.correct + (correct ? 1 : 0),
@@ -74,12 +94,28 @@ export const useCladexStore = create<CladexState>()(
           byType: {
             ...s.byType,
             [type]: {
-              correct: s.byType[type].correct + (correct ? 1 : 0),
-              incorrect: s.byType[type].incorrect + (correct ? 0 : 1),
+              correct: (s.byType[type]?.correct ?? 0) + (correct ? 1 : 0),
+              incorrect: (s.byType[type]?.incorrect ?? 0) + (correct ? 0 : 1),
+            },
+          },
+          byModule: {
+            ...(s.byModule ?? {}),
+            [moduleId]: {
+              correct: (s.byModule?.[moduleId]?.correct ?? 0) + (correct ? 1 : 0),
+              incorrect: (s.byModule?.[moduleId]?.incorrect ?? 0) + (correct ? 0 : 1),
             },
           },
         });
-        set({ sessionStats: update(get().sessionStats), allTimeStats: update(get().allTimeStats) });
+        const newError: ErrorRecord | null = correct ? null : {
+          ts: Date.now(), moduleId, type, question: question.slice(0, 80),
+        };
+        set({
+          sessionStats: update(get().sessionStats),
+          allTimeStats: update(get().allTimeStats),
+          errorLog: newError
+            ? [newError, ...get().errorLog].slice(0, 100)
+            : get().errorLog,
+        });
       },
 
       resetSession: () => set({ sessionStats: emptyStats() }),
@@ -107,6 +143,7 @@ export const useCladexStore = create<CladexState>()(
         savedTrees: s.savedTrees,
         allTimeStats: s.allTimeStats,
         theme: s.theme,
+        errorLog: s.errorLog,
       }),
     },
   ),

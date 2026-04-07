@@ -39,7 +39,6 @@ function App() {
         {page === 'tutorial' && (
           <Tutorial
             onBack={() => setPage('home')}
-            onStartTraining={startTraining}
           />
         )}
         {page === 'training' && (

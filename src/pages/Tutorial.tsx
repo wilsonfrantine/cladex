@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import { ArrowLeft, ChevronLeft, ChevronRight, Play } from 'lucide-react'
+import { ArrowLeft, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react'
 
 interface TutorialProps {
   onBack: () => void
-  onStartTraining: (module: string) => void
 }
 
 // ── Coordenadas da árvore balanceada ((A,B),(C,D)) ────────────────────────────
@@ -44,6 +43,13 @@ function GroupBox({ y1, y2, color }: { y1: number; y2: number; color: string }) 
       fill={color} fillOpacity={0.13} stroke={color} strokeOpacity={0.45} strokeWidth={1.5} />
   )
 }
+function StateMarker({ p, derived, color }: { p: Pt; derived: boolean; color: string }) {
+  const [x, y] = p
+  return derived
+    ? <rect x={x - 5} y={y - 5} width={10} height={10} rx={2} fill={color} opacity={0.9} />
+    : <rect x={x - 5} y={y - 5} width={10} height={10} rx={2} fill="none"
+        stroke={color} strokeWidth={1.8} opacity={0.75} />
+}
 
 // viewBox com 18px de margem em todos os lados para evitar cortes
 const VB = '-18 -14 251 196'
@@ -56,7 +62,8 @@ function DiagSVG({ children }: { children: React.ReactNode }) {
   )
 }
 
-// ── Diagrama 1: estrutura básica ───────────────────────────────────────────────
+// ── Diagramas — Clados ────────────────────────────────────────────────────────
+
 function Diag1() {
   return (
     <DiagSVG>
@@ -80,7 +87,6 @@ function Diag1() {
   )
 }
 
-// ── Diagrama 2: ancestral exclusivo ──────────────────────────────────────────
 function Diag2() {
   const em = '#10b981'
   return (
@@ -105,7 +111,6 @@ function Diag2() {
   )
 }
 
-// ── Diagrama 3: monofilético ──────────────────────────────────────────────────
 function Diag3() {
   const em = '#10b981'
   return (
@@ -128,7 +133,6 @@ function Diag3() {
   )
 }
 
-// ── Diagrama 4: parafilético ──────────────────────────────────────────────────
 function Diag4() {
   const am   = '#f59e0b'
   const rose = '#f43f5e'
@@ -148,14 +152,12 @@ function Diag4() {
       <Lbl p={[195, 60]}  text="B" color={am}   />
       <Lbl p={[195, 106]} text="C" color={am}   />
       <Lbl p={[195, 154]} text="D" color={rose} />
-      {/* X sobre D */}
       <line x1={187} y1={147} x2={201} y2={161} stroke={rose} strokeWidth={2} />
       <line x1={187} y1={161} x2={201} y2={147} stroke={rose} strokeWidth={2} />
     </DiagSVG>
   )
 }
 
-// ── Diagrama 5: polifilético ──────────────────────────────────────────────────
 function Diag5() {
   const rose = '#f43f5e'
   const gray = '#374151'
@@ -174,9 +176,149 @@ function Diag5() {
       <Lbl p={[195, 60]}  text="B"              />
       <Lbl p={[195, 106]} text="C" color={rose} />
       <Lbl p={[195, 154]} text="D"              />
-      {/* Linha pontilhada mostrando que A e C estão em lados opostos */}
       <line x1={188} y1={14} x2={188} y2={106}
         stroke={rose} strokeWidth={1.2} strokeDasharray="4 3" opacity={0.7} />
+    </DiagSVG>
+  )
+}
+
+// ── Diagramas — Sinapomorfias ─────────────────────────────────────────────────
+
+function DiagSina1() {
+  const blue = '#3b82f6'
+  return (
+    <DiagSVG>
+      <Br a={P.root} b={P.nAB} color="#4b5563" sw={2.2} />
+      <Br a={P.root} b={P.nCD} color="#4b5563" sw={2.2} />
+      <Br a={P.nAB}  b={P.A}   color="#4b5563" sw={1.7} />
+      <Br a={P.nAB}  b={P.B}   color="#4b5563" sw={1.7} />
+      <Br a={P.nCD}  b={P.C}   color="#4b5563" sw={1.7} />
+      <Br a={P.nCD}  b={P.D}   color="#4b5563" sw={1.7} />
+      <Node p={P.root} color="#6b7280" r={4} />
+      <Node p={P.nAB}  color="#6b7280" />
+      <Node p={P.nCD}  color="#6b7280" />
+      <StateMarker p={[200, 14]}  derived={true}  color={blue} />
+      <StateMarker p={[200, 60]}  derived={true}  color={blue} />
+      <StateMarker p={[200, 106]} derived={false} color="#6b7280" />
+      <StateMarker p={[200, 154]} derived={false} color="#6b7280" />
+      <text x={186} y={2} fill={blue} fontSize={8} fontFamily="system-ui" textAnchor="middle">caráter X</text>
+      <Lbl p={[195, 14]}  text="A" color="#d1d5db" />
+      <Lbl p={[195, 60]}  text="B" color="#d1d5db" />
+      <Lbl p={[195, 106]} text="C" color="#6b7280"  />
+      <Lbl p={[195, 154]} text="D" color="#6b7280"  />
+    </DiagSVG>
+  )
+}
+
+function DiagSina2() {
+  const blue = '#3b82f6'
+  const gray = '#6b7280'
+  return (
+    <DiagSVG>
+      <Br a={P.root} b={P.nAB} color="#4b5563" sw={2.2} />
+      <Br a={P.root} b={P.nCD} color="#4b5563" sw={2.2} />
+      <Br a={P.nAB}  b={P.A}   color="#4b5563" sw={1.7} />
+      <Br a={P.nAB}  b={P.B}   color="#4b5563" sw={1.7} />
+      <Br a={P.nCD}  b={P.C}   color="#4b5563" sw={1.7} />
+      <Br a={P.nCD}  b={P.D}   color="#4b5563" sw={1.7} />
+      <Node p={P.root} color="#6b7280" r={4} />
+      <Node p={P.nAB}  color="#6b7280" />
+      <Node p={P.nCD}  color="#6b7280" />
+      {/* A, B, C: estado ancestral (aberto, cinza) */}
+      <StateMarker p={[200, 14]}  derived={false} color={gray} />
+      <StateMarker p={[200, 60]}  derived={false} color={gray} />
+      <StateMarker p={[200, 106]} derived={false} color={gray} />
+      {/* D: estado derivado (preenchido, azul) */}
+      <StateMarker p={[200, 154]} derived={true}  color={blue} />
+      <text x={-4} y={88} fill={gray} fontSize={8} fontFamily="system-ui" textAnchor="middle">outgroup</text>
+      <Lbl p={[195, 14]}  text="A" color="#d1d5db" />
+      <Lbl p={[195, 60]}  text="B" color="#d1d5db" />
+      <Lbl p={[195, 106]} text="C" color="#d1d5db" />
+      <Lbl p={[195, 154]} text="D" color={blue}    />
+    </DiagSVG>
+  )
+}
+
+function DiagSina3() {
+  const em = '#10b981'
+  return (
+    <DiagSVG>
+      <Br a={P.root} b={P.nAB} color={em}      sw={2.2} />
+      <Br a={P.root} b={P.nCD} color="#374151" sw={2.2} />
+      <Br a={P.nAB}  b={P.A}   color={em}      sw={1.7} />
+      <Br a={P.nAB}  b={P.B}   color={em}      sw={1.7} />
+      <Br a={P.nCD}  b={P.C}   color="#374151" sw={1.7} />
+      <Br a={P.nCD}  b={P.D}   color="#374151" sw={1.7} />
+      <Node p={P.root} color="#4b5563" r={3.5} />
+      <Node p={P.nCD}  color="#4b5563" r={3.5} />
+      {/* Anel de origem no nó nAB */}
+      <circle cx={P.nAB[0]} cy={P.nAB[1]} r={7} fill="none" stroke={em} strokeWidth={2} />
+      <circle cx={P.nAB[0]} cy={P.nAB[1]} r={3} fill={em} />
+      <text x={P.nAB[0] + 12} y={P.nAB[1] - 6} fill={em} fontSize={8} fontFamily="system-ui">origem</text>
+      <StateMarker p={[200, 14]}  derived={true}  color={em} />
+      <StateMarker p={[200, 60]}  derived={true}  color={em} />
+      <StateMarker p={[200, 106]} derived={false} color="#6b7280" />
+      <StateMarker p={[200, 154]} derived={false} color="#6b7280" />
+      <Lbl p={[195, 14]}  text="A" color={em}      />
+      <Lbl p={[195, 60]}  text="B" color={em}      />
+      <Lbl p={[195, 106]} text="C" color="#4b5563" />
+      <Lbl p={[195, 154]} text="D" color="#4b5563" />
+    </DiagSVG>
+  )
+}
+
+function DiagSina4() {
+  const sky  = '#0ea5e9'
+  const gray = '#6b7280'
+  return (
+    <DiagSVG>
+      <Br a={P.root} b={P.nAB} color="#4b5563" sw={2.2} />
+      <Br a={P.root} b={P.nCD} color="#4b5563" sw={2.2} />
+      <Br a={P.nAB}  b={P.A}   color="#4b5563" sw={1.7} />
+      <Br a={P.nAB}  b={P.B}   color="#4b5563" sw={1.7} />
+      <Br a={P.nCD}  b={P.C}   color="#4b5563" sw={1.7} />
+      <Br a={P.nCD}  b={P.D}   color="#4b5563" sw={1.7} />
+      <Node p={P.root} color="#6b7280" r={4} />
+      <Node p={P.nAB}  color="#6b7280" />
+      <Node p={P.nCD}  color="#6b7280" />
+      <StateMarker p={[200, 14]}  derived={true}  color={sky}  />
+      <StateMarker p={[200, 60]}  derived={false} color={gray} />
+      <StateMarker p={[200, 106]} derived={false} color={gray} />
+      <StateMarker p={[200, 154]} derived={false} color={gray} />
+      <Lbl p={[195, 14]}  text="A" color={sky}      />
+      <Lbl p={[195, 60]}  text="B" color="#d1d5db"  />
+      <Lbl p={[195, 106]} text="C" color="#d1d5db"  />
+      <Lbl p={[195, 154]} text="D" color="#d1d5db"  />
+    </DiagSVG>
+  )
+}
+
+function DiagSina5() {
+  const am   = '#f59e0b'
+  const slate = '#64748b'
+  return (
+    <DiagSVG>
+      <GroupBox y1={14} y2={106} color={am} />
+      <Br a={P.root} b={P.nAB} color="#4b5563" sw={2.2} />
+      <Br a={P.root} b={P.nCD} color="#4b5563" sw={2.2} />
+      <Br a={P.nAB}  b={P.A}   color="#4b5563" sw={1.7} />
+      <Br a={P.nAB}  b={P.B}   color="#4b5563" sw={1.7} />
+      <Br a={P.nCD}  b={P.C}   color="#4b5563" sw={1.7} />
+      <Br a={P.nCD}  b={P.D}   color="#4b5563" sw={1.7} />
+      <Node p={P.root} color="#6b7280" r={4} />
+      <Node p={P.nAB}  color="#6b7280" />
+      <Node p={P.nCD}  color="#6b7280" />
+      <StateMarker p={[200, 14]}  derived={false} color={am}    />
+      <StateMarker p={[200, 60]}  derived={false} color={am}    />
+      <StateMarker p={[200, 106]} derived={false} color={am}    />
+      <StateMarker p={[200, 154]} derived={true}  color={slate} />
+      <text x={185} y={68} fill={am} fontSize={7.5} fontFamily="system-ui" textAnchor="middle">
+        simplesiomorfia?
+      </text>
+      <Lbl p={[195, 14]}  text="A" color={am}      />
+      <Lbl p={[195, 60]}  text="B" color={am}      />
+      <Lbl p={[195, 106]} text="C" color={am}      />
+      <Lbl p={[195, 154]} text="D" color="#9ca3af" />
     </DiagSVG>
   )
 }
@@ -184,7 +326,7 @@ function Diag5() {
 // ── Slides ─────────────────────────────────────────────────────────────────────
 interface Slide { title: string; tag: string; body: string; diagram: React.ReactNode }
 
-const SLIDES: Slide[] = [
+const CLADOS_SLIDES: Slide[] = [
   {
     title: 'Lendo uma Árvore',
     tag: 'Estrutura',
@@ -200,7 +342,7 @@ const SLIDES: Slide[] = [
   {
     title: 'Clado Monofilético',
     tag: 'Monofilético',
-    body: 'Um grupo é monofilético quando inclui um ancestral e TODOS os seus descendentes. O grupo A+B é monofilético: compartilham o nó verde e nenhum descendente desse nó foi excluído.',
+    body: 'Um grupo é monofilético quando inclui um ancestral e TODOS os seus descendentes. O grupo A+B é monofilético: compartilham um ancestral exclusivo e nenhum descendente foi omitido.',
     diagram: <Diag3 />,
   },
   {
@@ -217,19 +359,138 @@ const SLIDES: Slide[] = [
   },
 ]
 
+const SINAPOMORFIAS_SLIDES: Slide[] = [
+  {
+    title: 'Caracteres na Filogenia',
+    tag: 'Fundamentos',
+    body: 'Caracteres são atributos que variam entre os táxons — morfológicos, moleculares ou comportamentais. Comparamos os estados de cada caráter para inferir qual táxon compartilha qual história evolutiva. Aqui, A e B apresentam o estado derivado do caráter X (quadrado preenchido); C e D não.',
+    diagram: <DiagSina1 />,
+  },
+  {
+    title: 'Estado Ancestral e Derivado',
+    tag: 'Plesiomorfia',
+    body: 'O ponto de partida é o grupo externo (outgroup). O estado presente no outgroup é considerado ancestral — chamado plesiomórfico. Qualquer mudança a partir desse estado é uma apomorfia (estado derivado). Aqui A, B e C têm o estado ancestral; D possui uma apomorfia.',
+    diagram: <DiagSina2 />,
+  },
+  {
+    title: 'Sinapomorfia',
+    tag: 'Sinapomorfia',
+    body: 'Uma sinapomorfia é um estado derivado compartilhado por dois ou mais táxons. Ela surgiu em um nó ancestral interno (marcado com anel) e foi herdada por todos os descendentes desse nó. Sinapomorfias são a principal evidência para reconhecer clados monofiléticos.',
+    diagram: <DiagSina3 />,
+  },
+  {
+    title: 'Autapomorfia',
+    tag: 'Autapomorfia',
+    body: 'Uma autapomorfia é um estado derivado exclusivo de um único táxon — surgiu naquele terminal e não foi herdado por outros. Autapomorfias identificam e caracterizam o grupo, mas não revelam parentesco com outros táxons.',
+    diagram: <DiagSina4 />,
+  },
+  {
+    title: 'Simplesiomorfia',
+    tag: 'Simplesiomorfia',
+    body: 'Uma simplesiomorfia é um estado ancestral compartilhado por vários táxons. A, B e C têm o mesmo estado — mas herdado da raiz, antes de qualquer divergência. Compartilhar uma condição primitiva não é evidência de clado: é apenas herança do ancestral comum mais remoto.',
+    diagram: <DiagSina5 />,
+  },
+]
+
 const TAG_CLS: Record<string, string> = {
-  Estrutura:    'text-zinc-400 border-zinc-700',
-  Parentesco:   'text-blue-400 border-blue-800',
-  Monofilético: 'text-emerald-400 border-emerald-800',
-  Parafilético: 'text-amber-400 border-amber-800',
-  Polifilético: 'text-rose-400 border-rose-800',
+  Estrutura:      'text-zinc-400 border-zinc-700',
+  Parentesco:     'text-blue-400 border-blue-800',
+  Monofilético:   'text-emerald-400 border-emerald-800',
+  Parafilético:   'text-amber-400 border-amber-800',
+  Polifilético:   'text-rose-400 border-rose-800',
+  Fundamentos:    'text-zinc-400 border-zinc-700',
+  Plesiomorfia:   'text-sky-400 border-sky-800',
+  Sinapomorfia:   'text-emerald-400 border-emerald-800',
+  Autapomorfia:   'text-sky-400 border-sky-800',
+  Simplesiomorfia:'text-amber-400 border-amber-800',
+}
+
+// ── Catálogo ───────────────────────────────────────────────────────────────────
+type TutorialId = 'clados' | 'sinapomorfias'
+
+interface CatalogEntry {
+  title: string
+  subtitle: string
+  icon: string
+  slides: Slide[]
+  accentCls: string
+}
+
+const CATALOG: Record<TutorialId, CatalogEntry> = {
+  clados: {
+    title: 'Clados',
+    subtitle: 'Mono, para e polifilético',
+    icon: '🌿',
+    slides: CLADOS_SLIDES,
+    accentCls: 'border-emerald-700/60 hover:border-emerald-500/80',
+  },
+  sinapomorfias: {
+    title: 'Sinapomorfias',
+    subtitle: 'Caracteres e tipos de homologia',
+    icon: '✦',
+    slides: SINAPOMORFIAS_SLIDES,
+    accentCls: 'border-sky-700/60 hover:border-sky-500/80',
+  },
 }
 
 // ── Componente ─────────────────────────────────────────────────────────────────
-export default function Tutorial({ onBack, onStartTraining }: TutorialProps) {
+export default function Tutorial({ onBack }: TutorialProps) {
+  const [selectedId, setSelectedId] = useState<TutorialId | null>(null)
   const [idx, setIdx] = useState(0)
-  const done  = idx >= SLIDES.length
-  const slide = done ? null : SLIDES[idx]
+
+  const goHub = () => { setSelectedId(null); setIdx(0) }
+
+  // ── Hub ──────────────────────────────────────────────────────────────────────
+  if (selectedId === null) {
+    return (
+      <div className="relative h-dvh overflow-hidden flex flex-col bg-zinc-950">
+        <div className="shrink-0 relative flex items-center px-5 py-3 border-b border-zinc-800/60 bg-zinc-950/50 backdrop-blur-md">
+          <button
+            onClick={onBack}
+            className="btn-juicy p-1.5 rounded-xl hover:bg-zinc-800/50 text-zinc-500 hover:text-zinc-200 transition-all z-10"
+          >
+            <ArrowLeft size={18} />
+          </button>
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+            <span className="text-base font-black tracking-tighter text-zinc-100">Clade<span className="text-emerald-500">X</span></span>
+          </div>
+        </div>
+
+        <div className="flex-1 flex flex-col items-center justify-center px-6 gap-8">
+          <div className="text-center">
+            <BookOpen className="mx-auto mb-3 text-zinc-500" size={28} />
+            <h2 className="text-2xl font-bold text-zinc-100 mb-1">Tutoriais</h2>
+            <p className="text-sm text-zinc-500">Escolha um tema para começar</p>
+          </div>
+
+          <div className="w-full max-w-sm flex flex-col gap-4">
+            {(Object.entries(CATALOG) as [TutorialId, CatalogEntry][]).map(([id, entry]) => (
+              <button
+                key={id}
+                onClick={() => { setSelectedId(id); setIdx(0) }}
+                className={`w-full text-left p-5 rounded-2xl bg-zinc-900 border transition-all ${entry.accentCls}`}
+              >
+                <div className="flex items-center gap-4">
+                  <span className="text-3xl">{entry.icon}</span>
+                  <div>
+                    <div className="text-base font-bold text-zinc-100">{entry.title}</div>
+                    <div className="text-xs text-zinc-500 mt-0.5">{entry.subtitle}</div>
+                    <div className="text-xs text-zinc-600 mt-1">{entry.slides.length} slides</div>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ── Slides ───────────────────────────────────────────────────────────────────
+  const entry  = CATALOG[selectedId]
+  const slides = entry.slides
+  const done   = idx >= slides.length
+  const slide  = done ? null : slides[idx]
 
   const next = () => setIdx(i => i + 1)
   const prev = () => setIdx(i => Math.max(0, i - 1))
@@ -237,24 +498,22 @@ export default function Tutorial({ onBack, onStartTraining }: TutorialProps) {
   return (
     <div className="relative h-dvh overflow-hidden flex flex-col bg-zinc-950">
 
-      {/* ── Cabeçalho ─────────────────────────────────────────────────── */}
-      <div className="shrink-0 relative flex items-center px-4 py-2.5 border-b border-zinc-800/60">
+      {/* ── Cabeçalho ───────────────────────────────────────────────── */}
+      <div className="shrink-0 relative flex items-center px-5 py-3 border-b border-zinc-800/60 bg-zinc-950/50 backdrop-blur-md">
         <button
-          onClick={onBack}
-          className="flex items-center gap-1.5 text-zinc-500 hover:text-zinc-200 transition-colors z-10"
+          onClick={goHub}
+          className="btn-juicy p-1.5 rounded-xl hover:bg-zinc-800/50 text-zinc-500 hover:text-zinc-200 transition-all z-10"
         >
-          <ArrowLeft size={15} />
-          <span className="text-sm hidden sm:inline">Voltar</span>
+          <ArrowLeft size={18} />
         </button>
 
-        {/* Logo centrado absolutamente */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-          <span className="text-lg font-black tracking-tighter text-zinc-200">CladeX</span>
+          <span className="text-base font-black tracking-tighter text-zinc-100">Clade<span className="text-emerald-500">X</span></span>
         </div>
 
         {/* Dots à direita */}
         <div className="ml-auto flex items-center gap-1.5 z-10">
-          {SLIDES.map((_, i) => (
+          {slides.map((_, i) => (
             <button key={i} onClick={() => setIdx(i)}
               className={`w-1.5 h-1.5 rounded-full transition-all ${
                 i === idx ? 'bg-emerald-400 scale-125' : i < idx ? 'bg-emerald-800' : 'bg-zinc-700'
@@ -266,26 +525,30 @@ export default function Tutorial({ onBack, onStartTraining }: TutorialProps) {
       </div>
 
       {done ? (
-        /* ── Tela final ─────────────────────────────────────────────── */
+        /* ── Tela de conclusão ──────────────────────────────────────── */
         <div className="flex-1 flex flex-col items-center justify-center px-8 gap-6 text-center">
           <div className="w-16 h-16 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center">
-            <Play className="w-7 h-7 text-emerald-400 ml-0.5" />
+            <span className="text-3xl">{entry.icon}</span>
           </div>
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-zinc-100 mb-3">Pronto para Praticar!</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-zinc-100 mb-3">
+              {entry.title} concluído!
+            </h2>
             <p className="text-sm sm:text-base text-zinc-400 max-w-sm">
-              Você conhece os conceitos. Escolha um grupo taxonômico e comece a identificar clados na árvore.
+              Você terminou todos os slides deste tutorial. Volte ao menu para explorar outros temas ou retorne ao início.
             </p>
           </div>
-          <button
-            onClick={() => onStartTraining('invertebrados-gerais')}
-            className="bg-emerald-700 hover:bg-emerald-600 px-8 py-3 rounded-2xl text-base sm:text-lg font-semibold transition-colors"
-          >
-            Começar agora
-          </button>
-          <button onClick={onBack} className="text-sm text-zinc-600 hover:text-zinc-400 transition-colors">
-            Voltar ao início
-          </button>
+          <div className="flex flex-col items-center gap-3 w-full max-w-xs">
+            <button
+              onClick={goHub}
+              className="w-full bg-emerald-700 hover:bg-emerald-600 px-8 py-3 rounded-2xl text-base font-semibold transition-colors"
+            >
+              Ver outros tutoriais
+            </button>
+            <button onClick={onBack} className="text-sm text-zinc-600 hover:text-zinc-400 transition-colors">
+              Ir para o início
+            </button>
+          </div>
         </div>
       ) : (
         /* ── Slide de conteúdo ──────────────────────────────────────── */
@@ -312,10 +575,10 @@ export default function Tutorial({ onBack, onStartTraining }: TutorialProps) {
                 className="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
                 <ChevronLeft size={16} /> Anterior
               </button>
-              <span className="text-xs text-zinc-600 tabular-nums">{idx + 1} / {SLIDES.length}</span>
+              <span className="text-xs text-zinc-600 tabular-nums">{idx + 1} / {slides.length}</span>
               <button onClick={next}
                 className="flex items-center gap-1.5 text-sm text-emerald-400 hover:text-emerald-300 transition-colors font-medium">
-                {idx === SLIDES.length - 1 ? 'Concluir' : 'Próximo'} <ChevronRight size={16} />
+                {idx === slides.length - 1 ? 'Concluir' : 'Próximo'} <ChevronRight size={16} />
               </button>
             </div>
           </div>

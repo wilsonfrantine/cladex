@@ -99,69 +99,95 @@ const SEGS: Seg[] = [
   { d: 'M706,128 L712,128 L712,65',  depth: 6 },
 ]
 
-const SW    = [3.0, 2.4, 1.9, 1.5, 1.2, 0.9, 0.7]
-const DELAY = [0, 0.4, 0.85, 1.35, 1.85, 2.4, 3.0]
-const CYCLE = 9
+const SW = [3.0, 2.4, 1.9, 1.5, 1.2, 0.9, 0.7]
 
 export default function TreePulse({ theme = 'dark' }: TreePulseProps) {
-  const baseStroke  = theme === 'light' ? '#5a4e3c' : '#065f46'
-  const baseOpacity = theme === 'light' ? 0.14       : 0.18
-  const pulseStroke = theme === 'light' ? '#1b5e35'  : '#a7f3d0'
+  const isLight = theme === 'light'
+  
+  // Cores orgânicas para o modo claro (Nanquim/Verde Musgo)
+  // Cores neon para o modo escuro (Esmeralda/Ciano)
+  const baseStroke  = isLight ? '#3a5a40' : '#064e3b'
+  const baseOpacity = isLight ? 0.08      : 0.12
+  const pulseStroke = isLight ? '#1b3a4b' : '#10b981'
+  
   return (
-    <svg
-      viewBox="0 0 720 960"
-      style={{ width: '100%', height: '100%' }}
-      preserveAspectRatio="xMidYMid slice"
-      aria-hidden
-    >
-      <defs>
-        {/*
-          Blur aplicado ao grupo inteiro dos pulsos — 1 operação/frame
-          independente de quantos paths estão animando.
-        */}
-        <filter id="glow-pulse" x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
+    <div className="relative w-full h-full overflow-hidden">
+      <svg
+        viewBox="0 0 720 960"
+        className="w-full h-full"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden
+      >
+        <defs>
+          <filter id="glow-pulse" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation={isLight ? "1" : "4"} result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
 
-      {/* Camada base — todos os ramos sempre visíveis (baixa opacidade, sem animação) */}
-      {SEGS.map((seg, i) => (
-        <path
-          key={`b${i}`}
-          d={seg.d}
-          fill="none"
-          stroke={baseStroke}
-          strokeWidth={SW[seg.depth]}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          opacity={baseOpacity}
-        />
-      ))}
+          <radialGradient id="vignette" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="white" stopOpacity="1" />
+            <stop offset="80%" stopColor="white" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="white" stopOpacity="0" />
+          </radialGradient>
+          <mask id="vignette-mask">
+            <rect width="100%" height="100%" fill="url(#vignette)" />
+          </mask>
 
-      {/* Camada de pulso — blur aplicado ao grupo (custo fixo, não por path) */}
-      <g filter="url(#glow-pulse)">
-        {SEGS.map((seg, i) => (
-          <path
-            key={`p${i}`}
-            d={seg.d}
-            fill="none"
-            stroke={pulseStroke}
-            strokeWidth={SW[seg.depth] * 1.6}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            pathLength={1}
-            className="pulse-dash"
-            style={{
-              animationDelay: `${DELAY[seg.depth]}s`,
-              animationDuration: `${CYCLE}s`,
-            }}
-          />
-        ))}
-      </g>
-    </svg>
+          {/* Faixa de luz: gradiente vertical com borda suave, move de root→tips */}
+          <linearGradient id="band-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="black" />
+            <stop offset="38%"  stopColor="black" />
+            <stop offset="50%"  stopColor="white" />
+            <stop offset="62%"  stopColor="black" />
+            <stop offset="100%" stopColor="black" />
+          </linearGradient>
+          <mask id="sweep-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="720" height="960">
+            {/* rect 2000px de altura centrado em y=0; translateY move o centro até a posição desejada */}
+            <rect x="-10" width="740" height="2000" y="-1000" fill="url(#band-grad)" className="pulse-sweep" />
+          </mask>
+        </defs>
+
+        <g mask="url(#vignette-mask)">
+          {/* Camada base */}
+          {SEGS.map((seg, i) => (
+            <path
+              key={`b${i}`}
+              d={seg.d}
+              fill="none"
+              stroke={baseStroke}
+              strokeWidth={SW[seg.depth]}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              opacity={baseOpacity}
+            />
+          ))}
+
+          {/* Camada de pulso — faixa única varrendo da raiz às folhas */}
+          <g filter="url(#glow-pulse)" opacity={isLight ? 0.7 : 1} mask="url(#sweep-mask)">
+            {SEGS.map((seg, i) => (
+              <path
+                key={`p${i}`}
+                d={seg.d}
+                fill="none"
+                stroke={pulseStroke}
+                strokeWidth={SW[seg.depth] * (isLight ? 1.6 : 2.5)}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            ))}
+          </g>
+        </g>
+      </svg>
+      
+      {/* Overlay de profundidade */}
+      <div className={`absolute inset-0 pointer-events-none ${
+        isLight 
+          ? 'bg-gradient-to-b from-transparent via-transparent to-[#f7f3eb]/40' 
+          : 'bg-gradient-to-b from-transparent via-transparent to-black/40'
+      }`} />
+    </div>
   )
 }
