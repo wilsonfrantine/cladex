@@ -1,73 +1,68 @@
-# React + TypeScript + Vite
+# CladeX 🌿🧬
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**CladeX** is an interactive, gamified phylogenetic simulator designed to bridge the gap between abstract evolutionary theory and practical tree-thinking. Built as a specialized tool for the [TATAbox Hub](https://github.com/wilsonfrantine/wilsonfrantine.github.io) ecosystem, it helps students and researchers master the logic of common ancestry, homology, and character evolution.
 
-Currently, two official plugins are available:
+## 🔬 Core Concepts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Understanding biological relationships requires more than looking at "who is next to whom." CladeX focuses on the fundamental pillars of **Phylogenetic Systematics**:
 
-## React Compiler
+- **Clade Classification**: Distinguish between monophyletic (true clades), paraphyletic, and polyphyletic groups.
+- **Homology Patterns**: Identify and locate Synapomorphies (shared derived traits), Autapomorphies, and Symplesiomorphies.
+- **Tree-Thinking Exercises**: Solve challenges involving character placement, leaf identification based on taxonomic hints, and MRCA (Most Recent Common Ancestor) detection.
+- **Dynamic Visualization**: Explore trees with organic "pulse" animations and high-fidelity D3-powered renderings.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Features
 
-## Expanding the ESLint configuration
+- **Interactive Training**: Modules centered on specific taxonomic groups (e.g., Annelida, Chordata) with randomized exercise generation.
+- **PhyloPic Integration**: Automatic retrieval and caching of biological silhouettes to provide visual context for every taxon.
+- **Newick Parser**: Support for standard Newick format for importing custom evolutionary trees.
+- **Visual Feedback**: Real-time validation of answers with detailed evolutionary explanations and highlighted branch paths.
+- **JUICY UI**: A modern, responsive interface built with Tailwind CSS 4, featuring dark/light modes and fluid animations.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🏗️ Technical Workbench
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+CladeX is a high-performance React application designed for the modern web:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Frontend**: React 19 + TypeScript 5
+- **Visualization**: D3.js for tree layout and SVG path calculations.
+- **State Management**: Zustand for efficient session tracking and XP progress.
+- **Styling**: Tailwind CSS + Lucide Icons.
+- **Build System**: Vite for ultra-fast development and deployment.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🚀 Getting Started
+
+### Development
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/wilsonfrantine/cladex.git
+   cd cladex
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Content Curation
+
+To update taxonomic icons from the PhyloPic API:
+```bash
+npm run curate-phylopic
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📖 Part of the TATAbox Ecosystem
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This project is part of a broader effort to democratize bioinformatics and evolutionary biology education. It follows the principles of **Open Science** and modular design. 
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+For more tutorials and scripts in Genetics, Ecology, and Data Science, visit the [TATAbox Workbench](https://github.com/wilsonfrantine/wilsonfrantine.github.io).
+
+---
+
+Developed by **Wilson Frantine** (wilsonfrantine@gmail.com)
+"Where the transcription of knowledge begins."
