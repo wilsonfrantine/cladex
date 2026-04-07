@@ -1,6 +1,6 @@
 # CladeX 🌿🧬
 
-**CladeX** is an interactive, gamified phylogenetic simulator designed to bridge the gap between abstract evolutionary theory and practical tree-thinking. Built as a specialized tool for the [TATAbox Hub](https://github.com/wilsonfrantine/wilsonfrantine.github.io) ecosystem, it helps students and researchers master the logic of common ancestry, homology, and character evolution.
+**CladeX** is an interactive, gamified phylogenetic simulator designed to bridge the gap between abstract evolutionary theory and practical tree-thinking. It helps students and researchers master the logic of common ancestry, homology, and character evolution through an intuitive, visual interface.
 
 ## 🔬 Core Concepts
 
@@ -17,7 +17,7 @@ Understanding biological relationships requires more than looking at "who is nex
 - **PhyloPic Integration**: Automatic retrieval and caching of biological silhouettes to provide visual context for every taxon.
 - **Newick Parser**: Support for standard Newick format for importing custom evolutionary trees.
 - **Visual Feedback**: Real-time validation of answers with detailed evolutionary explanations and highlighted branch paths.
-- **JUICY UI**: A modern, responsive interface built with Tailwind CSS 4, featuring dark/light modes and fluid animations.
+- **Responsive UI**: A modern interface built with Tailwind CSS 4, featuring dark/light modes and fluid animations.
 
 ## 🏗️ Technical Workbench
 
@@ -56,13 +56,7 @@ To update taxonomic icons from the PhyloPic API:
 npm run curate-phylopic
 ```
 
-## 📖 Part of the TATAbox Ecosystem
-
-This project is part of a broader effort to democratize bioinformatics and evolutionary biology education. It follows the principles of **Open Science** and modular design. 
-
-For more tutorials and scripts in Genetics, Ecology, and Data Science, visit the [TATAbox Workbench](https://github.com/wilsonfrantine/wilsonfrantine.github.io).
-
 ---
 
-Developed by **Wilson Frantine** (wilsonfrantine@gmail.com)
-"Where the transcription of knowledge begins."
+Developed by **Wilson Frantine** (wilsonfrantine@gmail.com).
+More resources at [wilsonfrantine.github.io](https://wilsonfrantine.github.io).
