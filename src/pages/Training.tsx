@@ -11,7 +11,7 @@ import type { Exercise, Feedback } from '../store';
 
 // ─── Props e tipos ────────────────────────────────────────────────────────────
 
-interface TrainingProps { module: string; onBack: () => void }
+interface TrainingProps { module: string; onBack: () => void; onViewResults: () => void }
 
 const MODULE_LABELS: Record<string, string> = {
   'annelida': 'Filo Annelida',
@@ -133,11 +133,12 @@ function getLevel(total: number): { label: string; style: string } {
 
 // ─── Componente principal ─────────────────────────────────────────────────────
 
-export default function Training({ module, onBack }: TrainingProps) {
+export default function Training({ module, onBack, onViewResults }: TrainingProps) {
   const { sessionStats, allTimeStats, recordAnswer, theme } = useCladexStore();
 
   const [usedKeys, setUsedKeys] = useState<Set<string>>(() => new Set());
   const [poolCycle, setPoolCycle] = useState(0); // incrementa a cada reset do pool
+  const [showEndScreen, setShowEndScreen] = useState(false);
   const [round, setRound] = useState<Round>(() =>
     makeRound(module, useCladexStore.getState().allTimeStats.treesAttempted, new Set()),
   );
@@ -250,22 +251,36 @@ export default function Training({ module, onBack }: TrainingProps) {
 
     let next = makeRound(module, total, nextUsed);
 
-    // Pool esgotado → reinicia ciclo
+    // Pool esgotado → exibir tela de conclusão
     if (next.key === '__reset__') {
-      const freshSet = new Set<string>();
-      next = makeRound(module, total, freshSet);
-      setUsedKeys(freshSet);
-      setPoolCycle(c => c + 1);
-    } else {
       setUsedKeys(nextUsed);
+      setFeedback(null);
+      setEnvState('neutral');
+      setShowEndScreen(true);
+      return;
     }
 
+    setUsedKeys(nextUsed);
     setRound(next);
     setFeedback(null);
     setEnvState('neutral');
     setPan({ x: 0, y: 0 });
     setZoom(1);
   }, [module, allTimeStats.treesAttempted, sessionStats.correct, sessionStats.incorrect, usedKeys, round.key]);
+
+  const handleContinueAfterEnd = useCallback(() => {
+    const total = allTimeStats.treesAttempted + sessionStats.correct + sessionStats.incorrect;
+    const freshSet = new Set<string>();
+    const next = makeRound(module, total, freshSet);
+    setUsedKeys(freshSet);
+    setPoolCycle(c => c + 1);
+    setRound(next);
+    setFeedback(null);
+    setEnvState('neutral');
+    setShowEndScreen(false);
+    setPan({ x: 0, y: 0 });
+    setZoom(1);
+  }, [module, allTimeStats.treesAttempted, sessionStats.correct, sessionStats.incorrect]);
 
   // ── Resposta ─────────────────────────────────────────────────────────────────
   const handleAnswer = useCallback(
@@ -327,8 +342,11 @@ export default function Training({ module, onBack }: TrainingProps) {
 
   const displayNewick = module === 'custom' ? customTree : (round.tree?.newick ?? null);
 
-  // Taxa a destacar: suprimir highlight em character-placement (entrega a resposta)
-  const highlightTaxa = (!feedback && round.exercise?.type === 'character-placement')
+  // Taxa a destacar: suprimir highlight antes do feedback em exercícios que entregam a resposta
+  const highlightTaxa = (!feedback && (
+    round.exercise?.type === 'character-placement' ||
+    round.exercise?.type === 'leaf-placement'
+  ))
     ? []
     : (round.exercise?.meta?.highlightTaxa ?? (round.clade?.taxaInGroup ?? []));
 
@@ -358,10 +376,10 @@ export default function Training({ module, onBack }: TrainingProps) {
       {/* ── Barra de navegação ── */}
       <div className={`shrink-0 flex items-center gap-3 px-5 py-3 border-b transition-all duration-700 ${theme === 'light' ? 'bg-zinc-900/5 border-zinc-800/20' : 'bg-zinc-950/50 border-zinc-800/40'} backdrop-blur-md relative z-10`}>
 
-        {/* Logo */}
-        <div className="flex flex-col -space-y-1 select-none">
+        {/* Logo — link para home */}
+        <button onClick={onBack} className="flex flex-col -space-y-1 select-none hover:opacity-70 transition-opacity">
           <span className="text-base font-black tracking-tighter text-zinc-100">Clade<span className="text-emerald-500">X</span></span>
-        </div>
+        </button>
 
         <div className="w-px h-6 bg-zinc-800/50 mx-1" />
 
@@ -399,10 +417,17 @@ export default function Training({ module, onBack }: TrainingProps) {
           return <span className={`text-[10px] font-semibold uppercase tracking-wider hidden sm:inline ${lv.style}`}>{lv.label}</span>;
         })()}
 
-        {/* Donut de acerto */}
-        {module !== 'custom' && (
-          <DonutScore correct={sessionStats.correct} total={sessionStats.correct + sessionStats.incorrect} />
-        )}
+        {/* Donut de acerto + XP acumulado */}
+        {module !== 'custom' && (() => {
+          const xp = allTimeStats.correct * 10 + allTimeStats.incorrect * 2;
+          return (
+            <DonutScore
+              correct={sessionStats.correct}
+              total={sessionStats.correct + sessionStats.incorrect}
+              xp={xp}
+            />
+          );
+        })()}
       </div>
 
       {/* ── Custom Newick ── */}
@@ -516,12 +541,38 @@ export default function Training({ module, onBack }: TrainingProps) {
         </div>
       </div>
 
-      {/* ── Zona inferior: pergunta + respostas / feedback ── */}
+      {/* ── Zona inferior: pergunta + respostas / feedback / conclusão ── */}
       <div
         key={`panel-${rippleKey}`}
         className={`shrink-0 relative z-10 border-t ${envBorder}${envState === 'incorrect' ? ' shake-once' : ''}`}
       >
-        {!feedback ? (
+        {showEndScreen ? (
+          <div className="flex flex-col items-center justify-center gap-4 py-6 px-5 text-center">
+            <div className="w-12 h-12 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center">
+              <CheckCircle size={24} className="text-emerald-400" />
+            </div>
+            <div>
+              <p className="text-base font-bold text-zinc-100">Módulo concluído!</p>
+              <p className="text-xs text-zinc-500 mt-1">
+                Você respondeu todas as questões disponíveis.
+              </p>
+            </div>
+            <div className="flex gap-3 w-full max-w-xs">
+              <button
+                onClick={handleContinueAfterEnd}
+                className="flex-1 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-sm font-semibold text-zinc-200 transition-colors"
+              >
+                Continuar
+              </button>
+              <button
+                onClick={onViewResults}
+                className="flex-1 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-sm font-semibold text-white transition-colors"
+              >
+                Ver Resultados
+              </button>
+            </div>
+          </div>
+        ) : !feedback ? (
           <>
             {/* Pergunta — imediatamente acima dos botões */}
             {round.exercise && (
@@ -676,20 +727,19 @@ function renderBold(text: string): string {
 
 // ─── Donut de acerto ─────────────────────────────────────────────────────────
 
-function DonutScore({ correct, total }: { correct: number; total: number }) {
+function DonutScore({ correct, total, xp }: { correct: number; total: number; xp: number }) {
   const r = 14;
   const circ = 2 * Math.PI * r;
   const pct = total > 0 ? correct / total : 0;
   const arc = pct * circ;
   const color = pct >= 0.7 ? '#10b981' : pct >= 0.5 ? '#f59e0b' : total === 0 ? '#52525b' : '#f43f5e';
-  
+  const xpStr = xp >= 1000 ? `${(xp / 1000).toFixed(1)}k` : String(xp);
+
   return (
     <div className="flex items-center gap-2 bg-zinc-900/50 px-2 py-1 rounded-full border border-zinc-800/50 shadow-inner">
       <div className="relative flex items-center justify-center">
         <svg width="32" height="32" viewBox="0 0 32 32" className="transform -rotate-90 drop-shadow-md">
-          {/* Trilha */}
           <circle cx="16" cy="16" r={r} fill="none" stroke="currentColor" className="text-zinc-800/80" strokeWidth="4" />
-          {/* Arco de acerto */}
           {total > 0 && (
             <circle
               cx="16" cy="16" r={r} fill="none"
@@ -703,7 +753,7 @@ function DonutScore({ correct, total }: { correct: number; total: number }) {
       </div>
       <div className="flex flex-col -space-y-1 mr-1">
         <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">XP</span>
-        <span className="text-xs font-black text-zinc-100">{correct}<span className="text-zinc-600 font-medium text-[10px]">/{total}</span></span>
+        <span className="text-xs font-black text-zinc-100">{xpStr}</span>
       </div>
     </div>
   );

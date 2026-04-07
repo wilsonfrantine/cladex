@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import Home from './pages/Home'
 import Tutorial from './pages/Tutorial'
 import Training from './pages/Training'
+import Results from './pages/Results'
 import { useCladexStore } from './store'
 
-type Page = 'home' | 'tutorial' | 'training'
+type Page = 'home' | 'tutorial' | 'training' | 'results'
 
 function App() {
   const [page, setPage]     = useState<Page>('home')
@@ -34,6 +35,7 @@ function App() {
           <Home
             onStartTraining={startTraining}
             onOpenTutorial={() => setPage('tutorial')}
+            onOpenResults={() => setPage('results')}
           />
         )}
         {page === 'tutorial' && (
@@ -45,7 +47,11 @@ function App() {
           <Training
             module={module}
             onBack={() => setPage('home')}
+            onViewResults={() => setPage('results')}
           />
+        )}
+        {page === 'results' && (
+          <Results onBack={() => setPage('home')} />
         )}
       </main>
     </div>

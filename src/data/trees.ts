@@ -51,7 +51,7 @@ export interface CuratedTree {
 // Sipuncula grupo-irmão de Annelida (ambos em Lophotrochozoa).
 // Annelida = Chaetopteridae + Pleistoannelida; Pleistoannelida = Errantia + Sedentaria.
 // Sedentaria contém Clitellata; Clitellata contém Hirudinida.
-// Polychaeta e Oligochaeta são POLIFILÉTICOS nesta filogenia molecular.
+// Polychaeta e Oligochaeta são PARAFILÉTICOS nesta filogenia molecular.
 
 const ANNELIDA_TRADITIONAL: Record<string, { abbr: string; color: string }> = {
   Chaetopteridae:  { abbr: 'Pol', color: '#60a5fa' },
@@ -86,12 +86,12 @@ const annelidaTrees: CuratedTree[] = [
     taxonAnnotations: ANNELIDA_TRADITIONAL,
     clades: [
       {
-        id: 'polychaeta-poli',
+        id: 'polychaeta-para',
         taxaInGroup: ['Nereidae', 'Glyceridae', 'Siboglinidae', 'Sabellidae', 'Echiuridae'],
-        type: 'polyphyletic',
+        type: 'paraphyletic',
         traditionalGroupContext: 'Polychaeta',
         explanation:
-          '**Polychaeta** é **polifilético**: Nereidae e Glyceridae pertencem a Errantia, enquanto Siboglinidae, Sabellidae e Echiuridae estão em Sedentaria. O ancestral comum mais recente de todos eles engloba também os oligoquetos e as sanguessugas. Os poliquetos são definidos por caracteres plesiomórficos (parapódios birramosos, cerdas), não por sinapomorfias exclusivas.',
+          '**Polychaeta** (sem Chaetopteridae) é **parafilético**: o ancestral comum mais recente de todos os poliquetos destacados é Pleistoannelida, que inclui também toda a Clitellata (oligoquetos e sanguessugas) — excluída do agrupamento. Os poliquetos são definidos por caracteres plesiomórficos (parapódios birramosos, cerdas), não por sinapomorfias exclusivas.',
       },
       {
         id: 'oligochaeta-para',
@@ -165,7 +165,7 @@ const annelidaTrees: CuratedTree[] = [
         type: 'paraphyletic',
         traditionalGroupContext: 'Polychaeta',
         explanation:
-          '**Polychaeta** incluindo Chaetopteridae é **polifilético**: Chaetopteridae é outgroup de todo Pleistoannelida (Errantia + Sedentaria), Nereidae e Glyceridae estão em Errantia, e Siboglinidae, Sabellidae, Echiuridae estão em Sedentaria. Os poliquetos aparecem em três posições independentes na árvore — não há ancestral exclusivo que os una.',
+          '**Polychaeta** incluindo Chaetopteridae é **parafilético**: o ancestral comum de todos os poliquetos é a raiz de Annelida, que inclui também a Clitellata (excluída do agrupamento). Chaetopteridae é grupo-irmão de todo Pleistoannelida (Errantia + Sedentaria), enquanto Nereidae e Glyceridae estão em Errantia e Siboglinidae, Sabellidae, Echiuridae estão em Sedentaria. Os poliquetos não formam um clado exclusivo — Clitellata evoluiu de dentro do grupo.',
       },
     ],
   },

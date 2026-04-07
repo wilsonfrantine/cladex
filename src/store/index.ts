@@ -40,6 +40,11 @@ export interface ErrorRecord {
   question: string;
 }
 
+export interface AnswerRecord {
+  ts: number;
+  correct: boolean;
+}
+
 export interface SavedTree {
   id: string;
   newick: string;
@@ -69,6 +74,7 @@ interface CladexState {
   savedTrees: SavedTree[];
   theme: 'dark' | 'light';
   errorLog: ErrorRecord[];
+  answerHistory: AnswerRecord[];
 
   recordAnswer: (type: ExerciseType, correct: boolean, moduleId: string, question: string) => void;
   resetSession: () => void;
@@ -85,6 +91,7 @@ export const useCladexStore = create<CladexState>()(
       savedTrees: [],
       theme: 'dark',
       errorLog: [],
+      answerHistory: [],
 
       recordAnswer: (type, correct, moduleId, question) => {
         const update = (s: SessionStats): SessionStats => ({
@@ -109,12 +116,14 @@ export const useCladexStore = create<CladexState>()(
         const newError: ErrorRecord | null = correct ? null : {
           ts: Date.now(), moduleId, type, question: question.slice(0, 80),
         };
+        const newRecord: AnswerRecord = { ts: Date.now(), correct };
         set({
           sessionStats: update(get().sessionStats),
           allTimeStats: update(get().allTimeStats),
           errorLog: newError
             ? [newError, ...get().errorLog].slice(0, 100)
             : get().errorLog,
+          answerHistory: [...get().answerHistory, newRecord].slice(-300),
         });
       },
 
@@ -144,6 +153,7 @@ export const useCladexStore = create<CladexState>()(
         allTimeStats: s.allTimeStats,
         theme: s.theme,
         errorLog: s.errorLog,
+        answerHistory: s.answerHistory,
       }),
     },
   ),

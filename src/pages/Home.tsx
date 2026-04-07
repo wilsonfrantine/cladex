@@ -1,11 +1,33 @@
-import { Play, Zap, BookOpen, ChevronRight, Sun, Moon } from 'lucide-react'
+import { Play, Zap, BookOpen, ChevronRight, Sun, Moon, BarChart2, Share2 } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import TreePulse from '../components/TreePulse'
 import { useCladexStore } from '../store'
 
+const APP_URL = 'https://wilsonfrantine.github.io/cladex/'
+const AUTHOR_URL = 'https://wilsonfrantine.github.io/'
+
+async function shareApp() {
+  const shareData = {
+    title: 'CladeX',
+    text: 'Treine Sistemática Filogenética com CladeX — clados, sinapomorfias e muito mais!',
+    url: APP_URL,
+  }
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData)
+    } else {
+      await navigator.clipboard.writeText(APP_URL)
+      alert('Link copiado para a área de transferência!')
+    }
+  } catch {
+    // usuário cancelou
+  }
+}
+
 interface HomeProps {
   onStartTraining: (module: string) => void
   onOpenTutorial: () => void
+  onOpenResults: () => void
 }
 
 // ── Módulos — ícone emoji como placeholder (equivalente web do rphylopic/PhyloPic)
@@ -43,7 +65,7 @@ const modules = [
   },
 ]
 
-export default function Home({ onStartTraining, onOpenTutorial }: HomeProps) {
+export default function Home({ onStartTraining, onOpenTutorial, onOpenResults }: HomeProps) {
   const dailyMod = useMemo(() => modules.find(m => m.id === 'metazoa')!, [])
   const [modulesOpen, setModulesOpen] = useState(false)
   const { theme, toggleTheme } = useCladexStore()
@@ -61,14 +83,30 @@ export default function Home({ onStartTraining, onOpenTutorial }: HomeProps) {
         <TreePulse theme={theme} />
       </div>
 
-      {/* ── Botão de tema ─────────────────────────────────────────────────── */}
-      <button
-        onClick={toggleTheme}
-        className="fixed top-3 right-3 z-20 w-7 h-7 flex items-center justify-center rounded-full bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 text-zinc-500 hover:text-zinc-300 transition-colors backdrop-blur-sm"
-        aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
-      >
-        {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
-      </button>
+      {/* ── Botões de controle (canto superior direito) ───────────────────── */}
+      <div className="fixed top-3 right-3 z-20 flex items-center gap-1.5">
+        <button
+          onClick={shareApp}
+          className="w-7 h-7 flex items-center justify-center rounded-full bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 text-zinc-500 hover:text-zinc-300 transition-colors backdrop-blur-sm"
+          aria-label="Compartilhar CladeX"
+        >
+          <Share2 size={13} />
+        </button>
+        <button
+          onClick={onOpenResults}
+          className="w-7 h-7 flex items-center justify-center rounded-full bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 text-zinc-500 hover:text-zinc-300 transition-colors backdrop-blur-sm"
+          aria-label="Ver resultados"
+        >
+          <BarChart2 size={13} />
+        </button>
+        <button
+          onClick={toggleTheme}
+          className="w-7 h-7 flex items-center justify-center rounded-full bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 text-zinc-500 hover:text-zinc-300 transition-colors backdrop-blur-sm"
+          aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
+        >
+          {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
+        </button>
+      </div>
 
       {/* ── Área de conteúdo (scroll interno sem barra visível) ──────────── */}
       <div className="relative z-10 flex-1 overflow-y-auto scrollbar-none flex flex-col">
@@ -183,10 +221,16 @@ export default function Home({ onStartTraining, onOpenTutorial }: HomeProps) {
           </button>
         </div>
 
-        {/* Rodapé */}
         <div className="text-center py-4 px-4 mt-2">
           <p className="text-[10px] text-zinc-700 tracking-wide">
             CladeX · Laboratório de Zoologia
+          </p>
+          <p className="text-[10px] text-zinc-700 tracking-wide mt-0.5">
+            developed by{' '}
+            <a href={AUTHOR_URL} target="_blank" rel="noopener noreferrer"
+              className="hover:text-zinc-400 transition-colors">
+              @wfrantine
+            </a>
           </p>
         </div>
       </div>

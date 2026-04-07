@@ -451,9 +451,9 @@ export default function Tutorial({ onBack }: TutorialProps) {
           >
             <ArrowLeft size={18} />
           </button>
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+          <button onClick={onBack} className="absolute inset-0 flex items-center justify-center select-none hover:opacity-70 transition-opacity">
             <span className="text-base font-black tracking-tighter text-zinc-100">Clade<span className="text-emerald-500">X</span></span>
-          </div>
+          </button>
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-center px-6 gap-8">
@@ -480,6 +480,14 @@ export default function Tutorial({ onBack }: TutorialProps) {
                 </div>
               </button>
             ))}
+
+            <button
+              onClick={onBack}
+              className="btn-juicy w-full text-center text-sm text-zinc-600 hover:text-zinc-300 py-3 transition-colors flex items-center justify-center gap-2 mt-2"
+            >
+              <ArrowLeft size={14} />
+              Voltar ao Início
+            </button>
           </div>
         </div>
       </div>
@@ -507,9 +515,9 @@ export default function Tutorial({ onBack }: TutorialProps) {
           <ArrowLeft size={18} />
         </button>
 
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <button onClick={onBack} className="absolute inset-0 flex items-center justify-center select-none hover:opacity-70 transition-opacity">
           <span className="text-base font-black tracking-tighter text-zinc-100">Clade<span className="text-emerald-500">X</span></span>
-        </div>
+        </button>
 
         {/* Dots à direita */}
         <div className="ml-auto flex items-center gap-1.5 z-10">
