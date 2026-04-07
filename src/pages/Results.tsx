@@ -516,6 +516,12 @@ export default function Results({ onBack }: ResultsProps) {
           </div>
         )}
 
+        <div className="rounded-xl border border-zinc-800/50 px-4 py-3">
+          <p className="text-[10px] text-zinc-600 leading-relaxed">
+            Dados armazenados localmente neste navegador. Limpar os dados do navegador, usar outro dispositivo ou trocar de navegador apagará seu histórico.
+          </p>
+        </div>
+
         <div className="pb-4" />
       </div>
     </div>

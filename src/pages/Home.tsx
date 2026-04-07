@@ -69,6 +69,14 @@ export default function Home({ onStartTraining, onOpenTutorial, onOpenResults }:
   const dailyMod = useMemo(() => modules.find(m => m.id === 'metazoa')!, [])
   const [modulesOpen, setModulesOpen] = useState(false)
   const { theme, toggleTheme } = useCladexStore()
+  const [showStorageNotice, setShowStorageNotice] = useState(
+    () => localStorage.getItem('seenStorageNotice') !== 'true'
+  )
+
+  const dismissStorageNotice = () => {
+    localStorage.setItem('seenStorageNotice', 'true')
+    setShowStorageNotice(false)
+  }
 
   // Módulos do Treino Livre — Annelida e Chordata Basal
   const freeTrainingModules = useMemo(() => 
@@ -220,6 +228,21 @@ export default function Home({ onStartTraining, onOpenTutorial, onOpenResults }:
             </div>
           </button>
         </div>
+
+        {showStorageNotice && (
+          <div className="mx-5 mb-2 rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3 flex items-start gap-3">
+            <p className="flex-1 text-xs text-zinc-400 leading-relaxed">
+              Seu progresso fica salvo apenas neste navegador. Limpar os dados do navegador, usar outro dispositivo ou trocar de navegador apagará seu histórico.
+            </p>
+            <button
+              onClick={dismissStorageNotice}
+              className="shrink-0 text-zinc-600 hover:text-zinc-300 transition-colors mt-0.5"
+              aria-label="Dispensar aviso"
+            >
+              ✕
+            </button>
+          </div>
+        )}
 
         <div className="text-center py-4 px-4 mt-2">
           <p className="text-[10px] text-zinc-700 tracking-wide">
