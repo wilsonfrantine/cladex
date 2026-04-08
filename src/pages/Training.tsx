@@ -173,7 +173,7 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
   const lastPanPos = useRef({ x: 0, y: 0 });
   const lastPinchDist = useRef(0);
 
-  // Wheel: zoom (não propaga para o resto da página)
+  // Wheel: zoom em direção ao cursor
   useEffect(() => {
     const el = treeContainerRef.current;
     if (!el) return;
@@ -181,7 +181,17 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
       e.preventDefault();
       e.stopPropagation();
       const factor = e.deltaY < 0 ? 1.08 : 0.93;
-      setZoom(z => Math.max(0.4, Math.min(6, z * factor)));
+      const rect = el.getBoundingClientRect();
+      // posição do cursor relativa ao centro do container
+      const cx = e.clientX - rect.left - rect.width / 2;
+      const cy = e.clientY - rect.top - rect.height / 2;
+      setZoom(z => {
+        const newZoom = Math.max(0.4, Math.min(6, z * factor));
+        const ratio = newZoom / z;
+        // ajusta pan para que o ponto sob o cursor permaneça fixo
+        setPan(p => ({ x: cx - ratio * (cx - p.x), y: cy - ratio * (cy - p.y) }));
+        return newZoom;
+      });
     };
     el.addEventListener('wheel', onWheel, { passive: false });
     return () => el.removeEventListener('wheel', onWheel);
@@ -218,13 +228,23 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
     if (hasDragged.current) { e.stopPropagation(); hasDragged.current = false; }
   };
 
-  // Touch: pinch-to-zoom
+  // Touch: pinch-to-zoom em direção ao ponto médio dos dedos
+  const lastPinchMid = useRef({ x: 0, y: 0 });
+
   const onTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length === 2) {
       lastPinchDist.current = Math.hypot(
         e.touches[0].clientX - e.touches[1].clientX,
         e.touches[0].clientY - e.touches[1].clientY,
       );
+      const el = treeContainerRef.current;
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        lastPinchMid.current = {
+          x: (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left - rect.width / 2,
+          y: (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top - rect.height / 2,
+        };
+      }
     }
   };
   const onTouchMove = (e: React.TouchEvent) => {
@@ -235,8 +255,24 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
       e.touches[0].clientY - e.touches[1].clientY,
     );
     const ratio = dist / lastPinchDist.current;
-    setZoom(z => Math.max(0.4, Math.min(6, z * ratio)));
+    const el = treeContainerRef.current;
+    const mid = el ? (() => {
+      const rect = el.getBoundingClientRect();
+      return {
+        x: (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left - rect.width / 2,
+        y: (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top - rect.height / 2,
+      };
+    })() : lastPinchMid.current;
+
+    setZoom(z => {
+      const newZoom = Math.max(0.4, Math.min(6, z * ratio));
+      const zRatio = newZoom / z;
+      const cx = mid.x, cy = mid.y;
+      setPan(p => ({ x: cx - zRatio * (cx - p.x), y: cy - zRatio * (cy - p.y) }));
+      return newZoom;
+    });
     lastPinchDist.current = dist;
+    lastPinchMid.current = mid;
   };
 
   const resetZoom = () => { setZoom(1); setPan({ x: 0, y: 0 }); };
