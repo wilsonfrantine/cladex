@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useLayoutEffect, useEffect } from 'react';
 import { ArrowLeft, CheckCircle, XCircle, HelpCircle } from 'lucide-react';
-import { LEVELS, getLevelIndex, getLevel, type LevelInfo } from '../utils/levels';
+import { getLevelIndex, getLevel, type LevelInfo } from '../utils/levels';
 import TreeViewer from '../components/TreeViewer';
 import { useCladexStore } from '../store';
 import { getTreesByModule, type CuratedTree, type ExerciseClade } from '../data/trees';
