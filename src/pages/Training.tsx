@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useLayoutEffect, useEffect } from 'react';
 import { ArrowLeft, CheckCircle, XCircle, HelpCircle } from 'lucide-react';
+import { LEVELS, getLevelIndex, getLevel, type LevelInfo } from '../utils/levels';
 import TreeViewer from '../components/TreeViewer';
 import { useCladexStore } from '../store';
 import { getTreesByModule, type CuratedTree, type ExerciseClade } from '../data/trees';
@@ -125,12 +126,6 @@ const HOMOLOGY_OPTIONS = [
   { value: 'simplesiomorfia', label: 'Simplesiomorfia', desc: 'Plesiomorfia compartilhada por vários táxons', key: '4', cls: 'bg-zinc-800/60   hover:bg-zinc-700/60   border-zinc-600/50'   },
 ];
 
-function getLevel(total: number): { label: string; style: string } {
-  if (total < 10) return { label: 'Nível 1 · Cotovelo', style: 'text-zinc-600' };
-  if (total < 25) return { label: 'Nível 2 · Diagonal', style: 'text-indigo-500' };
-  return { label: 'Nível 3 · Livre', style: 'text-emerald-600' };
-}
-
 // ─── Componente principal ─────────────────────────────────────────────────────
 
 export default function Training({ module, onBack, onViewResults }: TrainingProps) {
@@ -145,6 +140,8 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [envState, setEnvState] = useState<EnvState>('neutral');
   const [rippleKey, setRippleKey] = useState(0);
+  const [levelUpData, setLevelUpData] = useState<LevelInfo | null>(null);
+  const prevLevelIdx = useRef(getLevelIndex(allTimeStats.correct));
 
   // Silhuetas PhyloPic — inicia com o cache estático dos 33 táxons curados
   const [silhouetteUrls, setSilhouetteUrls] = useState<Record<string, string>>(PHYLOPIC_STATIC);
@@ -165,6 +162,15 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
       });
     }
   }, []);
+
+  // ── Detecção de promoção de nível ────────────────────────────────────────────
+  useEffect(() => {
+    const idx = getLevelIndex(allTimeStats.correct);
+    if (idx > prevLevelIdx.current) {
+      setLevelUpData(getLevel(allTimeStats.correct));
+    }
+    prevLevelIdx.current = idx;
+  }, [allTimeStats.correct]);
 
   // ── Zoom + Pan na árvore ─────────────────────────────────────────────────────
   const [zoom, setZoom] = useState(1);
@@ -409,6 +415,11 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
   return (
     <div className="flex flex-col flex-1 overflow-hidden bg-zinc-950 relative">
 
+      {/* ── Level-up overlay ── */}
+      {levelUpData && (
+        <LevelUpOverlay lv={levelUpData} onDone={() => setLevelUpData(null)} />
+      )}
+
       {/* ── Barra de navegação ── */}
       <div className={`shrink-0 flex items-center gap-3 px-5 py-3 border-b transition-all duration-700 ${theme === 'light' ? 'bg-zinc-900/5 border-zinc-800/20' : 'bg-zinc-950/50 border-zinc-800/40'} backdrop-blur-md relative z-10`}>
 
@@ -448,9 +459,13 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
 
         {/* Nível */}
         {module !== 'custom' && (() => {
-          const total = allTimeStats.treesAttempted + sessionStats.correct + sessionStats.incorrect;
-          const lv = getLevel(total);
-          return <span className={`text-[10px] font-semibold uppercase tracking-wider hidden sm:inline ${lv.style}`}>{lv.label}</span>;
+          const lv = getLevel(allTimeStats.correct);
+          return (
+            <span className={`hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider ${lv.style}`}>
+              <lv.Icon size={11} strokeWidth={2.5} />
+              {lv.label}
+            </span>
+          );
         })()}
 
         {/* Donut de acerto + XP acumulado */}
@@ -790,6 +805,70 @@ function DonutScore({ correct, total, xp }: { correct: number; total: number; xp
       <div className="flex flex-col -space-y-1 mr-1">
         <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">XP</span>
         <span className="text-xs font-black text-zinc-100">{xpStr}</span>
+      </div>
+    </div>
+  );
+}
+
+// ─── Level-up overlay ─────────────────────────────────────────────────────────
+
+const N_PARTICLES = 14;
+
+function LevelUpOverlay({ lv, onDone }: { lv: LevelInfo; onDone: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center cursor-pointer"
+      style={{ background: 'rgba(5,5,7,0.90)', backdropFilter: 'blur(6px)',
+               animation: 'lvlup-overlay-in 0.3s ease both' }}
+      onClick={onDone}
+    >
+      {/* Card */}
+      <div
+        className="relative flex flex-col items-center gap-4 px-12 py-9 rounded-2xl bg-zinc-900 border border-zinc-800 max-w-xs mx-6"
+        style={{
+          boxShadow: `0 0 0 1px ${lv.glow}, 0 0 60px ${lv.glow}`,
+          animation: 'lvlup-card-in 0.65s cubic-bezier(0.16,1,0.3,1) both',
+        }}
+      >
+        {/* Partículas radiais */}
+        {Array.from({ length: N_PARTICLES }, (_, i) => {
+          const angle = (i / N_PARTICLES) * Math.PI * 2;
+          const dist  = 75 + (i % 3) * 22;
+          return (
+            <div
+              key={i}
+              className={`absolute w-2 h-2 rounded-full ${lv.particle}`}
+              style={{
+                top: '50%', left: '50%',
+                '--tx': `${Math.cos(angle) * dist}px`,
+                '--ty': `${Math.sin(angle) * dist}px`,
+                animation: `lvlup-particle 1s ease-out ${i * 0.035}s both`,
+              } as React.CSSProperties}
+            />
+          );
+        })}
+
+        {/* Ícone com glow */}
+        <div className={lv.style} style={{ filter: `drop-shadow(0 0 18px ${lv.glow})` }}>
+          <lv.Icon size={58} strokeWidth={1.4} />
+        </div>
+
+        {/* Textos */}
+        <div className="flex flex-col items-center gap-2 text-center">
+          <span className="text-[10px] font-bold tracking-[0.22em] text-zinc-500 uppercase">
+            Nível alcançado
+          </span>
+          <span className={`text-3xl font-black tracking-tight ${lv.style}`}>
+            {lv.label}
+          </span>
+          {lv.message && (
+            <p className="text-sm text-zinc-400 leading-snug mt-1 max-w-[220px]">
+              {lv.message}
+            </p>
+          )}
+        </div>
+
+        <span className="text-[10px] text-zinc-600 mt-2">toque para continuar</span>
       </div>
     </div>
   );

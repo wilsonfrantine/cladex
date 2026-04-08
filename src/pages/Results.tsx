@@ -1,7 +1,8 @@
 import { useRef } from 'react';
-import { ArrowLeft, RotateCcw, Share2 } from 'lucide-react';
+import { ArrowLeft, RotateCcw, Share2, Lock } from 'lucide-react';
 import { useCladexStore } from '../store';
 import type { ExerciseType, AnswerRecord } from '../store';
+import { LEVELS, getLevelIndex } from '../utils/levels';
 
 interface ResultsProps { onBack: () => void }
 
@@ -347,6 +348,66 @@ function DonutBig({ correct, total }: { correct: number; total: number }) {
   );
 }
 
+// ─── Grade de progressão de níveis ───────────────────────────────────────────
+
+function LevelGrid({ correct, theme }: { correct: number; theme: string }) {
+  const currentIdx = getLevelIndex(correct);
+
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+      {LEVELS.map((lv, idx) => {
+        const isCurrent = idx === currentIdx;
+        const isEarned  = idx < currentIdx;
+        const isLocked  = idx > currentIdx;
+
+        return (
+          <div
+            key={lv.label}
+            className={`relative flex items-center gap-2.5 px-3 py-2.5 rounded-xl border transition-all
+              ${isCurrent
+                ? `bg-zinc-900 border-zinc-700`
+                : isEarned
+                  ? `${theme === 'light' ? 'bg-white border-zinc-200' : 'bg-zinc-900/40 border-zinc-800/50'}`
+                  : `${theme === 'light' ? 'bg-zinc-100 border-zinc-200' : 'bg-zinc-900/20 border-zinc-800/30'}`
+              }`}
+            style={isCurrent ? { boxShadow: `0 0 0 1px ${lv.glow}, 0 0 18px ${lv.glow}` } : undefined}
+          >
+            {/* Ícone */}
+            <div className={`shrink-0 transition-all
+              ${isCurrent ? lv.style : isEarned ? `${lv.style} opacity-60` : 'text-zinc-700'}`}
+              style={isCurrent ? { filter: `drop-shadow(0 0 6px ${lv.glow})` } : undefined}
+            >
+              {isLocked
+                ? <Lock size={16} strokeWidth={2} />
+                : <lv.Icon size={16} strokeWidth={2} />
+              }
+            </div>
+
+            {/* Nome + threshold */}
+            <div className="min-w-0">
+              <p className={`text-xs font-semibold leading-tight truncate
+                ${isCurrent ? lv.style : isEarned ? 'text-zinc-400' : 'text-zinc-700'}`}>
+                {lv.label}
+              </p>
+              <p className={`text-[10px] leading-tight
+                ${isCurrent ? 'text-zinc-500' : isEarned ? 'text-zinc-600' : 'text-zinc-800'}`}>
+                {lv.threshold === 0 ? 'início' : `${lv.threshold}+ acertos`}
+              </p>
+            </div>
+
+            {/* Badge "atual" */}
+            {isCurrent && (
+              <span className="absolute -top-1.5 -right-1.5 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-300 leading-none">
+                atual
+              </span>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // ─── Componente principal ─────────────────────────────────────────────────────
 
 export default function Results({ onBack }: ResultsProps) {
@@ -484,6 +545,14 @@ export default function Results({ onBack }: ResultsProps) {
             </div>
           </section>
         )}
+
+        {/* Progressão de níveis */}
+        <section>
+          <p className={`${labelCls} mb-3`}>Jornada</p>
+          <div className={card}>
+            <LevelGrid correct={allTimeStats.correct} theme={theme} />
+          </div>
+        </section>
 
         {/* Erros recentes */}
         {recentErrors.length > 0 && (
