@@ -68,12 +68,16 @@ function buildTodayStats(history: AnswerRecord[]): { correct: number; total: num
 
 // ─── Gráfico SVG de evolução diária ──────────────────────────────────────────
 
-function ProgressChart({ history }: { history: AnswerRecord[] }) {
+function ProgressChart({ history, theme }: { history: AnswerRecord[]; theme: string }) {
   const days = buildDailyStats(history);
+  const light = theme === 'light';
+  const gridColor  = light ? '#c8bfb0' : '#3f3f46';
+  const labelColor = light ? '#8c7e6a' : '#52525b';
+  const dotStroke  = light ? '#f7f3eb' : '#18181b';
 
   if (days.length < 2) {
     return (
-      <div className="flex items-center justify-center h-28 text-zinc-600 text-xs">
+      <div className="flex items-center justify-center h-28 text-zinc-500 text-xs">
         Responda questões em ao menos 2 dias para ver a evolução.
       </div>
     );
@@ -90,41 +94,32 @@ function ProgressChart({ history }: { history: AnswerRecord[] }) {
   const linePath = days.map((d, i) => `${i === 0 ? 'M' : 'L'}${toX(i).toFixed(1)},${toY(d.pct).toFixed(1)}`).join(' ');
   const areaPath = `${linePath} L${toX(days.length - 1).toFixed(1)},${(PAD.t + iH).toFixed(1)} L${PAD.l.toFixed(1)},${(PAD.t + iH).toFixed(1)} Z`;
 
-  // Cor da linha baseada na média
   const avgPct = days.reduce((s, d) => s + d.pct, 0) / days.length;
   const lineColor = avgPct >= 70 ? '#10b981' : avgPct >= 50 ? '#f59e0b' : '#f43f5e';
-
-  // Exibir no máx 6 labels no eixo X
   const labelStep = Math.ceil(days.length / 6);
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: H }}>
-      {/* Grade horizontal 50% e 70% */}
       {[50, 70].map(y => (
         <g key={y}>
           <line x1={PAD.l} y1={toY(y)} x2={W - PAD.r} y2={toY(y)}
-            stroke="#3f3f46" strokeWidth="1" strokeDasharray="3 3" />
+            stroke={gridColor} strokeWidth="1" strokeDasharray="3 3" />
           <text x={PAD.l - 4} y={toY(y) + 3.5} textAnchor="end"
-            fill="#52525b" fontSize="8">{y}%</text>
+            fill={labelColor} fontSize="8">{y}%</text>
         </g>
       ))}
 
-      {/* Área preenchida */}
       <path d={areaPath} fill={lineColor} fillOpacity="0.12" />
-
-      {/* Linha */}
       <path d={linePath} fill="none" stroke={lineColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 
-      {/* Pontos */}
       {days.map((d, i) => (
         <circle key={i} cx={toX(i)} cy={toY(d.pct)} r="2.5"
-          fill={lineColor} stroke="#18181b" strokeWidth="1.5" />
+          fill={lineColor} stroke={dotStroke} strokeWidth="1.5" />
       ))}
 
-      {/* Labels eixo X */}
       {days.map((d, i) => i % labelStep === 0 && (
         <text key={i} x={toX(i)} y={H - 4} textAnchor="middle"
-          fill="#52525b" fontSize="8">{d.label}</text>
+          fill={labelColor} fontSize="8">{d.label}</text>
       ))}
     </svg>
   );
@@ -352,9 +347,10 @@ function DonutBig({ correct, total }: { correct: number; total: number }) {
 
 function LevelGrid({ correct, theme }: { correct: number; theme: string }) {
   const currentIdx = getLevelIndex(correct);
+  const light = theme === 'light';
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+    <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,8rem)] gap-2">
       {LEVELS.map((lv, idx) => {
         const isCurrent = idx === currentIdx;
         const isEarned  = idx < currentIdx;
@@ -363,41 +359,42 @@ function LevelGrid({ correct, theme }: { correct: number; theme: string }) {
         return (
           <div
             key={lv.label}
-            className={`relative flex items-center gap-2.5 px-3 py-2.5 rounded-xl border transition-all
+            className={`relative flex flex-col items-center text-center gap-2 px-3 py-3 rounded-xl border transition-all
               ${isCurrent
-                ? `bg-zinc-900 border-zinc-700`
+                ? 'bg-zinc-900 border-zinc-700'
                 : isEarned
-                  ? `${theme === 'light' ? 'bg-white border-zinc-200' : 'bg-zinc-900/40 border-zinc-800/50'}`
-                  : `${theme === 'light' ? 'bg-zinc-100 border-zinc-200' : 'bg-zinc-900/20 border-zinc-800/30'}`
+                  ? 'bg-zinc-900/40 border-zinc-800/50'
+                  : 'bg-zinc-900/20 border-zinc-800/30'
               }`}
-            style={isCurrent ? { boxShadow: `0 0 0 1px ${lv.glow}, 0 0 18px ${lv.glow}` } : undefined}
+            style={isCurrent
+              ? { boxShadow: light ? `0 0 0 2px ${lv.glow}` : `0 0 0 1px ${lv.glow}, 0 0 16px ${lv.glow}` }
+              : undefined}
           >
             {/* Ícone */}
-            <div className={`shrink-0 transition-all
-              ${isCurrent ? lv.style : isEarned ? `${lv.style} opacity-60` : 'text-zinc-700'}`}
-              style={isCurrent ? { filter: `drop-shadow(0 0 6px ${lv.glow})` } : undefined}
+            <div
+              className={`${isCurrent ? lv.style : isLocked ? 'text-zinc-600' : `${lv.style} opacity-50`}`}
+              style={isCurrent && !light ? { filter: `drop-shadow(0 0 6px ${lv.glow})` } : undefined}
             >
               {isLocked
-                ? <Lock size={16} strokeWidth={2} />
-                : <lv.Icon size={16} strokeWidth={2} />
+                ? <Lock size={22} strokeWidth={1.8} />
+                : <lv.Icon size={22} strokeWidth={1.8} />
               }
             </div>
 
-            {/* Nome + threshold */}
-            <div className="min-w-0">
-              <p className={`text-xs font-semibold leading-tight truncate
-                ${isCurrent ? lv.style : isEarned ? 'text-zinc-400' : 'text-zinc-700'}`}>
-                {lv.label}
-              </p>
-              <p className={`text-[10px] leading-tight
-                ${isCurrent ? 'text-zinc-500' : isEarned ? 'text-zinc-600' : 'text-zinc-800'}`}>
-                {lv.threshold === 0 ? 'início' : `${lv.threshold}+ acertos`}
-              </p>
-            </div>
+            {/* Nome */}
+            <p className={`text-xs font-semibold leading-tight
+              ${isCurrent ? lv.style : isEarned ? 'text-zinc-400' : 'text-zinc-600'}`}>
+              {lv.label}
+            </p>
+
+            {/* Threshold */}
+            <p className={`text-[10px] leading-none -mt-1 ${isCurrent ? 'text-zinc-500' : isEarned ? 'text-zinc-600' : 'text-zinc-700'}`}>
+              {lv.threshold === 0 ? 'início' : `${lv.threshold}+`}
+            </p>
 
             {/* Badge "atual" */}
             {isCurrent && (
-              <span className="absolute -top-1.5 -right-1.5 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-300 leading-none">
+              <span className="absolute -top-1.5 -right-1.5 text-[8px] font-bold px-1 py-0.5 rounded-full leading-none bg-zinc-800 border border-zinc-700 text-zinc-300">
                 atual
               </span>
             )}
@@ -421,19 +418,19 @@ export default function Results({ onBack }: ResultsProps) {
   const allTimePct = pctNum(allTimeStats.correct, totalAll);
   const today      = buildTodayStats(answerHistory);
 
-  const card = `rounded-2xl border p-4 ${theme === 'light' ? 'bg-white border-zinc-200' : 'bg-zinc-900/60 border-zinc-800/50'}`;
+  const card = `rounded-2xl border p-4 bg-zinc-900/60 border-zinc-800/50`;
   const labelCls = `text-[10px] font-bold uppercase tracking-widest text-zinc-500`;
 
   return (
-    <div className={`h-dvh overflow-hidden flex flex-col ${theme === 'light' ? 'bg-zinc-100' : 'bg-zinc-950'}`}>
+    <div className="h-dvh overflow-hidden flex flex-col bg-zinc-950">
 
       {/* Cabeçalho */}
-      <div className={`shrink-0 flex items-center gap-3 px-5 py-3 border-b ${theme === 'light' ? 'border-zinc-200 bg-zinc-100/80' : 'border-zinc-800/60 bg-zinc-950/80'} backdrop-blur-md`}>
+      <div className="shrink-0 flex items-center gap-3 px-5 py-3 border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur-md">
         <button onClick={onBack}
           className="btn-juicy p-1.5 rounded-xl hover:bg-zinc-800/50 text-zinc-500 hover:text-zinc-200 transition-all">
           <ArrowLeft size={18} />
         </button>
-        <span className={`text-base font-black tracking-tight flex-1 ${theme === 'light' ? 'text-zinc-800' : 'text-zinc-100'}`}>
+        <span className="text-base font-black tracking-tight flex-1 text-zinc-100">
           Meu Desempenho
         </span>
         <ShareButton allTimePct={allTimePct} totalAnswers={totalAll} days={days} />
@@ -442,77 +439,85 @@ export default function Results({ onBack }: ResultsProps) {
       {/* Conteúdo com scroll */}
       <div className="flex-1 overflow-y-auto scrollbar-none px-5 py-5 space-y-6">
 
-        {/* Resumo geral */}
+        {/* ── Jornada ── */}
         <section>
-          <p className={`${labelCls} mb-3`}>Acumulado Total</p>
-          <div className={card}>
-            <div className="flex items-center gap-5">
-              <DonutBig correct={allTimeStats.correct} total={totalAll} />
-              <div className="space-y-1">
-                <p className={`text-2xl font-black ${theme === 'light' ? 'text-zinc-800' : 'text-zinc-100'}`}>
+          <p className={`${labelCls} mb-3`}>Jornada</p>
+          <LevelGrid correct={allTimeStats.correct} theme={theme} />
+        </section>
+
+        {/* ── Acumulado Total + Hoje — lado a lado ── */}
+        <section>
+          <div className="flex gap-3 mb-3">
+            <p className={`${labelCls} flex-1`}>Acumulado total</p>
+            <p className={`${labelCls} flex-1`}>Hoje</p>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+
+            {/* Acumulado */}
+            <div className={card}>
+              <div className="flex flex-col items-center text-center gap-2">
+                <DonutBig correct={allTimeStats.correct} total={totalAll} />
+                <p className="text-xl font-black text-zinc-100 leading-none">
                   {totalAll === 0 ? '—' : `${Math.round(allTimePct)}%`}
                 </p>
-                <p className="text-xs text-zinc-500">{allTimeStats.correct} corretas · {allTimeStats.incorrect} erros</p>
-                <p className="text-xs text-zinc-600">{totalAll} questões no total</p>
-                <p className="text-xs font-bold text-emerald-500 mt-0.5">
-                  {totalXP >= 1000 ? `${(totalXP / 1000).toFixed(1)}k` : totalXP} XP acumulados
-                </p>
+                <div className="space-y-0.5">
+                  <p className="text-[10px] text-zinc-500">{allTimeStats.correct}✓ · {allTimeStats.incorrect}✗</p>
+                  <p className="text-[10px] text-zinc-600">{totalAll} questões</p>
+                  <p className="text-[10px] font-bold text-emerald-500">
+                    {totalXP >= 1000 ? `${(totalXP / 1000).toFixed(1)}k` : totalXP} XP
+                  </p>
+                </div>
               </div>
+            </div>
+
+            {/* Hoje */}
+            <div className={card}>
+              {today.total === 0 ? (
+                <p className="text-[11px] text-zinc-600 text-center py-4 leading-snug">
+                  Nenhuma questão hoje ainda.
+                </p>
+              ) : (
+                <div className="flex flex-col items-center text-center gap-2">
+                  <DonutBig correct={today.correct} total={today.total} />
+                  <p className="text-xl font-black text-zinc-100 leading-none">
+                    {pct(today.correct, today.total)}
+                  </p>
+                  <div className="space-y-0.5">
+                    <p className="text-[10px] text-zinc-500">{today.correct}✓ · {today.total - today.correct}✗</p>
+                    <p className="text-[10px] text-zinc-600">{today.total} questões</p>
+                    {totalSess > 0 && (
+                      <button onClick={resetSession}
+                        className="flex items-center gap-0.5 text-[9px] text-zinc-700 hover:text-zinc-400 transition-colors mx-auto pt-0.5">
+                        <RotateCcw size={8} />
+                        Reiniciar
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </section>
 
-        {/* Sessão do dia — sempre visível */}
+        {/* ── Evolução diária ── */}
         <section>
-          <div className="flex items-center justify-between mb-3">
-            <p className={labelCls}>Hoje</p>
-            {totalSess > 0 && (
-              <button onClick={resetSession}
-                className="flex items-center gap-1 text-[10px] text-zinc-600 hover:text-zinc-300 transition-colors">
-                <RotateCcw size={10} />
-                Reiniciar sessão
-              </button>
-            )}
-          </div>
+          <p className={`${labelCls} mb-3`}>Evolução diária</p>
           <div className={card}>
-            {today.total === 0 ? (
-              <p className="text-sm text-zinc-600 py-1">Nenhuma questão respondida hoje ainda.</p>
-            ) : (
-              <div className="flex items-center gap-5">
-                <DonutBig correct={today.correct} total={today.total} />
-                <div className="space-y-1">
-                  <p className={`text-2xl font-black ${theme === 'light' ? 'text-zinc-800' : 'text-zinc-100'}`}>
-                    {pct(today.correct, today.total)}
-                  </p>
-                  <p className="text-xs text-zinc-500">{today.correct} corretas · {today.total - today.correct} erros</p>
-                  <p className="text-xs text-zinc-600">{today.total} questões hoje</p>
-                </div>
-              </div>
-            )}
+            <ProgressChart history={answerHistory} theme={theme} />
           </div>
         </section>
 
-        {/* Gráfico de evolução */}
+        {/* ── Desempenho por tipo de questão ── */}
         <section>
-          <p className={`${labelCls} mb-3`}>Evolução por Dia</p>
-          <div className={card}>
-            <ProgressChart history={answerHistory} />
-          </div>
-        </section>
-
-        {/* Por tipo de exercício */}
-        <section>
-          <p className={`${labelCls} mb-3`}>Por Tipo de Questão</p>
-          <div className={`rounded-2xl border divide-y ${theme === 'light' ? 'bg-white border-zinc-200 divide-zinc-100' : 'bg-zinc-900/60 border-zinc-800/50 divide-zinc-800/50'}`}>
+          <p className={`${labelCls} mb-3`}>Desempenho por tipo de questão</p>
+          <div className="rounded-2xl border divide-y bg-zinc-900/60 border-zinc-800/50 divide-zinc-800/50">
             {(Object.keys(TYPE_LABELS) as ExerciseType[]).map(type => {
               const s = allTimeStats.byType[type] ?? { correct: 0, incorrect: 0 };
               const tot = s.correct + s.incorrect;
               return (
                 <div key={type} className="px-4 py-3 space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className={`text-sm font-medium ${theme === 'light' ? 'text-zinc-700' : 'text-zinc-300'}`}>
-                      {TYPE_LABELS[type]}
-                    </span>
+                    <span className="text-sm font-medium text-zinc-300">{TYPE_LABELS[type]}</span>
                     <span className="text-xs text-zinc-500 font-mono">{s.correct}/{tot}</span>
                   </div>
                   <AccuracyBar correct={s.correct} total={tot} />
@@ -522,49 +527,15 @@ export default function Results({ onBack }: ResultsProps) {
           </div>
         </section>
 
-        {/* Por módulo */}
-        {Object.keys(allTimeStats.byModule ?? {}).length > 0 && (
-          <section>
-            <p className={`${labelCls} mb-3`}>Por Módulo</p>
-            <div className={`rounded-2xl border divide-y ${theme === 'light' ? 'bg-white border-zinc-200 divide-zinc-100' : 'bg-zinc-900/60 border-zinc-800/50 divide-zinc-800/50'}`}>
-              {Object.entries(allTimeStats.byModule ?? {}).map(([modId, s]) => {
-                if (!s) return null;
-                const tot = s.correct + s.incorrect;
-                return (
-                  <div key={modId} className="px-4 py-3 space-y-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className={`text-sm font-medium ${theme === 'light' ? 'text-zinc-700' : 'text-zinc-300'}`}>
-                        {MODULE_LABELS[modId] ?? modId}
-                      </span>
-                      <span className="text-xs text-zinc-500 font-mono">{s.correct}/{tot}</span>
-                    </div>
-                    <AccuracyBar correct={s.correct} total={tot} />
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-        )}
-
-        {/* Progressão de níveis */}
-        <section>
-          <p className={`${labelCls} mb-3`}>Jornada</p>
-          <div className={card}>
-            <LevelGrid correct={allTimeStats.correct} theme={theme} />
-          </div>
-        </section>
-
-        {/* Erros recentes */}
+        {/* ── Erros recentes ── */}
         {recentErrors.length > 0 && (
           <section>
-            <p className={`${labelCls} mb-3`}>Erros Recentes</p>
-            <div className={`rounded-2xl border divide-y ${theme === 'light' ? 'bg-white border-zinc-200 divide-zinc-100' : 'bg-zinc-900/60 border-zinc-800/50 divide-zinc-800/50'}`}>
+            <p className={`${labelCls} mb-3`}>Erros recentes</p>
+            <div className="rounded-2xl border divide-y bg-zinc-900/60 border-zinc-800/50 divide-zinc-800/50">
               {recentErrors.map((err, i) => (
                 <div key={i} className="px-4 py-3">
                   <div className="flex items-start justify-between gap-2">
-                    <p className={`text-xs leading-snug ${theme === 'light' ? 'text-zinc-600' : 'text-zinc-400'}`}>
-                      {err.question}
-                    </p>
+                    <p className="text-xs leading-snug text-zinc-400">{err.question}</p>
                     <span className="shrink-0 text-[10px] text-zinc-600 font-mono">
                       {new Date(err.ts).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}
                     </span>
@@ -580,13 +551,13 @@ export default function Results({ onBack }: ResultsProps) {
 
         {totalAll === 0 && (
           <div className="text-center py-12">
-            <p className="text-zinc-600 text-sm">Nenhuma questão respondida ainda.</p>
-            <p className="text-zinc-700 text-xs mt-1">Complete um treino para ver seu desempenho aqui.</p>
+            <p className="text-zinc-500 text-sm">Nenhuma questão respondida ainda.</p>
+            <p className="text-zinc-600 text-xs mt-1">Complete um treino para ver seu desempenho aqui.</p>
           </div>
         )}
 
-        <div className="rounded-xl border border-zinc-800/50 px-4 py-3">
-          <p className="text-[10px] text-zinc-600 leading-relaxed">
+        <div className="rounded-xl border px-4 py-3 border-zinc-800/50">
+          <p className="text-[10px] text-zinc-500 leading-relaxed">
             Dados armazenados localmente neste navegador. Limpar os dados do navegador, usar outro dispositivo ou trocar de navegador apagará seu histórico.
           </p>
         </div>
