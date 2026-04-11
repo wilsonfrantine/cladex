@@ -61,6 +61,18 @@ export const annelidaTrees: CuratedTree[] = [
         traditionalGroupContext: 'Hirudinida',
         explanation:
           '**Hirudinida** é **monofilético**: Acanthobdellida, Branchiobdellida e Hirudinea compartilham um ancestral exclusivo. Sinapomorfias do clado: ânulos superficiais, ventosa posterior, paredes septais reduzidas e número reduzido de cerdas. Branchiobdellida e Hirudinea compartilham ainda perda de cerdas e ventosa anterior.',
+        sisterGroupQuestions: [
+          {
+            targetTaxon: 'Hirudinea',
+            correctSister: 'Branchiobdellida',
+            explanation: '**Branchiobdellida** é o grupo-irmão direto de **Hirudinea**: juntos formam o clado `(Branchiobdellida, Hirudinea)` dentro de Hirudinida, unidos por perda de cerdas e presença de ventosa anterior. Acanthobdellida é grupo-irmão do conjunto (Branchiobdellida + Hirudinea), não de Hirudinea isoladamente.',
+          },
+          {
+            targetTaxon: 'Hirudinida',
+            correctSister: 'Lumbricidae',
+            explanation: '**Lumbricidae** é o grupo-irmão direto de **Hirudinida** na topologia de Clitellata: `(Lumbricidae,(Acanthobdellida,(Branchiobdellida,Hirudinea))Hirudinida)`. As minhocas da família Lumbricidae estão mais próximas das sanguessugas do que Aeolosomatidae ou Naididae.',
+          },
+        ],
         characters: [
           {
             character: 'Ventosa posterior muscular',
@@ -79,6 +91,7 @@ export const annelidaTrees: CuratedTree[] = [
               'Produz hirudina, o anticoagulante natural mais potente conhecido, usado em microcirurgia',
             ],
             cardLabel: 'Sanguessugas (Hirudinea)',
+            dragDrop: true,
           },
         ],
       },
@@ -104,6 +117,18 @@ export const annelidaTrees: CuratedTree[] = [
         type: 'monophyletic',
         explanation:
           '**Errantia** é **monofilético**: Nereidae e Glyceridae são unidos por 2 pares de olhos multicelulares, antena lateral e palpos sólidos. São os poliquetos de vida livre, errantes — daí o nome.',
+        sisterGroupQuestions: [
+          {
+            targetTaxon: 'Errantia',
+            correctSister: 'Sedentaria',
+            explanation: '**Sedentaria** é o grupo-irmão de **Errantia**: juntos formam **Pleistoannelida**, o clado que reúne todos os anelídeos exceto Chaetopteridae. Errantia inclui os poliquetos errantes (Nereidae, Glyceridae) e Sedentaria inclui os sésseis e a Clitellata.',
+          },
+          {
+            targetTaxon: 'Nereidae',
+            correctSister: 'Glyceridae',
+            explanation: '**Glyceridae** é o grupo-irmão direto de **Nereidae**: juntos formam **Errantia**, os poliquetos errantes. Ambas as famílias compartilham 2 pares de olhos multicelulares, palpos sólidos e vida livre predatória.',
+          },
+        ],
       },
       {
         id: 'sedentaria-sem-clitellata-para',

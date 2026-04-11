@@ -19,6 +19,16 @@ export interface LeafHint {
   hints: string[];
   /** Nome do grupo a exibir no card de dicas */
   cardLabel?: string;
+  /** Quando presente, ativa modo drag-and-drop em vez de clique */
+  dragDrop?: true;
+}
+
+export interface SisterGroupQuestion {
+  /** Folha ou nó destacado — o aluno busca o grupo-irmão DESTE táxon */
+  targetTaxon: string;
+  /** Nome exato no Newick (folha OU nó interno nomeado) */
+  correctSister: string;
+  explanation: string;
 }
 
 export interface ExerciseClade {
@@ -32,6 +42,8 @@ export interface ExerciseClade {
   characters?: CharacterItem[];
   /** Dicas para exercícios de posicionamento de folha */
   leafHints?: LeafHint[];
+  /** Questões de grupo-irmão — aluno clica no grupo-irmão direto do targetTaxon */
+  sisterGroupQuestions?: SisterGroupQuestion[];
 }
 
 export interface CuratedTree {

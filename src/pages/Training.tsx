@@ -4,11 +4,14 @@ import { getLevelIndex, getLevel, type LevelInfo } from '../utils/levels';
 import TreeViewer from '../components/TreeViewer';
 import { useCladexStore } from '../store';
 import { getTreesByModule, getModuleLabel, type CuratedTree, type ExerciseClade } from '../data/index';
-import { cladeToExercise, homologyToExercise, characterPlacementToExercise, leafPlacementToExercise, checkAnswer } from '../utils/exercises';
+import { cladeToExercise, homologyToExercise, characterPlacementToExercise, leafPlacementToExercise, sisterGroupToExercise, checkAnswer } from '../utils/exercises';
 import { validateNewick, parseNewick, collectLeafNames } from '../utils/newick';
 import { PHYLOPIC_STATIC } from '../data/phylopic-cache';
 import { fetchSilhouetteBatch } from '../utils/phylopic';
 import type { Exercise, Feedback } from '../store';
+import DraggableTaxonCard from '../components/DraggableTaxonCard';
+import DevHud from '../components/DevHud';
+import type { ExerciseType } from '../store';
 
 // ─── Props e tipos ────────────────────────────────────────────────────────────
 
@@ -45,15 +48,17 @@ function countPoolSize(mod: string): number {
     for (const clade of tree.clades) {
       n++; // clade-classification
       if (clade.characters?.length) n += clade.characters.length * 2; // homology-type + character-placement por caráter
-      if (clade.leafHints?.length) n++;     // leaf-placement
+      if (clade.leafHints?.length) n += clade.leafHints.length;       // leaf-placement ou taxon-drag por hint
+      if (clade.sisterGroupQuestions?.length) n += clade.sisterGroupQuestions.length;
     }
   }
   return n;
 }
 
 /** Gera a próxima rodada evitando repetir exercícios já vistos.
- *  Retorna `key === '__reset__'` quando o pool foi esgotado (o caller deve limpar usedKeys). */
-function makeRound(mod: string, totalAttempts: number, usedKeys: Set<string>): Round {
+ *  Retorna `key === '__reset__'` quando o pool foi esgotado (o caller deve limpar usedKeys).
+ *  `forceType` (dev-only): restringe candidatos ao tipo informado. */
+function makeRound(mod: string, totalAttempts: number, usedKeys: Set<string>, forceType?: ExerciseType | null): Round {
   if (mod === 'custom') return { tree: null, clade: null, exercise: null, treeStyle: 'elbow', key: '' };
 
   const trees = getTreesByModule(mod);
@@ -79,18 +84,30 @@ function makeRound(mod: string, totalAttempts: number, usedKeys: Set<string>): R
       }
 
       if (clade.leafHints?.length) {
-        const hint = clade.leafHints[Math.floor(Math.random() * clade.leafHints.length)];
-        const leafKey = `${tree.id}-${clade.id}-leaf-placement`;
-        if (!usedKeys.has(leafKey)) available.push({ tree, clade, exercise: leafPlacementToExercise(hint), key: leafKey });
+        clade.leafHints.forEach((hint, i) => {
+          const leafKey = `${tree.id}-${clade.id}-leaf-placement-${i}`;
+          if (!usedKeys.has(leafKey)) available.push({ tree, clade, exercise: leafPlacementToExercise(hint), key: leafKey });
+        });
+      }
+
+      if (clade.sisterGroupQuestions?.length) {
+        clade.sisterGroupQuestions.forEach((q, i) => {
+          const sisterKey = `${tree.id}-${clade.id}-sister-group-${i}`;
+          if (!usedKeys.has(sisterKey)) available.push({ tree, clade, exercise: sisterGroupToExercise(q), key: sisterKey });
+        });
       }
     }
   }
 
+  // Filtra por tipo forçado (dev HUD) — se nenhum candidato resta, ignora o filtro
+  const filtered = forceType ? available.filter(c => c.exercise.type === forceType) : available;
+  const pool = filtered.length ? filtered : available;
+
   // Pool esgotado — sinaliza para o caller reiniciar
-  if (!available.length)
+  if (!pool.length)
     return { tree: null, clade: null, exercise: null, treeStyle: 'elbow', key: '__reset__' };
 
-  const { tree, clade, exercise, key } = available[Math.floor(Math.random() * available.length)];
+  const { tree, clade, exercise, key } = pool[Math.floor(Math.random() * pool.length)];
 
   // Para leaf-placement: ocultar o alvo + 2 decoys aleatórios da mesma árvore
   let hiddenLeaves: string[] | undefined;
@@ -136,6 +153,11 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
   const [envState, setEnvState] = useState<EnvState>('neutral');
   const [rippleKey, setRippleKey] = useState(0);
   const [levelUpData, setLevelUpData] = useState<LevelInfo | null>(null);
+  const [dragHoverLeaf, setDragHoverLeaf] = useState<string | null>(null);
+
+  // Dev HUD — only in development builds
+  const [devHudVisible, setDevHudVisible] = useState(false);
+  const [devForceType, setDevForceType] = useState<ExerciseType | null>(null);
   const prevLevelIdx = useRef(getLevelIndex(allTimeStats.correct));
 
   // Silhuetas PhyloPic — inicia com o cache estático dos 33 táxons curados
@@ -286,7 +308,7 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
     const nextUsed = new Set(usedKeys);
     if (round.key && round.key !== '__reset__') nextUsed.add(round.key);
 
-    let next = makeRound(module, total, nextUsed);
+    let next = makeRound(module, total, nextUsed, import.meta.env.DEV ? devForceType : undefined);
 
     // Pool esgotado → exibir tela de conclusão
     if (next.key === '__reset__') {
@@ -303,7 +325,7 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
     setEnvState('neutral');
     setPan({ x: 0, y: 0 });
     setZoom(1);
-  }, [module, allTimeStats.treesAttempted, sessionStats.correct, sessionStats.incorrect, usedKeys, round.key]);
+  }, [module, allTimeStats.treesAttempted, sessionStats.correct, sessionStats.incorrect, usedKeys, round.key, devForceType]);
 
   const handleContinueAfterEnd = useCallback(() => {
     const total = allTimeStats.treesAttempted + sessionStats.correct + sessionStats.incorrect;
@@ -344,6 +366,11 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement).tagName === 'TEXTAREA') return;
+      // Dev HUD toggle (D key) — dev builds only
+      if (import.meta.env.DEV && (e.key === 'd' || e.key === 'D')) {
+        setDevHudVisible(v => !v);
+        return;
+      }
       if (feedback) {
         if (e.key === 'Enter') nextRound();
         return;
@@ -379,10 +406,12 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
 
   const displayNewick = module === 'custom' ? customTree : (round.tree?.newick ?? null);
 
-  // Taxa a destacar: suprimir highlight antes do feedback em exercícios que entregam a resposta
+  // Taxa a destacar: suprimir highlight antes do feedback em exercícios que entregam a resposta.
+  // 'sister-group' é intencionalmente excluído — o targetTaxon deve SEMPRE ficar visível.
   const highlightTaxa = (!feedback && (
     round.exercise?.type === 'character-placement' ||
-    round.exercise?.type === 'leaf-placement'
+    round.exercise?.type === 'leaf-placement' ||
+    round.exercise?.type === 'taxon-drag'
   ))
     ? []
     : (round.exercise?.meta?.highlightTaxa ?? (round.clade?.taxaInGroup ?? []));
@@ -413,6 +442,23 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
       {/* ── Level-up overlay ── */}
       {levelUpData && (
         <LevelUpOverlay lv={levelUpData} onDone={() => setLevelUpData(null)} />
+      )}
+
+      {/* ── Dev HUD (dev builds only) ── */}
+      {import.meta.env.DEV && (
+        <DevHud
+          visible={devHudVisible}
+          treeId={round.tree?.id ?? null}
+          cladeId={round.clade?.id ?? null}
+          exerciseType={round.exercise?.type ?? null}
+          correctAnswer={round.exercise?.correctAnswer ?? null}
+          question={round.exercise?.question ?? null}
+          poolUsed={usedKeys.size}
+          poolTotal={countPoolSize(module)}
+          forceType={devForceType}
+          onForceType={setDevForceType}
+          onClose={() => setDevHudVisible(false)}
+        />
       )}
 
       {/* ── Barra de navegação ── */}
@@ -537,23 +583,28 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
               silhouetteUrls={silhouetteUrls}
               // Exercícios interativos de clique na árvore
               onInternalNodeClick={
-                round.exercise?.type === 'character-placement' && !feedback
+                (round.exercise?.type === 'character-placement' || round.exercise?.type === 'sister-group') && !feedback
                   ? handleCharacterAnswer
                   : undefined
               }
               onLeafClick={
-                round.exercise?.type === 'leaf-placement' && !feedback
+                (round.exercise?.type === 'leaf-placement' || round.exercise?.type === 'sister-group') && !feedback
                   ? handleLeafAnswer
                   : undefined
               }
               hiddenLeaves={
-                round.exercise?.type === 'leaf-placement' && !feedback
+                (round.exercise?.type === 'leaf-placement' || round.exercise?.type === 'taxon-drag') && !feedback
                   ? (round.hiddenLeaves ?? [])
                   : []
               }
               nodeClickMode={
                 round.exercise?.type === 'character-placement' ? 'character-placement' :
-                round.exercise?.type === 'leaf-placement'      ? 'leaf-placement' : false
+                round.exercise?.type === 'leaf-placement'      ? 'leaf-placement' :
+                round.exercise?.type === 'sister-group'        ? 'sister-group' :
+                round.exercise?.type === 'taxon-drag'          ? 'taxon-drag' : false
+              }
+              dragHighlightLeaf={
+                round.exercise?.type === 'taxon-drag' ? (dragHoverLeaf ?? undefined) : undefined
               }
             />
           </div>
@@ -631,6 +682,8 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
                   {round.exercise.type === 'homology-type'         && 'Tipo de homologia'}
                   {round.exercise.type === 'character-placement'   && 'Posicionamento de caráter'}
                   {round.exercise.type === 'leaf-placement'        && 'Identificação de táxon'}
+                  {round.exercise.type === 'sister-group'          && 'Grupo-irmão'}
+                  {round.exercise.type === 'taxon-drag'            && 'Identificação por arrastar'}
                 </p>
                 <p className="text-base sm:text-lg text-zinc-100 leading-snug font-medium whitespace-pre-line">
                   {round.exercise.question}
@@ -638,7 +691,18 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
               </div>
             )}
             <div className="px-4 pb-3 pt-2">
-              <AnswerButtons module={module} exercise={round.exercise} onAnswer={handleAnswer} />
+              {round.exercise?.type === 'taxon-drag' ? (
+                <DraggableTaxonCard
+                  label={round.exercise.meta?.cardLabel ?? round.exercise.correctAnswer}
+                  hints={round.exercise.meta?.hints ?? []}
+                  silhouetteUrl={silhouetteUrls[round.exercise.meta?.hiddenLeaf ?? '']}
+                  onDrop={(leaf) => handleAnswer(leaf)}
+                  onHoverChange={setDragHoverLeaf}
+                  disabled={!!feedback}
+                />
+              ) : (
+                <AnswerButtons module={module} exercise={round.exercise} onAnswer={handleAnswer} />
+              )}
             </div>
           </>
         ) : (
@@ -698,6 +762,14 @@ function AnswerButtons({ module, exercise, onAnswer }: {
     return (
       <p className="text-zinc-400 text-sm text-center py-1 italic">
         Clique na folha "?" correta na árvore acima ↑
+      </p>
+    );
+  }
+
+  if (exercise.type === 'sister-group') {
+    return (
+      <p className="text-zinc-400 text-sm text-center py-1 italic">
+        Clique no grupo-irmão do táxon destacado na árvore ↑
       </p>
     );
   }

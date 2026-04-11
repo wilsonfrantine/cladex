@@ -31,7 +31,9 @@ export interface TreeViewerProps {
   /** Callback quando o usuário clica em uma folha (leaf-placement) */
   onLeafClick?: (name: string) => void;
   /** Modo de interação — habilita cursor pointer e hover em folhas ou nós */
-  nodeClickMode?: 'character-placement' | 'leaf-placement' | false;
+  nodeClickMode?: 'character-placement' | 'leaf-placement' | 'sister-group' | 'taxon-drag' | false;
+  /** Folha iluminada durante hover de drag (taxon-drag) */
+  dragHighlightLeaf?: string;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -190,6 +192,7 @@ export default function TreeViewer({
   hiddenLeaves,
   onLeafClick,
   nodeClickMode = false,
+  dragHighlightLeaf,
 }: TreeViewerProps) {
 
   // Paleta de cores conforme o tema — Refinada para "Cyber" vs "Naturalist"
@@ -356,11 +359,17 @@ export default function TreeViewer({
           const labelFontSize = Math.max(7, fontSize * 0.83);
 
           const isHidden = isLeaf && (hiddenLeaves?.includes(node.data.name) ?? false);
-          const isLeafClickable = isLeaf && !!onLeafClick && nodeClickMode === 'leaf-placement' && isHidden;
+          const isLeafClickable = isLeaf && !!onLeafClick && (
+            (nodeClickMode === 'leaf-placement' && isHidden) ||
+            (nodeClickMode === 'sister-group' && !highlightSet.has(node.data.name))
+          );
           const isNodeClickable = !isLeaf && (
             (onInternalNodeClick != null) ||
-            nodeClickMode === 'character-placement'
+            nodeClickMode === 'character-placement' ||
+            nodeClickMode === 'sister-group'
           );
+          const isDragTarget = nodeClickMode === 'taxon-drag' && isLeaf && isHidden;
+          const isDragHovered = isDragTarget && node.data.name === dragHighlightLeaf;
 
           return (
             <g
@@ -374,6 +383,7 @@ export default function TreeViewer({
                     : undefined
               }
               style={{ cursor: (isLeafClickable || isNodeClickable) ? 'pointer' : 'default' }}
+              {...(isDragTarget ? { 'data-leaf-name': node.data.name } : {})}
             >
               {/* Halo pulsante em nós internos clicáveis (character-placement) */}
               {isNodeClickable && !showAnswerFeedback && (
@@ -500,14 +510,31 @@ export default function TreeViewer({
                 />
               )}
 
-              {/* Halo interativo para folhas clicáveis (leaf-placement) */}
-              {isLeafClickable && (
+              {/* Halo interativo para folhas clicáveis — somente leaf-placement, não sister-group */}
+              {isLeafClickable && nodeClickMode !== 'sister-group' && (
                 <circle
                   r={nodeR + 7}
                   fill="none"
                   stroke={C.leafNode}
                   strokeWidth={1.5}
                   opacity={0.4}
+                  className="animate-soft-pulse"
+                />
+              )}
+
+              {/* Área de hit invisível para taxon-drag (SVG <g> transparente não é clicável) */}
+              {isDragTarget && (
+                <circle r={nodeR + 12} fill="transparent" pointerEvents="all" />
+              )}
+
+              {/* Anel de glow quando card está em hover sobre este nó */}
+              {isDragHovered && (
+                <circle
+                  r={nodeR + 10}
+                  fill="none"
+                  stroke="#10b981"
+                  strokeWidth={2.5}
+                  opacity={0.85}
                   className="animate-soft-pulse"
                 />
               )}

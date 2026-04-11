@@ -47,6 +47,7 @@ export const chordataTrees: CuratedTree[] = [
               'Filogenia molecular: grupo-irmão dos Vertebrata (Olfactores), apesar da aparência de "invertebrado"',
             ],
             cardLabel: 'Tunicados (Urochordata)',
+            dragDrop: true,
           },
         ],
       },
@@ -80,6 +81,18 @@ export const chordataTrees: CuratedTree[] = [
         traditionalGroupContext: 'Agnatha',
         explanation:
           '**Agnatha** (vertebrados sem mandíbula) é um grupo **parafilético**: nesta hipótese clássica, Petromyzontida (lampreias) compartilha um ancestral mais recente com Gnathostomata do que com Myxini (feiticeiras). O agrupamento exclui os mandibulados, sendo definido pela ausência de mandíbulas (plesiomorfia), não por sinapomorfias exclusivas.',
+        sisterGroupQuestions: [
+          {
+            targetTaxon: 'Petromyzontida',
+            correctSister: 'Gnathostomata',
+            explanation: '**Gnathostomata** é o grupo-irmão de **Petromyzontida**: juntos formam o clado de vertebrados com crânio excluindo Myxini, dentro de Vertebrata. Petromyzontida (lampreias) está mais próxima dos tubarões e peixes teleósteos do que das feiticeiras — resultado surpreendente dado seu aspecto primitivo.',
+          },
+          {
+            targetTaxon: 'Urochordata',
+            correctSister: 'Vertebrata',
+            explanation: '**Vertebrata** é o grupo-irmão de **Urochordata**: juntos formam **Olfactores**. Esta é uma das descobertas mais contraintuitivas da filogenia molecular: os tunicados sésseis são mais próximos dos vertebrados do que os cefalocordados (anfioxos), que morfologicamente parecem mais "vertebradoides".',
+          },
+        ],
         characters: [
           {
             character: 'Ausência de mandíbulas — boca circular com estruturas córneas ou sugadoras',
@@ -143,6 +156,18 @@ export const chordataTrees: CuratedTree[] = [
         type: 'monophyletic',
         explanation:
           '**Ambulacraria** (Hemichordata + Echinodermata) é um clado monofilético sustentado por dados moleculares e semelhanças nas larvas (dipleurula). Embora Hemichordata tenha fendas faringeanas como os cordados, ele é mais próximo dos equinodermos.',
+        sisterGroupQuestions: [
+          {
+            targetTaxon: 'Hemichordata',
+            correctSister: 'Echinodermata',
+            explanation: '**Echinodermata** é o grupo-irmão de **Hemichordata**: juntos formam **Ambulacraria**. Embora Hemichordata possua fendas faringeanas (como cordados), a filogenia molecular e a semelhança das larvas (tornaria ≈ bipinaria) confirmam parentesco com estrelas-do-mar e ouriços — não com Chordata.',
+          },
+          {
+            targetTaxon: 'Ambulacraria',
+            correctSister: 'Chordata',
+            explanation: '**Chordata** é o grupo-irmão de **Ambulacraria**: juntos formam **Deuterostomia**. O ancestral comum de equinodermos, hemicordados e cordados compartilhou o destino embrionário do blastóporo (→ ânus) — sinapomorfia de Deuterostomia.',
+          },
+        ],
         characters: [
           {
             character: 'Larva dipleurula — larva cilíada com bandas de cílios específicas e celoma tripartido',

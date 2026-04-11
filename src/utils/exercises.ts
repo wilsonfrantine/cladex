@@ -1,4 +1,4 @@
-import type { CharacterItem, ExerciseClade, LeafHint } from '../data/types';
+import type { CharacterItem, ExerciseClade, LeafHint, SisterGroupQuestion } from '../data/types';
 import type { Exercise, ExerciseType } from '../store';
 
 // ─── clade-classification ─────────────────────────────────────────────────────
@@ -69,20 +69,47 @@ export function characterPlacementToExercise(char: CharacterItem): Exercise {
   };
 }
 
-// ─── leaf-placement ───────────────────────────────────────────────────────────
+// ─── leaf-placement / taxon-drag ─────────────────────────────────────────────
 
 export function leafPlacementToExercise(hint: LeafHint): Exercise {
-  const hintList = hint.hints.map((h, i) => `${i + 1}. ${h}`).join('\n');
   const label = hint.cardLabel ?? hint.hiddenLeaf;
+
+  if (hint.dragDrop) {
+    return {
+      type: 'taxon-drag',
+      question: `Arraste o card para a posição correta na árvore:`,
+      correctAnswer: hint.hiddenLeaf,
+      explanation: `O táxon correto era **${label}**. ${hint.hints[0]}.`,
+      meta: { hiddenLeaf: hint.hiddenLeaf, cardLabel: label, hints: hint.hints },
+    };
+  }
+
+  const hintList = hint.hints.map((h, i) => `${i + 1}. ${h}`).join('\n');
   return {
     type: 'leaf-placement',
     question: `Um táxon está oculto na árvore (marcado como "?"). Usando as pistas abaixo, clique na folha correta:\n${hintList}`,
     correctAnswer: hint.hiddenLeaf,
     explanation: `O táxon correto era **${label}**. ${hint.hints[0]}.`,
-    meta: {
-      hiddenLeaf: hint.hiddenLeaf,
-      cardLabel: label,
-    },
+    meta: { hiddenLeaf: hint.hiddenLeaf, cardLabel: label },
+  };
+}
+
+// ─── sister-group ─────────────────────────────────────────────────────────────
+
+const SISTER_QUESTIONS: Array<(t: string) => string> = [
+  (t) => `Qual é o grupo-irmão de ${t} nesta árvore?`,
+  (t) => `${t} está destacado. Clique no seu grupo-irmão direto.`,
+  (t) => `Identifique e clique no táxon grupo-irmão de ${t}.`,
+];
+
+export function sisterGroupToExercise(q: SisterGroupQuestion): Exercise {
+  const template = SISTER_QUESTIONS[Math.floor(Math.random() * SISTER_QUESTIONS.length)];
+  return {
+    type: 'sister-group',
+    question: template(q.targetTaxon),
+    correctAnswer: q.correctSister,
+    explanation: q.explanation,
+    meta: { highlightTaxa: [q.targetTaxon] },
   };
 }
 

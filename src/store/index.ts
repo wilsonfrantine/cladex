@@ -5,7 +5,9 @@ export type ExerciseType =
   | 'clade-classification'
   | 'homology-type'
   | 'character-placement'
-  | 'leaf-placement';
+  | 'leaf-placement'
+  | 'sister-group'
+  | 'taxon-drag';
 
 export interface Exercise {
   type: ExerciseType;
@@ -16,6 +18,7 @@ export interface Exercise {
     highlightTaxa?: string[];
     hiddenLeaf?: string;
     cardLabel?: string;
+    hints?: string[];
   };
 }
 
@@ -63,6 +66,8 @@ function emptyStats(): SessionStats {
       'homology-type':        { correct: 0, incorrect: 0 },
       'character-placement':  { correct: 0, incorrect: 0 },
       'leaf-placement':       { correct: 0, incorrect: 0 },
+      'sister-group':         { correct: 0, incorrect: 0 },
+      'taxon-drag':           { correct: 0, incorrect: 0 },
     },
     byModule: {},
   };
