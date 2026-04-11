@@ -3,7 +3,7 @@ import { ArrowLeft, CheckCircle, XCircle, HelpCircle } from 'lucide-react';
 import { getLevelIndex, getLevel, type LevelInfo } from '../utils/levels';
 import TreeViewer from '../components/TreeViewer';
 import { useCladexStore } from '../store';
-import { getTreesByModule, type CuratedTree, type ExerciseClade } from '../data/trees';
+import { getTreesByModule, getModuleLabel, type CuratedTree, type ExerciseClade } from '../data/index';
 import { cladeToExercise, homologyToExercise, characterPlacementToExercise, leafPlacementToExercise, checkAnswer } from '../utils/exercises';
 import { validateNewick, parseNewick, collectLeafNames } from '../utils/newick';
 import { PHYLOPIC_STATIC } from '../data/phylopic-cache';
@@ -14,12 +14,6 @@ import type { Exercise, Feedback } from '../store';
 
 interface TrainingProps { module: string; onBack: () => void; onViewResults: () => void }
 
-const MODULE_LABELS: Record<string, string> = {
-  'annelida': 'Filo Annelida',
-  'chordata-basal': 'Filo Chordata Basal',
-  'metazoa': 'Reino Metazoa',
-  'custom': 'Newick Customizado',
-};
 
 interface Round {
   tree: CuratedTree | null;
@@ -50,7 +44,7 @@ function countPoolSize(mod: string): number {
   for (const tree of getTreesByModule(mod)) {
     for (const clade of tree.clades) {
       n++; // clade-classification
-      if (clade.characters?.length) n += 2; // homology-type + character-placement
+      if (clade.characters?.length) n += clade.characters.length * 2; // homology-type + character-placement por caráter
       if (clade.leafHints?.length) n++;     // leaf-placement
     }
   }
@@ -76,11 +70,12 @@ function makeRound(mod: string, totalAttempts: number, usedKeys: Set<string>): R
         available.push({ tree, clade, exercise: cladeToExercise(clade), key: cladeKey });
 
       if (clade.characters?.length) {
-        const char = clade.characters[Math.floor(Math.random() * clade.characters.length)];
-        const homoKey = `${tree.id}-${clade.id}-homology-type`;
-        const charKey  = `${tree.id}-${clade.id}-character-placement`;
-        if (!usedKeys.has(homoKey)) available.push({ tree, clade, exercise: homologyToExercise(char), key: homoKey });
-        if (!usedKeys.has(charKey))  available.push({ tree, clade, exercise: characterPlacementToExercise(char), key: charKey });
+        clade.characters.forEach((char, i) => {
+          const homoKey = `${tree.id}-${clade.id}-homology-type-${i}`;
+          const charKey  = `${tree.id}-${clade.id}-character-placement-${i}`;
+          if (!usedKeys.has(homoKey)) available.push({ tree, clade, exercise: homologyToExercise(char), key: homoKey });
+          if (!usedKeys.has(charKey))  available.push({ tree, clade, exercise: characterPlacementToExercise(char), key: charKey });
+        });
       }
 
       if (clade.leafHints?.length) {
@@ -438,7 +433,7 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
         </button>
 
         <span className="text-base font-black text-zinc-100 truncate flex-1 tracking-tight">
-          {MODULE_LABELS[module] ?? module}
+          {getModuleLabel(module)}
         </span>
 
         {/* Progresso do pool */}

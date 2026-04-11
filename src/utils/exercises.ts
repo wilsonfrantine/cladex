@@ -1,4 +1,4 @@
-import type { CharacterItem, ExerciseClade, LeafHint } from '../data/trees';
+import type { CharacterItem, ExerciseClade, LeafHint } from '../data/types';
 import type { Exercise, ExerciseType } from '../store';
 
 // ─── clade-classification ─────────────────────────────────────────────────────
