@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { fxManager } from '../audio/fx';
 
 interface DraggableTaxonCardProps {
   label: string;
@@ -51,7 +52,10 @@ export default function DraggableTaxonCard({
     if (!isDragging) return;
     const leaf = hitTest(e.clientX, e.clientY);
     cleanup();
-    if (leaf) onDrop(leaf);
+    if (leaf) {
+      fxManager.drop();
+      onDrop(leaf);
+    }
   }
 
   function handlePointerCancel() {

@@ -11,7 +11,8 @@ import { fetchSilhouetteBatch } from '../utils/phylopic';
 import type { Exercise, Feedback } from '../store';
 import DraggableTaxonCard from '../components/DraggableTaxonCard';
 import DevHud from '../components/DevHud';
-import AudioToggle from '../components/AudioToggle';
+import SettingsPanel from '../components/SettingsPanel';
+import { fxManager } from '../audio/fx';
 import type { ExerciseType } from '../store';
 
 // ─── Props e tipos ────────────────────────────────────────────────────────────
@@ -334,6 +335,7 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
     setEnvState('neutral');
     setPan({ x: 0, y: 0 });
     setZoom(1);
+    fxManager.card();
   }, [module, allTimeStats.treesAttempted, sessionStats.correct, sessionStats.incorrect, usedKeys, round.key, devForceType]);
 
   const handleContinueAfterEnd = useCallback(() => {
@@ -367,6 +369,7 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
       });
       setEnvState(correct ? 'correct' : 'incorrect');
       setRippleKey(k => k + 1);
+      if (correct) fxManager.win(); else fxManager.lose();
     },
     [round.exercise, feedback, recordAnswer],
   );
@@ -518,7 +521,7 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
           );
         })()}
 
-        <AudioToggle />
+        <SettingsPanel />
 
         {/* Donut de acerto + XP acumulado */}
         {module !== 'custom' && (() => {

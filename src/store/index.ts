@@ -92,6 +92,8 @@ interface CladexState {
   toggleTheme: () => void;
   audioMuted: boolean;
   toggleAudioMuted: () => void;
+  fxMuted: boolean;
+  toggleFxMuted: () => void;
 }
 
 export const useCladexStore = create<CladexState>()(
@@ -102,6 +104,7 @@ export const useCladexStore = create<CladexState>()(
       savedTrees: [],
       theme: 'dark',
       audioMuted: true, // padrão seguro — o browser bloqueia autoplay
+      fxMuted: true,    // usuário habilita explicitamente
       errorLog: [],
       answerHistory: [],
 
@@ -160,6 +163,9 @@ export const useCladexStore = create<CladexState>()(
 
       toggleAudioMuted: () =>
         set((s) => ({ audioMuted: !s.audioMuted })),
+
+      toggleFxMuted: () =>
+        set((s) => ({ fxMuted: !s.fxMuted })),
     }),
     {
       name: 'cladex-storage',
@@ -168,6 +174,7 @@ export const useCladexStore = create<CladexState>()(
         allTimeStats: s.allTimeStats,
         theme: s.theme,
         audioMuted: s.audioMuted,
+        fxMuted: s.fxMuted,
         errorLog: s.errorLog,
         answerHistory: s.answerHistory,
       }),
