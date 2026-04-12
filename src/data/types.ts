@@ -31,6 +31,16 @@ export interface SisterGroupQuestion {
   explanation: string;
 }
 
+export interface ProximityQuestion {
+  /** Táxon de referência — destacado na árvore */
+  targetTaxon: string;
+  /** Táxon mais próximo do alvo — resposta correta */
+  closer: string;
+  /** Táxon mais distante do alvo — distrator */
+  farther: string;
+  explanation: string;
+}
+
 export interface ExerciseClade {
   id: string;
   taxaInGroup: string[]; // leaf names (must match Newick exactly)
@@ -44,6 +54,8 @@ export interface ExerciseClade {
   leafHints?: LeafHint[];
   /** Questões de grupo-irmão — aluno clica no grupo-irmão direto do targetTaxon */
   sisterGroupQuestions?: SisterGroupQuestion[];
+  /** Questões de proximidade relativa — aluno decide qual de dois táxons é mais próximo do alvo */
+  proximityQuestions?: ProximityQuestion[];
 }
 
 export interface CuratedTree {

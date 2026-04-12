@@ -79,6 +79,20 @@ export const chordataTrees: CuratedTree[] = [
         taxaInGroup: ['Myxini', 'Petromyzontida'],
         type: 'paraphyletic',
         traditionalGroupContext: 'Agnatha',
+        proximityQuestions: [
+          {
+            targetTaxon: 'Petromyzontida',
+            closer: 'Chondrichthyes',
+            farther: 'Myxini',
+            explanation: '**Chondrichthyes** é mais próximo de **Petromyzontida**: lampreias e tubarões compartilham o clado Vertebrata sem Myxini. **Myxini** é o grupo mais basal de Vertebrata — o MRCA de Petromyzontida + Myxini é a raiz de Vertebrata, enquanto o MRCA de Petromyzontida + Chondrichthyes é apenas a raiz do clado Petromyzontida + Gnathostomata.',
+          },
+          {
+            targetTaxon: 'Actinopterygii',
+            closer: 'Chondrichthyes',
+            farther: 'Petromyzontida',
+            explanation: '**Chondrichthyes** é mais próximo de **Actinopterygii**: ambos são **Gnathostomata** (vertebrados com mandíbula), formando um clado exclusivo. O MRCA de Actinopterygii + Chondrichthyes é a raiz de Gnathostomata; o MRCA com Petromyzontida é a raiz de todo Vertebrata excluindo Myxini — um nó mais antigo.',
+          },
+        ],
         explanation:
           '**Agnatha** (vertebrados sem mandíbula) é um grupo **parafilético**: nesta hipótese clássica, Petromyzontida (lampreias) compartilha um ancestral mais recente com Gnathostomata do que com Myxini (feiticeiras). O agrupamento exclui os mandibulados, sendo definido pela ausência de mandíbulas (plesiomorfia), não por sinapomorfias exclusivas.',
         sisterGroupQuestions: [
@@ -154,6 +168,20 @@ export const chordataTrees: CuratedTree[] = [
         id: 'ambulacraria-mono',
         taxaInGroup: ['Hemichordata', 'Echinodermata'],
         type: 'monophyletic',
+        proximityQuestions: [
+          {
+            targetTaxon: 'Hemichordata',
+            closer: 'Echinodermata',
+            farther: 'Cephalochordata',
+            explanation: '**Echinodermata** é mais próximo de **Hemichordata**: juntos formam **Ambulacraria**, sustentada pela quase-identidade das larvas (tornaria ≈ bipinaria). Cephalochordata está em Chordata — o MRCA de Hemichordata + Cephalochordata é a raiz de Deuterostomia, muito mais antigo.',
+          },
+          {
+            targetTaxon: 'Urochordata',
+            closer: 'Myxini',
+            farther: 'Cephalochordata',
+            explanation: '**Myxini** é mais próximo de **Urochordata** do que **Cephalochordata**: Urochordata + Vertebrata (incluindo Myxini) formam **Olfactores**. Cephalochordata é o grupo-irmão de todo Olfactores — paradoxalmente, qualquer vertebrado está mais próximo dos tunicados do que os anfioxos estão.',
+          },
+        ],
         explanation:
           '**Ambulacraria** (Hemichordata + Echinodermata) é um clado monofilético sustentado por dados moleculares e semelhanças nas larvas (dipleurula). Embora Hemichordata tenha fendas faringeanas como os cordados, ele é mais próximo dos equinodermos.',
         sisterGroupQuestions: [

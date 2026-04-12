@@ -4,13 +4,14 @@ import { getLevelIndex, getLevel, type LevelInfo } from '../utils/levels';
 import TreeViewer from '../components/TreeViewer';
 import { useCladexStore } from '../store';
 import { getTreesByModule, getModuleLabel, type CuratedTree, type ExerciseClade } from '../data/index';
-import { cladeToExercise, homologyToExercise, characterPlacementToExercise, leafPlacementToExercise, sisterGroupToExercise, checkAnswer } from '../utils/exercises';
+import { cladeToExercise, homologyToExercise, characterPlacementToExercise, leafPlacementToExercise, sisterGroupToExercise, proximityToExercise, checkAnswer } from '../utils/exercises';
 import { validateNewick, parseNewick, collectLeafNames } from '../utils/newick';
 import { PHYLOPIC_STATIC } from '../data/phylopic-cache';
 import { fetchSilhouetteBatch } from '../utils/phylopic';
 import type { Exercise, Feedback } from '../store';
 import DraggableTaxonCard from '../components/DraggableTaxonCard';
 import DevHud from '../components/DevHud';
+import AudioToggle from '../components/AudioToggle';
 import type { ExerciseType } from '../store';
 
 // ─── Props e tipos ────────────────────────────────────────────────────────────
@@ -50,6 +51,7 @@ function countPoolSize(mod: string): number {
       if (clade.characters?.length) n += clade.characters.length * 2; // homology-type + character-placement por caráter
       if (clade.leafHints?.length) n += clade.leafHints.length;       // leaf-placement ou taxon-drag por hint
       if (clade.sisterGroupQuestions?.length) n += clade.sisterGroupQuestions.length;
+      if (clade.proximityQuestions?.length) n += clade.proximityQuestions.length;
     }
   }
   return n;
@@ -96,6 +98,13 @@ function makeRound(mod: string, totalAttempts: number, usedKeys: Set<string>, fo
           if (!usedKeys.has(sisterKey)) available.push({ tree, clade, exercise: sisterGroupToExercise(q), key: sisterKey });
         });
       }
+
+      if (clade.proximityQuestions?.length) {
+        clade.proximityQuestions.forEach((q, i) => {
+          const proxKey = `${tree.id}-${clade.id}-relative-proximity-${i}`;
+          if (!usedKeys.has(proxKey)) available.push({ tree, clade, exercise: proximityToExercise(q), key: proxKey });
+        });
+      }
     }
   }
 
@@ -109,9 +118,9 @@ function makeRound(mod: string, totalAttempts: number, usedKeys: Set<string>, fo
 
   const { tree, clade, exercise, key } = pool[Math.floor(Math.random() * pool.length)];
 
-  // Para leaf-placement: ocultar o alvo + 2 decoys aleatórios da mesma árvore
+  // Para leaf-placement e taxon-drag: ocultar o alvo + 2 decoys aleatórios da mesma árvore
   let hiddenLeaves: string[] | undefined;
-  if (exercise.type === 'leaf-placement' && exercise.meta?.hiddenLeaf) {
+  if ((exercise.type === 'leaf-placement' || exercise.type === 'taxon-drag') && exercise.meta?.hiddenLeaf) {
     const target = exercise.meta.hiddenLeaf;
     const pool = collectLeafNames(parseNewick(tree.newick)).filter(l => l !== target);
     const decoys: string[] = [];
@@ -509,6 +518,8 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
           );
         })()}
 
+        <AudioToggle />
+
         {/* Donut de acerto + XP acumulado */}
         {module !== 'custom' && (() => {
           const xp = allTimeStats.correct * 10 + allTimeStats.incorrect * 2;
@@ -588,7 +599,7 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
                   : undefined
               }
               onLeafClick={
-                (round.exercise?.type === 'leaf-placement' || round.exercise?.type === 'sister-group') && !feedback
+                (round.exercise?.type === 'leaf-placement' || round.exercise?.type === 'sister-group' || round.exercise?.type === 'relative-proximity') && !feedback
                   ? handleLeafAnswer
                   : undefined
               }
@@ -598,13 +609,19 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
                   : []
               }
               nodeClickMode={
-                round.exercise?.type === 'character-placement' ? 'character-placement' :
-                round.exercise?.type === 'leaf-placement'      ? 'leaf-placement' :
-                round.exercise?.type === 'sister-group'        ? 'sister-group' :
-                round.exercise?.type === 'taxon-drag'          ? 'taxon-drag' : false
+                round.exercise?.type === 'character-placement'  ? 'character-placement' :
+                round.exercise?.type === 'leaf-placement'       ? 'leaf-placement' :
+                round.exercise?.type === 'sister-group'         ? 'sister-group' :
+                round.exercise?.type === 'taxon-drag'           ? 'taxon-drag' :
+                round.exercise?.type === 'relative-proximity'   ? 'relative-proximity' : false
               }
               dragHighlightLeaf={
                 round.exercise?.type === 'taxon-drag' ? (dragHoverLeaf ?? undefined) : undefined
+              }
+              choiceTaxa={
+                round.exercise?.type === 'relative-proximity' && !feedback
+                  ? (round.exercise.meta?.choiceTaxa ?? undefined)
+                  : undefined
               }
             />
           </div>
@@ -684,6 +701,7 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
                   {round.exercise.type === 'leaf-placement'        && 'Identificação de táxon'}
                   {round.exercise.type === 'sister-group'          && 'Grupo-irmão'}
                   {round.exercise.type === 'taxon-drag'            && 'Identificação por arrastar'}
+                  {round.exercise.type === 'relative-proximity'   && 'Proximidade relativa'}
                 </p>
                 <p className="text-base sm:text-lg text-zinc-100 leading-snug font-medium whitespace-pre-line">
                   {round.exercise.question}
@@ -770,6 +788,14 @@ function AnswerButtons({ module, exercise, onAnswer }: {
     return (
       <p className="text-zinc-400 text-sm text-center py-1 italic">
         Clique no grupo-irmão do táxon destacado na árvore ↑
+      </p>
+    );
+  }
+
+  if (exercise.type === 'relative-proximity') {
+    return (
+      <p className="text-zinc-400 text-sm text-center py-1 italic">
+        Clique no táxon mais próximo do destacado na árvore ↑
       </p>
     );
   }

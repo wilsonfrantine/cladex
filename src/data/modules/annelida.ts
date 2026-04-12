@@ -59,6 +59,20 @@ export const annelidaTrees: CuratedTree[] = [
         taxaInGroup: ['Acanthobdellida', 'Branchiobdellida', 'Hirudinea'],
         type: 'monophyletic',
         traditionalGroupContext: 'Hirudinida',
+        proximityQuestions: [
+          {
+            targetTaxon: 'Hirudinea',
+            closer: 'Branchiobdellida',
+            farther: 'Acanthobdellida',
+            explanation: '**Branchiobdellida** é mais próximo de **Hirudinea**: juntos formam `(Branchiobdellida, Hirudinea)` dentro de Hirudinida, unidos pela perda de cerdas e pela ventosa anterior. **Acanthobdellida** é grupo-irmão desse par — está um nó mais distante de Hirudinea.',
+          },
+          {
+            targetTaxon: 'Hirudinea',
+            closer: 'Lumbricidae',
+            farther: 'Nereidae',
+            explanation: '**Lumbricidae** é mais próximo de **Hirudinea** do que **Nereidae**: minhocas e sanguessugas pertencem a **Clitellata**, enquanto Nereidae está em Errantia (Pleistoannelida). O MRCA de Hirudinea + Lumbricidae é a raiz de Clitellata; o MRCA com Nereidae é a raiz de Pleistoannelida — muito mais antigo.',
+          },
+        ],
         explanation:
           '**Hirudinida** é **monofilético**: Acanthobdellida, Branchiobdellida e Hirudinea compartilham um ancestral exclusivo. Sinapomorfias do clado: ânulos superficiais, ventosa posterior, paredes septais reduzidas e número reduzido de cerdas. Branchiobdellida e Hirudinea compartilham ainda perda de cerdas e ventosa anterior.',
         sisterGroupQuestions: [
@@ -99,6 +113,14 @@ export const annelidaTrees: CuratedTree[] = [
         id: 'clitellata-mono',
         taxaInGroup: ['Naididae', 'Aeolosomatidae', 'Lumbricidae', 'Acanthobdellida', 'Branchiobdellida', 'Hirudinea'],
         type: 'monophyletic',
+        proximityQuestions: [
+          {
+            targetTaxon: 'Echiuridae',
+            closer: 'Naididae',
+            farther: 'Siboglinidae',
+            explanation: '**Naididae** é mais próximo de **Echiuridae**: na topologia de Sedentaria, Echiuridae é grupo-irmão de toda Clitellata — o MRCA de Echiuridae + Naididae é a raiz de `(Echiuridae, Clitellata)`. Siboglinidae está no ramo irmão dessa unidade, separado por um nó a mais.',
+          },
+        ],
         explanation:
           '**Clitellata** é **monofilético**: inclui todos os anelídeos com clitelo — oligoquetos e sanguessugas. Sinapomorfias: clitelo, hermafroditismo, desenvolvimento direto, sistema reprodutivo distinto (fixo) e perda de parapódios.',
         characters: [
@@ -115,6 +137,14 @@ export const annelidaTrees: CuratedTree[] = [
         id: 'errantia-mono',
         taxaInGroup: ['Nereidae', 'Glyceridae'],
         type: 'monophyletic',
+        proximityQuestions: [
+          {
+            targetTaxon: 'Nereidae',
+            closer: 'Glyceridae',
+            farther: 'Sabellidae',
+            explanation: '**Glyceridae** é mais próximo de **Nereidae**: juntos formam **Errantia**, os poliquetos errantes. Sabellidae está em Sedentaria — o MRCA de Nereidae + Sabellidae é a raiz de Pleistoannelida, enquanto o MRCA de Nereidae + Glyceridae é apenas Errantia.',
+          },
+        ],
         explanation:
           '**Errantia** é **monofilético**: Nereidae e Glyceridae são unidos por 2 pares de olhos multicelulares, antena lateral e palpos sólidos. São os poliquetos de vida livre, errantes — daí o nome.',
         sisterGroupQuestions: [

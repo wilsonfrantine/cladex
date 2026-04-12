@@ -31,9 +31,11 @@ export interface TreeViewerProps {
   /** Callback quando o usuário clica em uma folha (leaf-placement) */
   onLeafClick?: (name: string) => void;
   /** Modo de interação — habilita cursor pointer e hover em folhas ou nós */
-  nodeClickMode?: 'character-placement' | 'leaf-placement' | 'sister-group' | 'taxon-drag' | false;
+  nodeClickMode?: 'character-placement' | 'leaf-placement' | 'sister-group' | 'taxon-drag' | 'relative-proximity' | false;
   /** Folha iluminada durante hover de drag (taxon-drag) */
   dragHighlightLeaf?: string;
+  /** Os dois táxons clicáveis no exercício relative-proximity */
+  choiceTaxa?: string[];
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -193,6 +195,7 @@ export default function TreeViewer({
   onLeafClick,
   nodeClickMode = false,
   dragHighlightLeaf,
+  choiceTaxa,
 }: TreeViewerProps) {
 
   // Paleta de cores conforme o tema — Refinada para "Cyber" vs "Naturalist"
@@ -274,6 +277,7 @@ export default function TreeViewer({
 
   const { nodes, links, svgW, svgH, fontSize, ml, offsetY, maxLabelW } = layout;
   const highlightSet = useMemo(() => new Set(highlightTaxa), [highlightTaxa]);
+  const choiceSet   = useMemo(() => new Set(choiceTaxa ?? []), [choiceTaxa]);
   const mrcaNode = useMemo(() => findMrca(nodes, highlightSet), [nodes, highlightSet]);
 
   if (!nodes.length) {
@@ -359,9 +363,11 @@ export default function TreeViewer({
           const labelFontSize = Math.max(7, fontSize * 0.83);
 
           const isHidden = isLeaf && (hiddenLeaves?.includes(node.data.name) ?? false);
+          const isChoice = isLeaf && choiceSet.has(node.data.name);
           const isLeafClickable = isLeaf && !!onLeafClick && (
             (nodeClickMode === 'leaf-placement' && isHidden) ||
-            (nodeClickMode === 'sister-group' && !highlightSet.has(node.data.name))
+            (nodeClickMode === 'sister-group' && !highlightSet.has(node.data.name)) ||
+            (nodeClickMode === 'relative-proximity' && isChoice)
           );
           const isNodeClickable = !isLeaf && (
             (onInternalNodeClick != null) ||
@@ -536,6 +542,18 @@ export default function TreeViewer({
                   strokeWidth={2.5}
                   opacity={0.85}
                   className="animate-soft-pulse"
+                />
+              )}
+
+              {/* Indicador de escolha — relative-proximity (anel âmbar clicável) */}
+              {isChoice && nodeClickMode === 'relative-proximity' && !showAnswerFeedback && (
+                <circle
+                  r={nodeR + 7}
+                  fill="none"
+                  stroke={theme === 'light' ? '#b45309' : '#fbbf24'}
+                  strokeWidth={2}
+                  opacity={0.7}
+                  strokeDasharray="3 2"
                 />
               )}
 

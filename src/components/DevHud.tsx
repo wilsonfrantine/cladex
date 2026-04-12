@@ -25,6 +25,7 @@ const ALL_TYPES: { value: ExerciseType; short: string }[] = [
   { value: 'leaf-placement',       short: 'folha' },
   { value: 'sister-group',         short: 'irmão' },
   { value: 'taxon-drag',           short: 'drag' },
+  { value: 'relative-proximity',   short: 'proxim.' },
 ];
 
 export default function DevHud({

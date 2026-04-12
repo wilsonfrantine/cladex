@@ -4,13 +4,20 @@ import Tutorial from './pages/Tutorial'
 import Training from './pages/Training'
 import Results from './pages/Results'
 import { useCladexStore } from './store'
+import { audioManager } from './audio/manager'
 
 type Page = 'home' | 'tutorial' | 'training' | 'results'
 
 function App() {
   const [page, setPage]     = useState<Page>('home')
   const [module, setModule] = useState<string>('')
-  const theme = useCladexStore((s) => s.theme)
+  const theme      = useCladexStore((s) => s.theme)
+  const audioMuted = useCladexStore((s) => s.audioMuted)
+
+  // Troca a faixa conforme a página — sem iniciar áudio (gesto do usuário é obrigatório)
+  useEffect(() => {
+    audioManager.setTrack(page === 'training' ? 'training' : 'home');
+  }, [page])
 
   useEffect(() => {
     const html = document.documentElement

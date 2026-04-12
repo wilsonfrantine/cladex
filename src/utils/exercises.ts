@@ -1,4 +1,4 @@
-import type { CharacterItem, ExerciseClade, LeafHint, SisterGroupQuestion } from '../data/types';
+import type { CharacterItem, ExerciseClade, LeafHint, SisterGroupQuestion, ProximityQuestion } from '../data/types';
 import type { Exercise, ExerciseType } from '../store';
 
 // ─── clade-classification ─────────────────────────────────────────────────────
@@ -110,6 +110,29 @@ export function sisterGroupToExercise(q: SisterGroupQuestion): Exercise {
     correctAnswer: q.correctSister,
     explanation: q.explanation,
     meta: { highlightTaxa: [q.targetTaxon] },
+  };
+}
+
+// ─── relative-proximity ───────────────────────────────────────────────────────
+
+const PROXIMITY_QUESTIONS: Array<(t: string, b: string, c: string) => string> = [
+  (t, b, c) => `${t} está mais próximo de ${b} ou de ${c}?`,
+  (t, b, c) => `Qual compartilha um ancestral mais recente com ${t}: ${b} ou ${c}?`,
+  (t, b, c) => `Em relação a ${t}, quem é o parente mais próximo: ${b} ou ${c}?`,
+];
+
+export function proximityToExercise(q: ProximityQuestion): Exercise {
+  // Embaralha os dois táxons para que a resposta correta não seja sempre a mesma posição
+  const [choice1, choice2] = Math.random() < 0.5
+    ? [q.closer, q.farther]
+    : [q.farther, q.closer];
+  const template = PROXIMITY_QUESTIONS[Math.floor(Math.random() * PROXIMITY_QUESTIONS.length)];
+  return {
+    type: 'relative-proximity',
+    question: template(q.targetTaxon, choice1, choice2),
+    correctAnswer: q.closer,
+    explanation: q.explanation,
+    meta: { highlightTaxa: [q.targetTaxon], choiceTaxa: [choice1, choice2] },
   };
 }
 

@@ -7,7 +7,8 @@ export type ExerciseType =
   | 'character-placement'
   | 'leaf-placement'
   | 'sister-group'
-  | 'taxon-drag';
+  | 'taxon-drag'
+  | 'relative-proximity';
 
 export interface Exercise {
   type: ExerciseType;
@@ -19,6 +20,8 @@ export interface Exercise {
     hiddenLeaf?: string;
     cardLabel?: string;
     hints?: string[];
+    /** Dois táxons clicáveis no exercício relative-proximity */
+    choiceTaxa?: string[];
   };
 }
 
@@ -68,6 +71,7 @@ function emptyStats(): SessionStats {
       'leaf-placement':       { correct: 0, incorrect: 0 },
       'sister-group':         { correct: 0, incorrect: 0 },
       'taxon-drag':           { correct: 0, incorrect: 0 },
+      'relative-proximity':   { correct: 0, incorrect: 0 },
     },
     byModule: {},
   };
@@ -86,6 +90,8 @@ interface CladexState {
   saveTree: (newick: string, moduleId: string, label: string) => void;
   removeSavedTree: (id: string) => void;
   toggleTheme: () => void;
+  audioMuted: boolean;
+  toggleAudioMuted: () => void;
 }
 
 export const useCladexStore = create<CladexState>()(
@@ -95,6 +101,7 @@ export const useCladexStore = create<CladexState>()(
       allTimeStats: emptyStats(),
       savedTrees: [],
       theme: 'dark',
+      audioMuted: true, // padrão seguro — o browser bloqueia autoplay
       errorLog: [],
       answerHistory: [],
 
@@ -150,6 +157,9 @@ export const useCladexStore = create<CladexState>()(
 
       toggleTheme: () =>
         set((s) => ({ theme: s.theme === 'dark' ? 'light' : 'dark' })),
+
+      toggleAudioMuted: () =>
+        set((s) => ({ audioMuted: !s.audioMuted })),
     }),
     {
       name: 'cladex-storage',
@@ -157,6 +167,7 @@ export const useCladexStore = create<CladexState>()(
         savedTrees: s.savedTrees,
         allTimeStats: s.allTimeStats,
         theme: s.theme,
+        audioMuted: s.audioMuted,
         errorLog: s.errorLog,
         answerHistory: s.answerHistory,
       }),

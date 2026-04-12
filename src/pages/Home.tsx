@@ -2,6 +2,7 @@ import { Play, Zap, BookOpen, ChevronRight, Sun, Moon, BarChart2, Share2 } from 
 import { useMemo, useState } from 'react'
 import TreePulse from '../components/TreePulse'
 import { useCladexStore } from '../store'
+import AudioToggle from '../components/AudioToggle'
 
 const APP_URL = 'https://wilsonfrantine.github.io/cladex/'
 const AUTHOR_URL = 'https://wilsonfrantine.github.io/'
@@ -93,6 +94,7 @@ export default function Home({ onStartTraining, onOpenTutorial, onOpenResults }:
 
       {/* ── Botões de controle (canto superior direito) ───────────────────── */}
       <div className="fixed top-3 right-3 z-20 flex items-center gap-1.5">
+        <AudioToggle />
         <button
           onClick={shareApp}
           className="w-7 h-7 flex items-center justify-center rounded-full bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 text-zinc-500 hover:text-zinc-300 transition-colors backdrop-blur-sm"
