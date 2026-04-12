@@ -477,14 +477,14 @@ export default function Training({ module, onBack, onViewResults }: TrainingProp
       <div className={`shrink-0 flex items-center gap-3 px-5 py-3 border-b transition-all duration-700 ${theme === 'light' ? 'bg-zinc-900/5 border-zinc-800/20' : 'bg-zinc-950/50 border-zinc-800/40'} backdrop-blur-md relative z-10`}>
 
         {/* Logo — link para home */}
-        <button onClick={onBack} className="flex flex-col -space-y-1 select-none hover:opacity-70 transition-opacity">
+        <button onClick={() => { fxManager.back(); onBack(); }} className="flex flex-col -space-y-1 select-none hover:opacity-70 transition-opacity">
           <span className="text-base font-black tracking-tighter text-zinc-100">Clade<span className="text-emerald-500">X</span></span>
         </button>
 
         <div className="w-px h-6 bg-zinc-800/50 mx-1" />
 
         <button
-          onClick={onBack}
+          onClick={() => { fxManager.back(); onBack(); }}
           className="btn-juicy p-1.5 rounded-xl hover:bg-zinc-800/50 text-zinc-500 hover:text-zinc-200 transition-all"
         >
           <ArrowLeft size={18} />

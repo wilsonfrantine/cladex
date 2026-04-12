@@ -1,5 +1,5 @@
 import { Play, Zap, BookOpen, ChevronRight } from 'lucide-react'
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState } from 'react'
 import TreePulse from '../components/TreePulse'
 import { useCladexStore } from '../store'
 import SettingsPanel from '../components/SettingsPanel'
@@ -75,12 +75,6 @@ export default function Home({ onStartTraining, onOpenTutorial, onOpenResults }:
     () => localStorage.getItem('seenStorageNotice') !== 'true'
   )
 
-  // Som de abertura — sincroniza com a animação inicial da página
-  useEffect(() => {
-    const id = setTimeout(() => fxManager.intro(), 300)
-    return () => clearTimeout(id)
-  }, [])
-
   const dismissStorageNotice = () => {
     localStorage.setItem('seenStorageNotice', 'true')
     setShowStorageNotice(false)
@@ -122,8 +116,7 @@ export default function Home({ onStartTraining, onOpenTutorial, onOpenResults }:
 
           {/* Tutorial — Estilo Glassmorphism secundário */}
           <button
-            onClick={onOpenTutorial}
-            onMouseEnter={() => fxManager.hover()}
+            onClick={() => { fxManager.click(); onOpenTutorial(); }}
             className="btn-juicy group w-full rounded-2xl bg-zinc-900/40 border border-zinc-800/50 hover:border-zinc-700 hover:bg-zinc-800/40 backdrop-blur-md transition-all duration-300 px-4 py-4 text-left flex items-center gap-4"
           >
             <div className="w-9 h-9 rounded-xl bg-zinc-800/80 border border-zinc-700/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
@@ -140,8 +133,7 @@ export default function Home({ onStartTraining, onOpenTutorial, onOpenResults }:
 
           {/* Escolher Grupo — Estilo Cyber-Emerald */}
           <button
-            onClick={() => setModulesOpen(o => !o)}
-            onMouseEnter={() => fxManager.hover()}
+            onClick={() => { fxManager.click(); setModulesOpen(o => !o); }}
             className="btn-juicy group w-full rounded-3xl bg-emerald-950/40 border border-emerald-500/20 hover:border-emerald-500/50 hover:bg-emerald-900/40 backdrop-blur-xl transition-all duration-500 p-6 text-left relative overflow-hidden"
           >
             {/* Efeito de luz interna */}
@@ -175,7 +167,6 @@ export default function Home({ onStartTraining, onOpenTutorial, onOpenResults }:
                 <button
                   key={mod.id}
                   onClick={() => { fxManager.click(); onStartTraining(mod.id); }}
-                  onMouseEnter={() => fxManager.hover()}
                   className="btn-juicy group w-full rounded-2xl bg-zinc-900/60 border border-zinc-800/80 hover:border-emerald-500/40 hover:bg-emerald-950/20 backdrop-blur-md transition-all duration-200 px-5 py-4 text-left flex items-center gap-4"
                 >
                   <span className="text-2xl filter grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-125" role="img" aria-label={mod.name}>
@@ -196,7 +187,6 @@ export default function Home({ onStartTraining, onOpenTutorial, onOpenResults }:
           {/* Desafio do Dia — Estilo Neon-Indigo */}
           <button
             onClick={() => { fxManager.click(); onStartTraining(dailyMod.id); }}
-            onMouseEnter={() => fxManager.hover()}
             className="btn-juicy group w-full rounded-3xl bg-indigo-950/40 border border-indigo-500/20 hover:border-indigo-500/50 hover:bg-indigo-900/40 backdrop-blur-xl transition-all duration-500 p-6 text-left relative overflow-hidden"
           >
             <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-colors" />

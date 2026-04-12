@@ -1,7 +1,8 @@
 import { useRef, useEffect, useState } from 'react';
-import { Settings, Volume2, VolumeX, Music, Sun, Moon, Share2, BarChart2 } from 'lucide-react';
+import { Menu, Volume2, VolumeX, Music, Sun, Moon, Share2, BarChart2 } from 'lucide-react';
 import { useCladexStore } from '../store';
 import { audioManager } from '../audio/manager';
+import { fxManager } from '../audio/fx';
 
 interface SettingsPanelProps {
   showShare?: boolean;
@@ -37,13 +38,17 @@ export default function SettingsPanel({
     return () => document.removeEventListener('mousedown', handler);
   }, [open]);
 
-  // audioManager.play() deve ser chamado dentro do event handler (política de autoplay)
+  // audioManager.play() deve ser chamado dentro do event handler (política de autoplay).
+  // fxManager.touch() inicializa o AudioContext no mesmo gesto — libera as duas vias de som.
   const handleAudioToggle = () => {
+    fxManager.touch(); // garante que o AudioContext esteja pronto para o click
     if (audioMuted) {
       audioManager.play();
+      if (fxMuted) toggleFxMuted(); // ativa FX junto à música (sync — Zustand)
     } else {
       audioManager.pause();
     }
+    fxManager.click(); // toca depois dos toggles: audível se FX está/ficou ativo
     toggleAudioMuted();
   };
 
@@ -55,10 +60,10 @@ export default function SettingsPanel({
       <button
         onClick={() => setOpen(o => !o)}
         className="w-7 h-7 flex items-center justify-center rounded-full bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 text-zinc-500 hover:text-zinc-300 transition-colors backdrop-blur-sm"
-        aria-label="Configurações"
+        aria-label="Menu"
         aria-expanded={open}
       >
-        <Settings size={13} />
+        <Menu size={13} />
       </button>
 
       {/* Painel flutuante */}
@@ -72,15 +77,15 @@ export default function SettingsPanel({
             <span className="ml-auto text-[10px] text-zinc-600">{audioMuted ? 'off' : 'on'}</span>
           </button>
 
-          {/* FX */}
-          <button onClick={toggleFxMuted} className={row}>
+          {/* FX — click toca antes do toggle: audível ao desligar, silencioso ao ligar */}
+          <button onClick={() => { fxManager.click(); toggleFxMuted(); }} className={row}>
             <Music size={15} />
             <span>FX</span>
             <span className="ml-auto text-[10px] text-zinc-600">{fxMuted ? 'off' : 'on'}</span>
           </button>
 
           {/* Tema */}
-          <button onClick={toggleTheme} className={row}>
+          <button onClick={() => { fxManager.click(); toggleTheme(); }} className={row}>
             {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
             <span>{theme === 'dark' ? 'Modo claro' : 'Modo escuro'}</span>
           </button>
@@ -91,14 +96,14 @@ export default function SettingsPanel({
           )}
 
           {showShare && onShare && (
-            <button onClick={() => { onShare(); setOpen(false); }} className={row}>
+            <button onClick={() => { fxManager.click(); onShare(); setOpen(false); }} className={row}>
               <Share2 size={15} />
               <span>Compartilhar</span>
             </button>
           )}
 
           {showResults && onResults && (
-            <button onClick={() => { onResults(); setOpen(false); }} className={row}>
+            <button onClick={() => { fxManager.click(); onResults(); setOpen(false); }} className={row}>
               <BarChart2 size={15} />
               <span>Resultados</span>
             </button>

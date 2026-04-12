@@ -3,16 +3,35 @@ import Home from './pages/Home'
 import Tutorial from './pages/Tutorial'
 import Training from './pages/Training'
 import Results from './pages/Results'
+import SplashScreen from './components/SplashScreen'
 import { useCladexStore } from './store'
 import { audioManager } from './audio/manager'
+import { fxManager } from './audio/fx'
 
 type Page = 'home' | 'tutorial' | 'training' | 'results'
 
 function App() {
   const [page, setPage]     = useState<Page>('home')
   const [module, setModule] = useState<string>('')
-  const theme      = useCladexStore((s) => s.theme)
-  const audioMuted = useCladexStore((s) => s.audioMuted)
+  const [splashVisible, setSplashVisible] = useState(true)
+  const [splashFading, setSplashFading]   = useState(false)
+  const theme = useCladexStore((s) => s.theme)
+
+  const dismissSplash = (withSound: boolean) => {
+    if (withSound) {
+      audioManager.play();          // gesto do usuário — libera autoplay
+      fxManager.touch();            // inicializa AudioContext de FX no mesmo gesto
+      const s = useCladexStore.getState();
+      if (s.audioMuted) s.toggleAudioMuted();
+      if (s.fxMuted)    s.toggleFxMuted();
+      fxManager.intro();            // Zustand é síncrono — fxMuted já é false aqui
+    }
+    setSplashFading(true);
+    setTimeout(() => setSplashVisible(false), 700);
+  }
+
+  // Hover global — registra uma vez, cobre todos os botões/links da app
+  useEffect(() => { fxManager.hookGlobalHover(); }, [])
 
   // Troca a faixa conforme a página — sem iniciar áudio (gesto do usuário é obrigatório)
   useEffect(() => {
@@ -61,6 +80,16 @@ function App() {
           <Results onBack={() => setPage('home')} />
         )}
       </main>
+
+      {/* Splash — cobre o conteúdo até o usuário interagir */}
+      {splashVisible && (
+        <SplashScreen
+          theme={theme}
+          fading={splashFading}
+          onStart={() => dismissSplash(true)}
+          onSkip={() => dismissSplash(false)}
+        />
+      )}
     </div>
   )
 }

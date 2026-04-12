@@ -390,6 +390,7 @@ export default function TreeViewer({
               }
               style={{ cursor: (isLeafClickable || isNodeClickable) ? 'pointer' : 'default' }}
               {...(isDragTarget ? { 'data-leaf-name': node.data.name } : {})}
+              {...((isLeafClickable || isNodeClickable) ? { 'data-fx-hover': '1' } : {})}
             >
               {/* Halo pulsante em nós internos clicáveis (character-placement) */}
               {isNodeClickable && !showAnswerFeedback && (
