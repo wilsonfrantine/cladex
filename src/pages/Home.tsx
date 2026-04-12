@@ -1,4 +1,4 @@
-import { Play, Zap, BookOpen, ChevronRight } from 'lucide-react'
+import { Play, Zap, BookOpen, ChevronRight, Map } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import TreePulse from '../components/TreePulse'
 import { useCladexStore } from '../store'
@@ -30,6 +30,7 @@ interface HomeProps {
   onStartTraining: (module: string) => void
   onOpenTutorial: () => void
   onOpenResults: () => void
+  onOpenTree: () => void
 }
 
 // ── Módulos — ícone emoji como placeholder (equivalente web do rphylopic/PhyloPic)
@@ -67,7 +68,7 @@ const modules = [
   },
 ]
 
-export default function Home({ onStartTraining, onOpenTutorial, onOpenResults }: HomeProps) {
+export default function Home({ onStartTraining, onOpenTutorial, onOpenResults, onOpenTree }: HomeProps) {
   const dailyMod = useMemo(() => modules.find(m => m.id === 'metazoa')!, [])
   const [modulesOpen, setModulesOpen] = useState(false)
   const { theme } = useCladexStore()
@@ -129,6 +130,26 @@ export default function Home({ onStartTraining, onOpenTutorial, onOpenResults }:
               <p className="text-[10px] text-zinc-600 uppercase tracking-wider mt-0.5">Fundamentos da Sistemática</p>
             </div>
             <ChevronRight className="w-4 h-4 text-zinc-700 group-hover:text-zinc-400 shrink-0 transition-transform group-hover:translate-x-1" />
+          </button>
+
+          {/* Árvore da Vida */}
+          <button
+            onClick={() => { fxManager.click(); onOpenTree(); }}
+            className="btn-juicy group w-full rounded-2xl bg-emerald-500/5 border border-emerald-500/10 hover:border-emerald-500/30 hover:bg-emerald-500/10 backdrop-blur-md transition-all duration-300 px-4 py-4 text-left flex items-center gap-4"
+          >
+            <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+              <Map className="w-4 h-4 text-emerald-400" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-bold text-emerald-400 group-hover:text-emerald-300 transition-colors">
+                Árvore da Vida
+              </p>
+              <p className="text-[10px] text-emerald-600 uppercase tracking-widest mt-0.5 font-black">Mapa de Conquistas</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-bold text-emerald-600/50 uppercase tracking-tighter">Explorar</span>
+              <ChevronRight className="w-4 h-4 text-emerald-700 group-hover:text-emerald-400 shrink-0 transition-transform group-hover:translate-x-1" />
+            </div>
           </button>
 
           {/* Escolher Grupo — Estilo Cyber-Emerald */}

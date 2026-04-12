@@ -179,7 +179,7 @@ class FxManagerClass {
       if (el !== lastTarget) return;
       // Só limpa se o cursor sair do parent clicável, não de um filho para outro filho
       const rel = me.relatedTarget as Node | null;
-      if (!rel || !el.contains(rel)) lastTarget = null;
+      if (el && (!rel || !el.contains(rel))) lastTarget = null;
     });
   }
 }

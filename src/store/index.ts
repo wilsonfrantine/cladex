@@ -84,6 +84,9 @@ interface CladexState {
   theme: 'dark' | 'light';
   errorLog: ErrorRecord[];
   answerHistory: AnswerRecord[];
+  
+  // Tree of Life state
+  unlockedCards: string[];
 
   recordAnswer: (type: ExerciseType, correct: boolean, moduleId: string, question: string) => void;
   resetSession: () => void;
@@ -94,6 +97,9 @@ interface CladexState {
   toggleAudioMuted: () => void;
   fxMuted: boolean;
   toggleFxMuted: () => void;
+
+  // Tree of Life actions
+  unlockCard: (id: string) => void;
 }
 
 export const useCladexStore = create<CladexState>()(
@@ -107,8 +113,11 @@ export const useCladexStore = create<CladexState>()(
       fxMuted: true,    // usuário habilita explicitamente
       errorLog: [],
       answerHistory: [],
+      unlockedCards: [],
+      stickyNotes: [],
 
       recordAnswer: (type, correct, moduleId, question) => {
+        const currentAllTime = get().allTimeStats;
         const update = (s: SessionStats): SessionStats => ({
           treesAttempted: s.treesAttempted + 1,
           correct: s.correct + (correct ? 1 : 0),
@@ -128,17 +137,43 @@ export const useCladexStore = create<CladexState>()(
             },
           },
         });
+
+        const updatedAllTime = update(currentAllTime);
         const newError: ErrorRecord | null = correct ? null : {
           ts: Date.now(), moduleId, type, question: question.slice(0, 80),
         };
         const newRecord: AnswerRecord = { ts: Date.now(), correct };
+        
         set({
           sessionStats: update(get().sessionStats),
-          allTimeStats: update(get().allTimeStats),
+          allTimeStats: updatedAllTime,
           errorLog: newError
             ? [newError, ...get().errorLog].slice(0, 100)
             : get().errorLog,
           answerHistory: [...get().answerHistory, newRecord].slice(-300),
+        });
+
+        // Trigger auto-unlock check (async to avoid blocking)
+        import('../data/treeoflife').then(({ TREE_OF_LIFE }) => {
+          const newlyUnlocked: string[] = [];
+          const currentlyUnlocked = get().unlockedCards;
+          
+          const traverse = (node: any) => {
+            if (node.unlockModule && node.unlockMinCorrect !== undefined) {
+              const modStats = updatedAllTime.byModule[node.unlockModule];
+              if (modStats && modStats.correct >= node.unlockMinCorrect) {
+                if (!currentlyUnlocked.includes(node.id)) {
+                  newlyUnlocked.push(node.id);
+                }
+              }
+            }
+            node.children?.forEach(traverse);
+          };
+          
+          traverse(TREE_OF_LIFE);
+          if (newlyUnlocked.length > 0) {
+            set({ unlockedCards: [...currentlyUnlocked, ...newlyUnlocked] });
+          }
         });
       },
 
@@ -166,6 +201,10 @@ export const useCladexStore = create<CladexState>()(
 
       toggleFxMuted: () =>
         set((s) => ({ fxMuted: !s.fxMuted })),
+
+      unlockCard: (id) => set((s) => ({
+        unlockedCards: s.unlockedCards.includes(id) ? s.unlockedCards : [...s.unlockedCards, id]
+      })),
     }),
     {
       name: 'cladex-storage',
@@ -177,7 +216,9 @@ export const useCladexStore = create<CladexState>()(
         fxMuted: s.fxMuted,
         errorLog: s.errorLog,
         answerHistory: s.answerHistory,
+        unlockedCards: s.unlockedCards,
       }),
     },
   ),
 );
+

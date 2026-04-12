@@ -3,12 +3,13 @@ import Home from './pages/Home'
 import Tutorial from './pages/Tutorial'
 import Training from './pages/Training'
 import Results from './pages/Results'
+import TreeOfLife from './pages/TreeOfLife'
 import SplashScreen from './components/SplashScreen'
 import { useCladexStore } from './store'
 import { audioManager } from './audio/manager'
 import { fxManager } from './audio/fx'
 
-type Page = 'home' | 'tutorial' | 'training' | 'results'
+type Page = 'home' | 'tutorial' | 'training' | 'results' | 'tree-of-life'
 
 function App() {
   const [page, setPage]     = useState<Page>('home')
@@ -62,6 +63,7 @@ function App() {
             onStartTraining={startTraining}
             onOpenTutorial={() => setPage('tutorial')}
             onOpenResults={() => setPage('results')}
+            onOpenTree={() => setPage('tree-of-life')}
           />
         )}
         {page === 'tutorial' && (
@@ -78,6 +80,9 @@ function App() {
         )}
         {page === 'results' && (
           <Results onBack={() => setPage('home')} />
+        )}
+        {page === 'tree-of-life' && (
+          <TreeOfLife onBack={() => setPage('home')} />
         )}
       </main>
 

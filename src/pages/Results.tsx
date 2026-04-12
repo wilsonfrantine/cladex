@@ -11,6 +11,9 @@ const TYPE_LABELS: Record<ExerciseType, string> = {
   'homology-type':        'Tipo de Homologia',
   'character-placement':  'Posicionamento de Caráter',
   'leaf-placement':       'Identificação de Táxon',
+  'sister-group':         'Grupo-Irmão',
+  'taxon-drag':           'Colecionável',
+  'relative-proximity':   'Proximidade',
 };
 
 const MODULE_LABELS: Record<string, string> = {

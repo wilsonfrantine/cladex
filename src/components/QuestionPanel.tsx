@@ -142,6 +142,9 @@ function labelForType(type: Exercise['type']): string {
     'homology-type':        'Tipo de homologia',
     'character-placement':  'Posicionamento de caráter',
     'leaf-placement':       'Identificação de táxon',
+    'sister-group':         'Grupo-Irmão',
+    'taxon-drag':           'Colecionável',
+    'relative-proximity':   'Proximidade',
   };
   return labels[type];
 }
