@@ -13,7 +13,7 @@ interface TreeOfLifeProps {
 
 export default function TreeOfLife({ onBack }: TreeOfLifeProps) {
   const [selectedNode, setSelectedNode] = useState<TolNode | null>(null);
-  const [layoutMode, setLayoutMode] = useState<LayoutMode>('circular');
+  const [layoutMode, setLayoutMode] = useState<LayoutMode>('vertical');
   
   const theme = useCladexStore((s) => s.theme);
   const unlockedCards = useCladexStore((s) => s.unlockedCards);
@@ -25,7 +25,7 @@ export default function TreeOfLife({ onBack }: TreeOfLifeProps) {
 
   const cycleLayout = () => {
     fxManager.click();
-    const modes: LayoutMode[] = ['circular', 'horizontal', 'vertical'];
+    const modes: LayoutMode[] = ['vertical', 'circular', 'horizontal'];
     const next = modes[(modes.indexOf(layoutMode) + 1) % modes.length];
     setLayoutMode(next);
   };

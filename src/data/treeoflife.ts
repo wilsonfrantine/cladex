@@ -1,7 +1,7 @@
 export type TolNodeType = 'internal' | 'card' | 'collapsed' | 'placeholder';
 
 export type TolRank =
-  | 'life'
+  | 'luca'
   | 'domain'
   | 'kingdom'
   | 'supergroup'
@@ -24,52 +24,73 @@ export interface TolNode {
   collapsedIcon?: string;
   unlockModule?: string;
   unlockMinCorrect?: number;
+  /** Estimativa de espécies para escala visual */
+  speciesCount?: number;
 }
 
 export const TREE_OF_LIFE: TolNode = {
-  id: 'life',
-  name: 'Vida',
-  rank: 'life',
+  id: 'luca',
+  name: 'LUCA',
+  rank: 'luca',
   type: 'internal',
+  speciesCount: 2300000, // Total estimado de espécies descritas
   children: [
-    { id: 'bacteria', name: 'Bacteria', type: 'collapsed', collapsedLabel: '~10³⁰ procariotos' },
-    { id: 'archaea', name: 'Archaea', type: 'collapsed', collapsedLabel: '~10.000 spp conhecidas' },
+    { 
+      id: 'bacteria', 
+      name: 'Bacteria', 
+      type: 'collapsed', 
+      collapsedLabel: '~1.000.000 spp descritas',
+      speciesCount: 1000000 
+    },
+    { 
+      id: 'archaea', 
+      name: 'Archaea', 
+      type: 'collapsed', 
+      collapsedLabel: '~10.000 spp conhecidas',
+      speciesCount: 10000 
+    },
     {
       id: 'eukarya',
       name: 'Eukarya',
       rank: 'domain',
       type: 'internal',
+      speciesCount: 1300000,
       children: [
-        { id: 'fungi', name: 'Fungi', type: 'collapsed', collapsedLabel: 'Cogumelos e leveduras' },
-        { id: 'plantae', name: 'Plantae', type: 'collapsed', collapsedLabel: 'Plantas terrestres e algas' },
-        { id: 'protozoa', name: 'Protozoa', type: 'collapsed', collapsedLabel: 'Linhagens unicelulares' },
+        { id: 'fungi', name: 'Fungi', type: 'collapsed', collapsedLabel: '150.000 spp', speciesCount: 150000 },
+        { id: 'plantae', name: 'Plantae', type: 'collapsed', collapsedLabel: '400.000 spp', speciesCount: 400000 },
+        { id: 'protozoa', name: 'Protozoa', type: 'collapsed', collapsedLabel: 'Linhagens unicelulares', speciesCount: 50000 },
         {
           id: 'animalia',
           name: 'Animalia',
           rank: 'kingdom',
           type: 'internal',
+          speciesCount: 1500000,
           children: [
-            { id: 'porifera', name: 'Porifera', type: 'card', cardTaxon: 'porifera', unlockModule: 'metazoa', unlockMinCorrect: 5 },
-            { id: 'cnidaria', name: 'Cnidaria', type: 'card', cardTaxon: 'cnidaria', unlockModule: 'metazoa', unlockMinCorrect: 5 },
+            { id: 'porifera', name: 'Porifera', type: 'card', cardTaxon: 'porifera', unlockModule: 'metazoa', unlockMinCorrect: 5, speciesCount: 8500 },
+            { id: 'cnidaria', name: 'Cnidaria', type: 'card', cardTaxon: 'cnidaria', unlockModule: 'metazoa', unlockMinCorrect: 5, speciesCount: 11000 },
             {
               id: 'bilateria',
               name: 'Bilateria',
               type: 'internal',
+              speciesCount: 1450000,
               children: [
                 {
                   id: 'nephrozoa',
                   name: 'Nephrozoa',
                   type: 'internal',
+                  speciesCount: 1440000,
                   children: [
                     {
                       id: 'protostomia',
                       name: 'Protostomia',
                       type: 'internal',
+                      speciesCount: 1350000,
                       children: [
                         {
                           id: 'spiralia',
                           name: 'Spiralia',
                           type: 'internal',
+                          speciesCount: 150000,
                           children: [
                             {
                               id: 'platyhelminthes',
@@ -79,15 +100,17 @@ export const TREE_OF_LIFE: TolNode = {
                               cardTaxon: 'platyhelminthes',
                               unlockModule: 'metazoa',
                               unlockMinCorrect: 5,
+                              speciesCount: 25000,
                               children: [
-                                { id: 'turbellaria', name: 'Turbellaria', type: 'placeholder', cardTaxon: 'planaria' },
-                                { id: 'cestoda', name: 'Cestoda', type: 'placeholder', cardTaxon: 'taenia' },
+                                { id: 'turbellaria', name: 'Turbellaria', type: 'placeholder', cardTaxon: 'planaria', speciesCount: 4500 },
+                                { id: 'cestoda', name: 'Cestoda', type: 'placeholder', cardTaxon: 'taenia', speciesCount: 6000 },
                               ],
                             },
                             {
                               id: 'lophotrochozoa',
                               name: 'Lophotrochozoa',
                               type: 'internal',
+                              speciesCount: 125000,
                               children: [
                                 {
                                   id: 'mollusca',
@@ -96,7 +119,8 @@ export const TREE_OF_LIFE: TolNode = {
                                   type: 'card',
                                   cardTaxon: 'mollusca',
                                   unlockModule: 'metazoa',
-                                  unlockMinCorrect: 5
+                                  unlockMinCorrect: 5,
+                                  speciesCount: 85000
                                 },
                                 {
                                   id: 'annelida',
@@ -106,21 +130,23 @@ export const TREE_OF_LIFE: TolNode = {
                                   cardTaxon: 'annelida',
                                   unlockModule: 'annelida',
                                   unlockMinCorrect: 5,
+                                  speciesCount: 22000,
                                   children: [
                                     {
                                       id: 'clitellata',
                                       name: 'Clitellata',
                                       type: 'internal',
+                                      speciesCount: 10000,
                                       children: [
-                                        { id: 'oligochaeta', name: 'Oligochaeta', type: 'card', cardTaxon: 'oligochaeta', unlockModule: 'annelida', unlockMinCorrect: 5 },
-                                        { id: 'hirudinida', name: 'Hirudinida', type: 'card', cardTaxon: 'hirudinida', unlockModule: 'annelida', unlockMinCorrect: 5 },
+                                        { id: 'oligochaeta', name: 'Oligochaeta', type: 'card', cardTaxon: 'oligochaeta', unlockModule: 'annelida', unlockMinCorrect: 5, speciesCount: 6000 },
+                                        { id: 'hirudinida', name: 'Hirudinida', type: 'card', cardTaxon: 'hirudinida', unlockModule: 'annelida', unlockMinCorrect: 5, speciesCount: 700 },
                                       ],
                                     },
-                                    { id: 'errantia', name: 'Errantia', type: 'card', cardTaxon: 'nereidae', unlockModule: 'annelida', unlockMinCorrect: 5 },
+                                    { id: 'errantia', name: 'Errantia', type: 'card', cardTaxon: 'nereidae', unlockModule: 'annelida', unlockMinCorrect: 5, speciesCount: 10000 },
                                   ],
                                 },
-                                { id: 'brachiopoda', name: 'Brachiopoda', type: 'collapsed', collapsedLabel: 'Lampshells' },
-                                { id: 'bryozoa', name: 'Bryozoa', type: 'collapsed', collapsedLabel: 'Moss animals' },
+                                { id: 'brachiopoda', name: 'Brachiopoda', type: 'collapsed', collapsedLabel: 'Lampshells', speciesCount: 450 },
+                                { id: 'bryozoa', name: 'Bryozoa', type: 'collapsed', collapsedLabel: 'Moss animals', speciesCount: 6000 },
                               ]
                             }
                           ]
@@ -129,9 +155,10 @@ export const TREE_OF_LIFE: TolNode = {
                           id: 'ecdysozoa',
                           name: 'Ecdysozoa',
                           type: 'internal',
+                          speciesCount: 1200000,
                           children: [
-                            { id: 'nematoda', name: 'Nematoda', rank: 'phylum', type: 'card', cardTaxon: 'nematoda', unlockModule: 'metazoa', unlockMinCorrect: 5 },
-                            { id: 'tardigrada', name: 'Tardigrada', type: 'collapsed', collapsedLabel: 'Water bears' },
+                            { id: 'nematoda', name: 'Nematoda', rank: 'phylum', type: 'card', cardTaxon: 'nematoda', unlockModule: 'metazoa', unlockMinCorrect: 5, speciesCount: 25000 },
+                            { id: 'tardigrada', name: 'Tardigrada', type: 'collapsed', collapsedLabel: 'Water bears', speciesCount: 1300 },
                             {
                               id: 'arthropoda',
                               name: 'Arthropoda',
@@ -140,11 +167,12 @@ export const TREE_OF_LIFE: TolNode = {
                               cardTaxon: 'arthropoda',
                               unlockModule: 'arthropoda',
                               unlockMinCorrect: 5,
+                              speciesCount: 1100000,
                               children: [
-                                { id: 'insecta', name: 'Insecta', type: 'card', cardTaxon: 'insecta', unlockModule: 'arthropoda', unlockMinCorrect: 5 },
-                                { id: 'arachnida', name: 'Arachnida', type: 'card', cardTaxon: 'arachnida', unlockModule: 'arthropoda', unlockMinCorrect: 5 },
-                                { id: 'crustacea', name: 'Crustacea', type: 'card', cardTaxon: 'crustacea', unlockModule: 'arthropoda', unlockMinCorrect: 5 },
-                                { id: 'myriapoda', name: 'Myriapoda', type: 'card', cardTaxon: 'myriapoda', unlockModule: 'arthropoda', unlockMinCorrect: 5 },
+                                { id: 'insecta', name: 'Insecta', type: 'card', cardTaxon: 'insecta', unlockModule: 'arthropoda', unlockMinCorrect: 5, speciesCount: 1000000 },
+                                { id: 'arachnida', name: 'Arachnida', type: 'card', cardTaxon: 'arachnida', unlockModule: 'arthropoda', unlockMinCorrect: 5, speciesCount: 100000 },
+                                { id: 'crustacea', name: 'Crustacea', type: 'card', cardTaxon: 'crustacea', unlockModule: 'arthropoda', unlockMinCorrect: 5, speciesCount: 67000 },
+                                { id: 'myriapoda', name: 'Myriapoda', type: 'card', cardTaxon: 'myriapoda', unlockModule: 'arthropoda', unlockMinCorrect: 5, speciesCount: 16000 },
                               ],
                             },
                           ]
@@ -155,9 +183,10 @@ export const TREE_OF_LIFE: TolNode = {
                       id: 'deuterostomia',
                       name: 'Deuterostomia',
                       type: 'internal',
+                      speciesCount: 70000,
                       children: [
-                        { id: 'echinodermata', name: 'Echinodermata', rank: 'phylum', type: 'card', cardTaxon: 'echinodermata', unlockModule: 'metazoa', unlockMinCorrect: 5 },
-                        { id: 'hemichordata', name: 'Hemichordata', rank: 'phylum', type: 'card', cardTaxon: 'hemichordata', unlockModule: 'chordata-basal', unlockMinCorrect: 5 },
+                        { id: 'echinodermata', name: 'Echinodermata', rank: 'phylum', type: 'card', cardTaxon: 'echinodermata', unlockModule: 'metazoa', unlockMinCorrect: 5, speciesCount: 7000 },
+                        { id: 'hemichordata', name: 'Hemichordata', rank: 'phylum', type: 'card', cardTaxon: 'hemichordata', unlockModule: 'chordata-basal', unlockMinCorrect: 5, speciesCount: 130 },
                         {
                           id: 'chordata',
                           name: 'Chordata',
@@ -166,21 +195,23 @@ export const TREE_OF_LIFE: TolNode = {
                           cardTaxon: 'chordata',
                           unlockModule: 'chordata-basal',
                           unlockMinCorrect: 5,
+                          speciesCount: 65000,
                           children: [
-                            { id: 'cephalochordata', name: 'Cephalochordata', type: 'card', cardTaxon: 'cephalochordata', unlockModule: 'chordata-basal', unlockMinCorrect: 5 },
-                            { id: 'urochordata', name: 'Urochordata', type: 'card', cardTaxon: 'urochordata', unlockModule: 'chordata-basal', unlockMinCorrect: 5 },
+                            { id: 'cephalochordata', name: 'Cephalochordata', type: 'card', cardTaxon: 'cephalochordata', unlockModule: 'chordata-basal', unlockMinCorrect: 5, speciesCount: 30 },
+                            { id: 'urochordata', name: 'Urochordata', type: 'card', cardTaxon: 'urochordata', unlockModule: 'chordata-basal', unlockMinCorrect: 5, speciesCount: 3000 },
                             {
                               id: 'vertebrata',
                               name: 'Vertebrata',
                               type: 'internal',
+                              speciesCount: 62000,
                               children: [
-                                { id: 'myxini', name: 'Myxini', type: 'card', cardTaxon: 'myxini', unlockModule: 'chordata-basal', unlockMinCorrect: 5 },
-                                { id: 'gnathostomata', name: 'Gnathostomata', type: 'internal', children: [
-                                  { id: 'chondrichthyes', name: 'Chondrichthyes', type: 'card', cardTaxon: 'chondrichthyes', unlockModule: 'chordata-basal', unlockMinCorrect: 5 },
-                                  { id: 'actinopterygii', name: 'Actinopterygii', type: 'card', cardTaxon: 'actinopterygii', unlockModule: 'chordata-basal', unlockMinCorrect: 5 },
-                                  { id: 'tetrapoda', name: 'Tetrapoda', type: 'internal', children: [
-                                    { id: 'amphibia', name: 'Amphibia', type: 'card', cardTaxon: 'amphibia', unlockModule: 'amniota', unlockMinCorrect: 5 },
-                                    { id: 'amniota', name: 'Amniota', type: 'card', cardTaxon: 'mammalia', unlockModule: 'amniota', unlockMinCorrect: 5 }
+                                { id: 'myxini', name: 'Myxini', type: 'card', cardTaxon: 'myxini', unlockModule: 'chordata-basal', unlockMinCorrect: 5, speciesCount: 80 },
+                                { id: 'gnathostomata', name: 'Gnathostomata', type: 'internal', speciesCount: 61000, children: [
+                                  { id: 'chondrichthyes', name: 'Chondrichthyes', type: 'card', cardTaxon: 'chondrichthyes', unlockModule: 'chordata-basal', unlockMinCorrect: 5, speciesCount: 1200 },
+                                  { id: 'actinopterygii', name: 'Actinopterygii', type: 'card', cardTaxon: 'actinopterygii', unlockModule: 'chordata-basal', unlockMinCorrect: 5, speciesCount: 33000 },
+                                  { id: 'tetrapoda', name: 'Tetrapoda', type: 'internal', speciesCount: 30000, children: [
+                                    { id: 'amphibia', name: 'Amphibia', type: 'card', cardTaxon: 'amphibia', unlockModule: 'amniota', unlockMinCorrect: 5, speciesCount: 8000 },
+                                    { id: 'amniota', name: 'Amniota', type: 'card', cardTaxon: 'mammalia', unlockModule: 'amniota', unlockMinCorrect: 5, speciesCount: 22000 }
                                   ]}
                                 ]}
                               ]
