@@ -8,7 +8,7 @@
 // Uso: node scripts/curate-phylopic.mjs
 //      npm run curate-phylopic
 
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync, readdirSync } from 'fs'
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
 
@@ -16,29 +16,34 @@ const __dir = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dir, '..')
 const API = 'https://api.phylopic.org'
 
-// ── Extrair phylopicQuery de cada entrada em taxa-cards.ts ──────────────────
+// ── Extrair phylopicQuery de cada entrada em src/data/cards/*.ts ──────────
 // Parse simples via regex — evita transpile de TS em runtime
 function extractQueries() {
-  const src = readFileSync(resolve(ROOT, 'src/data/taxa-cards.ts'), 'utf8')
-
-  // Captura pares taxon + phylopicQuery de cada objeto TaxonCard
+  const cardsDir = resolve(ROOT, 'src/data/cards')
+  const files = readdirSync(cardsDir).filter(f => f.endsWith('.ts') && f !== 'index.ts' && f !== 'types.ts')
+  
   const entries = []
 
-  // Match cada bloco de card (taxon até o próximo '},' de nível raiz)
-  const taxonRe = /taxon:\s*['"]([^'"]+)['"]/g
-  const queryRe = /phylopicQuery:\s*['"]([^'"]+)['"]/g
+  for (const file of files) {
+    const src = readFileSync(resolve(cardsDir, file), 'utf8')
 
-  const taxons = [...src.matchAll(taxonRe)].map(m => m[1])
-  const queries = [...src.matchAll(queryRe)].map(m => m[1])
+    // Captura pares taxon + phylopicQuery de cada objeto TaxonCard
+    const taxonRe = /taxon:\s*['"]([^'"]+)['"]/g
+    const queryRe = /phylopicQuery:\s*['"]([^'"]+)['"]/g
 
-  if (taxons.length !== queries.length) {
-    console.error(`Mismatch: ${taxons.length} taxons vs ${queries.length} queries`)
-    process.exit(1)
+    const taxons = [...src.matchAll(taxonRe)].map(m => m[1])
+    const queries = [...src.matchAll(queryRe)].map(m => m[1])
+
+    if (taxons.length !== queries.length) {
+      console.warn(`[${file}] Mismatch: ${taxons.length} taxons vs ${queries.length} queries. Verifique o arquivo.`)
+      continue
+    }
+
+    for (let i = 0; i < taxons.length; i++) {
+      entries.push({ taxon: taxons[i], query: queries[i] })
+    }
   }
-
-  for (let i = 0; i < taxons.length; i++) {
-    entries.push({ taxon: taxons[i], query: queries[i] })
-  }
+  
   return entries
 }
 
@@ -104,7 +109,7 @@ const today = new Date().toISOString().slice(0, 10)
 const lines = [
   `// Cache estático de silhuetas PhyloPic para os táxons curados do Cladex.`,
   `// Gerado em ${today} — PhyloPic build ${build}`,
-  `// Fonte: src/data/taxa-cards.ts (emblematicAnimal.phylopicQuery)`,
+  `// Fonte: src/data/cards/*.ts (emblematicAnimal.phylopicQuery)`,
   `// Táxons sem silhueta no PhyloPic são omitidos — TreeViewer exibe apenas label.`,
   `// Licenças: CC BY, CC BY-SA e domínio público (ver https://www.phylopic.org)`,
   `//`,

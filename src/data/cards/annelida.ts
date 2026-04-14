@@ -1,0 +1,327 @@
+import type { TaxonCard } from './types'
+
+export const annelida: TaxonCard[] = [
+  {
+    taxon: 'Chaetopteridae',
+    module: 'annelida',
+    rarity: 'rare',
+    emblematicAnimal: {
+      commonName: 'Parchment tube worm',
+      scientificName: 'Chaetopterus variopedatus',
+      phylopicQuery: 'Chaetopteridae',
+    },
+    synapomorphies: [
+      'Corpo altamente modificado em regiões com parapódios especializados',
+      'Secretam muco bioluminescente azul-esverdeado',
+    ],
+    bioFeatures: [
+      'Vivem em tubos de pergaminho em forma de U enterrados no sedimento',
+      'Criam uma corrente de água com parapódios em forma de leque para filtrar alimento',
+      'Podem se regenerar a partir de fragmentos do corpo',
+      'Bioluminescência intensa — visível a olho nu no escuro',
+    ],
+    funFact: 'Chaetopterus produz muco bioluminescente tão brilhante que pescadores da Califórnia o usavam como isca luminosa à noite.',
+  },
+  {
+    taxon: 'Nereidae',
+    module: 'annelida',
+    rarity: 'common',
+    emblematicAnimal: {
+      commonName: 'Ragworm',
+      scientificName: 'Alitta virens',
+      phylopicQuery: 'Nereidae',
+    },
+    synapomorphies: [
+      'Prostômio com 4 pares de tentáculos e olhos compostos',
+      'Faringe eversível com mandíbulas esclerotizadas (jaws)',
+      'Parapódios biremes bem desenvolvidos',
+    ],
+    bioFeatures: [
+      'Predadores ativos — capturam presas com a faringe eversível',
+      'Alguns membros são epítoco: durante reprodução, a região posterior se transforma em indivíduo nadador (epitoca)',
+      'Palolo worm (Eunice viridis) emerge sincronizado com a lua cheia — tradição alimentar na Polinésia',
+    ],
+    funFact: 'O "worm epitoca" de Palolo é tão previsível que populações polinésias calculam datas de festas pela sua emergência lunar — uma das primeiras formas humanas de astronomia aplicada.',
+  },
+  {
+    taxon: 'Glyceridae',
+    module: 'annelida',
+    rarity: 'rare',
+    emblematicAnimal: {
+      commonName: 'Bloodworm',
+      scientificName: 'Glycera dibranchiata',
+      phylopicQuery: 'Glyceridae',
+    },
+    synapomorphies: [
+      'Faringe eversível com 4 mandíbulas conectadas a glândulas de veneno',
+      'Corpo cilíndrico com prostômio cônico e pontudo',
+    ],
+    bioFeatures: [
+      'Únicas anelídeos com mandíbulas contendo cobre (atacagine) — metal raro em estruturas biológicas',
+      'Hemoglobina extracelular confere coloração vermelha intensa ao sangue',
+      'Vivem em galerias no sedimento, emergindo para predar',
+      'Mandíbulas tão duras quanto os dentes humanos apesar de serem proteínas',
+    ],
+    funFact: 'As mandíbulas de Glycera são feitas de uma proteína-cobre chamada atacagine — o único material biológico tão duro quanto minerais. Pesquisadores estudam para criar materiais sintéticos.',
+  },
+  {
+    taxon: 'Siboglinidae',
+    module: 'annelida',
+    rarity: 'epic',
+    emblematicAnimal: {
+      commonName: 'Giant tube worm',
+      scientificName: 'Riftia pachyptila',
+      phylopicQuery: 'Riftia pachyptila',
+    },
+    synapomorphies: [
+      'Ausência completa de trato digestivo (boca, intestino e ânus) no adulto',
+      'Trofossoma: órgão repleto de bactérias quimiossintetizantes endossimbiontes',
+      'Plumas branquiais vermelhas com hemoglobina transportadora de H₂S e O₂',
+    ],
+    bioFeatures: [
+      'Vivem exclusivamente em fontes hidrotermais do fundo oceânico (>2.500 m)',
+      'Sobrevivem inteiramente da quimiossiombionse — sem fotossíntese, sem digestão',
+      'Podem crescer mais de 1,5 m — os maiores anelídeos conhecidos',
+      'Descobertos apenas em 1977, revolucionaram a biologia de ecossistemas',
+    ],
+    funFact: 'Riftia pachyptila é o ser vivo que cresce mais rápido para seu tamanho — pode aumentar 85 cm em um ano, provando que vida complexa pode existir sem luz solar.',
+  },
+  {
+    taxon: 'Sabellidae',
+    module: 'annelida',
+    rarity: 'common',
+    emblematicAnimal: {
+      commonName: 'Feather duster worm',
+      scientificName: 'Spirobranchus giganteus',
+      phylopicQuery: 'Sabellida',
+    },
+    synapomorphies: [
+      'Coroa de radiolas (tentáculos branquiais) em espiral para filtração e respiração',
+      'Tubo secretado pelo próprio animal (quitina, carbonato de cálcio ou muco)',
+    ],
+    bioFeatures: [
+      'Filtram partículas em suspensão com cílios nas radiolas',
+      'Retração instantânea do tubo diante de predadores ou sombras',
+      'Algumas espécies vivem encrustadas em corais (Spirobranchus)',
+      'Reprodução por fragmentação ou gametas liberados no plâncton',
+    ],
+    funFact: 'O verme-árvore-de-natal (Spirobranchus giganteus) cresce diretamente dentro de corais vivos — o coral cresce em volta do tubo do verme, criando uma parceria acidental de décadas.',
+  },
+  {
+    taxon: 'Echiuridae',
+    module: 'annelida',
+    rarity: 'rare',
+    emblematicAnimal: {
+      commonName: 'Spoon worm',
+      scientificName: 'Bonellia viridis',
+      phylopicQuery: 'Bonellia',
+    },
+    synapomorphies: [
+      'Probóscide extensível em forma de colher (até 1 m) não retrátil para a cavidade do corpo',
+      'Dimorfismo sexual extremo — machos microscópicos vivem dentro da fêmea',
+    ],
+    bioFeatures: [
+      'O determinismo do sexo é ambiental: larvas que pousam sobre a fêmea tornam-se machos',
+      'A probóscide de Bonellia é verde por bonelina — pigmento tóxico para outros organismos',
+      'Fêmeas podem alcançar 15 cm; machos apenas 1–3 mm',
+      'A bonelina tem propriedades antiparasitárias e está sendo estudada para farmácia',
+    ],
+    funFact: 'Em Bonellia viridis, o sexo do indivíduo não está definido no genoma — larvas neutras que encontram uma fêmea são "convertidas" em machos por hormônios dela. Sexo como epigenética extrema.',
+  },
+  {
+    taxon: 'Naididae',
+    module: 'annelida',
+    rarity: 'common',
+    emblematicAnimal: {
+      commonName: 'Tubifex worm',
+      scientificName: 'Tubifex tubifex',
+      phylopicQuery: 'Naididae',
+    },
+    synapomorphies: [
+      'Cerdas capilares dorsais longas (em Naididae basais)',
+      'Reprodução assexuada por fissão ou brotamento (paratomia) frequente',
+    ],
+    bioFeatures: [
+      'Bioindicadores de poluição — tolerantes a baixo oxigênio e matéria orgânica em excesso',
+      'Agitam a extremidade posterior para aumentar troca gasosa em ambientes hipóxicos',
+      'Amplamente usados como alimento vivo em aquarismo',
+      'Podem formar grumos pulsantes de milhares de indivíduos',
+    ],
+    funFact: 'Tubifex tubifex é usado por biólogos como "termômetro biológico" de rios — sua presença em alta densidade indica poluição orgânica severa. Quando desaparecem de um rio poluído em recuperação, é notícia positiva.',
+  },
+  {
+    taxon: 'Aeolosomatidae',
+    module: 'annelida',
+    rarity: 'rare',
+    emblematicAnimal: {
+      commonName: 'Aeolosoma worm',
+      scientificName: 'Aeolosoma hemprichi',
+      phylopicQuery: 'Aeolosomatidae',
+    },
+    synapomorphies: [
+      'Células epidérmicas com vacúolos de pigmento colorido (vermelho, laranja, verde)',
+      'Cílios na região anterior (prostômio) — incomum em Annelida',
+    ],
+    bioFeatures: [
+      'Minúsculos (<1 mm) — vivem em biofilmes de algas e bactérias',
+      'Reproduzem-se quase exclusivamente por fissão transversal (paratomia)',
+      'Sua posição filogenética debatida: Annelida basais ou grupo irmão dos demais',
+      'Movem-se com cílios epidérmicos — locomoção ciliada rara em anelídeos',
+    ],
+    funFact: 'Aeolosoma é tão pequeno e transparente que os pesquisadores do século XIX pensavam que as gotículas coloridas no corpo eram olhos — eram vacúolos de pigmento, não fotorreceptores.',
+  },
+  {
+    taxon: 'Oligochaeta',
+    module: 'annelida',
+    rarity: 'common',
+    emblematicAnimal: {
+      commonName: 'Common earthworm',
+      scientificName: 'Lumbricus terrestris',
+      phylopicQuery: 'Lumbricidae',
+    },
+    synapomorphies: [
+      'Clitelo: região glandular que secreta o casulo para ovos',
+      'Hermafroditismo obrigatório com fertilização cruzada',
+      'Cerdas (setae) curtas e em número reduzido por segmento',
+    ],
+    bioFeatures: [
+      'Incluem as minhocas de terra e oligoquetas de água doce',
+      'Ingerem solo e detritos, agindo como engenheiros do ecossistema',
+      'Possuem sistema circulatório fechado com cinco "corações" laterais',
+      'Aeração do solo melhora a drenagem e penetração de raízes',
+    ],
+    funFact: 'As minhocas têm um sistema de defesa único: quando ameaçadas, algumas espécies expelem um muco pegajoso e fétido de seus poros dorsais para afugentar predadores como toupeiras.',
+  },
+  {
+    taxon: 'Hirudinida',
+    module: 'annelida',
+    rarity: 'rare',
+    emblematicAnimal: {
+      commonName: 'Medical leech',
+      scientificName: 'Hirudo medicinalis',
+      phylopicQuery: 'Hirudo medicinalis',
+    },
+    synapomorphies: [
+      'Ventosas anterior e posterior bem desenvolvidas para fixação e sucção',
+      'Perda total de cerdas (setae) e segmentação interna (septos)',
+      'Cavidade celômica preenchida por tecido botrioide (redução do celoma)',
+    ],
+    bioFeatures: [
+      'Incluem as sanguessugas, conhecidas por sua dieta hematófaga (sangue)',
+      'Secretam hirudina, o anticoagulante natural mais potente conhecido',
+      'Corpo com número fixo de 34 segmentos, independentemente da espécie',
+      'Ainda utilizadas na medicina moderna para aliviar congestão venosa após cirurgias',
+    ],
+    funFact: 'As sanguessugas medicinais podem ingerir até cinco vezes o seu peso corporal em sangue em uma única refeição e sobreviver por até um ano sem comer novamente.',
+  },
+  {
+    taxon: 'celegans',
+    module: 'metazoa',
+    rarity: 'epic',
+    emblematicAnimal: {
+      commonName: 'Caenorhabditis elegans',
+      scientificName: 'Caenorhabditis elegans',
+      phylopicQuery: 'Nematoda',
+    },
+    synapomorphies: [
+      'Eutelia: número de células somáticas constante em todos os indivíduos (959 na fêmea)',
+      'Desenvolvimento invariante: linhagem de cada célula é conhecida desde o ovo',
+    ],
+    bioFeatures: [
+      'Organismo modelo fundamental na genética e biologia do desenvolvimento',
+      'Primeiro animal multicelular a ter seu genoma totalmente sequenciado (1998)',
+      'Conectoma completo: o mapa de todos os seus 302 neurônios é conhecido',
+      'Transparentes, permitindo observar processos biológicos em tempo real',
+    ],
+    funFact: 'C. elegans é o único animal que teve seu sistema nervoso inteiramente mapeado, permitindo simular seu comportamento básico em computadores — o primeiro passo para o upload de mentes.',
+  },
+  {
+    taxon: 'Lumbricidae',
+    module: 'annelida',
+    rarity: 'common',
+    emblematicAnimal: {
+      commonName: 'Common earthworm',
+      scientificName: 'Lumbricus terrestris',
+      phylopicQuery: 'Lumbricidae',
+    },
+    synapomorphies: [
+      'Clitelo: região glandular de espessamento cuticular para formação do casulo',
+      'Hermafroditas com espermatecas para armazenar esperma de outro indivíduo',
+      'Cerdas (setae) em número reduzido — 8 por segmento (oligoqueta = poucas cerdas)',
+    ],
+    bioFeatures: [
+      'Ingerem terra e decompõem matéria orgânica, aerando e fertilizando o solo',
+      'Charles Darwin dedicou 40 anos ao estudo de minhocas — seu último livro é sobre elas',
+      'Respiram pela pele — devem manter a superfície corporal úmida',
+      'Um único campo agrícola pode conter mais de 1 milhão de minhocas por hectare',
+    ],
+    funFact: 'Darwin calculou que minhocas movem 10 toneladas de solo por hectare por ano — um trabalho geológico. Ele chamou isso de "a mais poderosa força na história da agricultura".',
+  },
+  {
+    taxon: 'Acanthobdellida',
+    module: 'annelida',
+    rarity: 'epic',
+    emblematicAnimal: {
+      commonName: 'Salmon leech',
+      scientificName: 'Acanthobdella peledina',
+      phylopicQuery: 'Acanthobdella',
+    },
+    synapomorphies: [
+      'Cerdas nos primeiros 5 segmentos — único Hirudinomorpha com cerdas',
+      'Somente ventosa posterior — sem ventosa anterior',
+      'Coeloma reduzido mas ainda parcialmente presente (intermediário entre Oligochaeta e Hirudinea)',
+    ],
+    bioFeatures: [
+      'Parasita exclusivo de salmonídeos de água fria (salmões, trutas)',
+      'Grupo-irmão de todos os hirudíneos — posição filogenética crucial',
+      'Extremamente raros — poucos espécimes coletados na história',
+      'Evidência viva da transição de oligoquetas para sanguessugas',
+    ],
+    funFact: 'Acanthobdella peledina é chamada de "fóssil vivo dos anelídeos" — retém cerdas que os ancestrais de todas as sanguessugas tinham antes de perdê-las. É o elo perdido entre minhocas e sanguessugas.',
+  },
+  {
+    taxon: 'Branchiobdellida',
+    module: 'annelida',
+    rarity: 'rare',
+    emblematicAnimal: {
+      commonName: 'Crayfish worm',
+      scientificName: 'Branchiobdella parasita',
+      phylopicQuery: 'Branchiobdella',
+    },
+    synapomorphies: [
+      'Exatamente 14–15 segmentos em todos os membros (número fixo)',
+      'Aparato bucal com mandíbulas quitinosas modificadas',
+      'Commensais obrigatórios de crustáceos de água doce',
+    ],
+    bioFeatures: [
+      'Vivem exclusivamente no corpo de lagostins de água doce',
+      'A relação pode ser comensal, mutualista ou parasítica dependendo da densidade',
+      'Removem fungos e detritos das brânquias — possivelmente benéficos em baixas densidades',
+      'Altamente especializados: sem os lagostins não sobrevivem',
+    ],
+    funFact: 'Branchiobdellida têm o número de segmentos mais fixo do reino animal — sempre 14-15, independente da espécie. Isso é uma sinapomorfia tão rígida que é usada para identificá-los mesmo sem microscópio.',
+  },
+  {
+    taxon: 'Hirudinea',
+    module: 'annelida',
+    rarity: 'rare',
+    emblematicAnimal: {
+      commonName: 'Medical leech',
+      scientificName: 'Hirudo medicinalis',
+      phylopicQuery: 'Hirudo medicinalis',
+    },
+    synapomorphies: [
+      'Ventosas anterior e posterior bem desenvolvidas',
+      'Coeloma completamente reduzido — substituído por tecido parenquimatoso',
+      'Número fixo de 34 segmentos',
+      'Ausência total de cerdas (perda secundária)',
+    ],
+    bioFeatures: [
+      'Produzem hirudina — anticoagulante mais potente conhecido, usado em cirurgia vascular',
+      'Cada sanguesuga pode ingerir até 5x seu peso em sangue em uma única refeição',
+      'Usadas em microcirurgia moderna para prevenir trombose após reimplante de dedos',
+      'Podem sobreviver até 1 ano sem se alimentar',
+    ],
+    funFact: 'Hirudo medicinalis é um dos poucos animais aprovados como "dispositivo médico" pela FDA dos EUA. Hoje são criadas em fazendas especializadas para uso em hospitais de cirurgia plástica e reconstrutiva.',
+  },
+]

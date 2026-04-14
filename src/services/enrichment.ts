@@ -1,12 +1,9 @@
-// Serviço de enriquecimento visual da Árvore da Vida.
-//
-// Carrega public/data/tol-enrichment.json uma única vez (singleton por módulo)
-// e fornece silhuetas PhyloPic e fotos iNaturalist por node ID.
 
 export interface PhotoEntry {
-  url: string;
-  credit: string;
+  url?: string;
+  credit?: string;
   license?: string;
+  summary?: string;
 }
 
 export interface EnrichmentData {
@@ -14,11 +11,6 @@ export interface EnrichmentData {
   phylopicBuild: number;
   silhouettes: Record<string, string | null>;
   photos: Record<string, PhotoEntry | null>;
-}
-
-export interface NodeEnrichment {
-  silhouette: string | null;
-  photo: PhotoEntry | null;
 }
 
 // ── Singleton ────────────────────────────────────────────────────────────────
@@ -40,18 +32,9 @@ export async function loadEnrichment(): Promise<EnrichmentData> {
     })
     .catch(err => {
       console.warn('[enrichment] Falha ao carregar tol-enrichment.json:', err);
-      // Retorna dados vazios para não quebrar a UI
       _data = { generated: '', phylopicBuild: 0, silhouettes: {}, photos: {} };
       return _data;
     });
 
   return _promise;
-}
-
-export function getEnrichment(nodeId: string): NodeEnrichment {
-  if (!_data) return { silhouette: null, photo: null };
-  return {
-    silhouette: _data.silhouettes[nodeId] ?? null,
-    photo: _data.photos[nodeId] ?? null,
-  };
 }

@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "curate-phylopic": "node scripts/curate-phylopic.mjs",
-    "fetch-enrichment": "node scripts/fetch-tol-enrichment.mjs"
+    "fetch-enrichment": "node scripts/fetch-tol-enrichment.mjs",
+    "check-cards": "node scripts/check-missing-cards.mjs"
   },
   "dependencies": {
     "d3": "^7.9.0",

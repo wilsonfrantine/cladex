@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { X, Award, Zap, Beaker, Info, Lock } from 'lucide-react';
 import type { TolNode } from '../data/treeoflife';
-import { TAXA_CARDS_BY_TAXON, type Rarity } from '../data/taxa-cards';
+import { TAXA_CARDS_BY_TAXON } from '../data/cards';
+import type { Rarity } from '../data/cards/types';
 import { useCladexStore } from '../store';
 import { loadEnrichment, type PhotoEntry } from '../services/enrichment';
 
@@ -41,6 +42,19 @@ function lockTeaser(node: TolNode): string {
   }
 }
 
+function getDiversitySummary(node: TolNode): string {
+  if (!node.speciesCount) return '';
+  const count = node.speciesCount.toLocaleString('pt-BR');
+  const childCount = node.children?.length ?? 0;
+  
+  const base = `Este clado engloba aproximadamente ${count} espécies conhecidas.`;
+  const expansion = childCount > 0 
+    ? ` Na árvore do Cladex, você pode explorar ${childCount} de suas linhagens principais.`
+    : '';
+  
+  return base + expansion;
+}
+
 // ── Limites ───────────────────────────────────────────────────────────────────
 const MAX_W_FRAC   = 0.5;
 const MAX_H_FRAC   = 0.9;
@@ -56,8 +70,8 @@ export default function TolCardPanel({
   panelW, panelH, onPanelWChange, onPanelHChange,
 }: TolCardPanelProps) {
   const card = node.cardTaxon
-    ? TAXA_CARDS_BY_TAXON[node.cardTaxon] || TAXA_CARDS_BY_TAXON[node.name]
-    : TAXA_CARDS_BY_TAXON[node.name];
+    ? TAXA_CARDS_BY_TAXON[node.cardTaxon.toLowerCase()] || TAXA_CARDS_BY_TAXON[node.name.toLowerCase()]
+    : TAXA_CARDS_BY_TAXON[node.name.toLowerCase()];
 
   const allTimeStats = useCladexStore((s) => s.allTimeStats);
 
@@ -217,31 +231,90 @@ export default function TolCardPanel({
     </div>
   );
 
-  // ── PAINEL SEM CONTEÚDO (nó estrutural) ───────────────────────────────────
+  // ── PAINEL SEM CONTEÚDO MANUAL (nó estrutural ou sem card) ────────────────
   if (!card && !isLocked) {
     return (
-      <div
-        className={`${base} ${slideClass}`}
-        style={isWide
-          ? { width: 'fit-content', maxWidth: `${MAX_W_FRAC * 100}vw`, minWidth: MIN_W }
-          : {}}
-      >
+      <div className={`${base} ${slideClass}`} style={panelStyle}>
         <MobileDragHandle />
-        <div className="relative flex items-center gap-3 px-5 py-4">
+        <div className="relative flex-1 flex flex-col overflow-hidden">
           <DesktopResizeHandle />
-          <div className="flex-1 min-w-0 sm:pl-3">
-            <span className="text-[10px] uppercase tracking-widest font-bold text-zinc-500">
-              {node.rank || 'Clado'}
-            </span>
-            <h2 className="text-base font-black text-white truncate">{node.name}</h2>
+
+          {/* Header */}
+          <div className="px-6 pt-5 pb-4 border-b border-zinc-800 flex items-start justify-between shrink-0 sm:pl-9">
+            <div className="min-w-0 flex-1 pr-3">
+              <span className="text-[10px] uppercase tracking-widest font-bold text-zinc-500">
+                {node.rank || 'Clado'}
+              </span>
+              <h2 className="text-xl font-black text-white leading-tight truncate">{node.name}</h2>
+              {node.latinName && (
+                <p className="text-sm italic text-zinc-500 mt-0.5">{node.latinName}</p>
+              )}
+            </div>
+            <button onClick={onClose} className="text-zinc-500 hover:text-white transition-colors shrink-0 mt-0.5">
+              <X size={18} />
+            </button>
           </div>
-          <button onClick={onClose} className="text-zinc-500 hover:text-white transition-colors shrink-0">
-            <X size={18} />
-          </button>
+
+          {/* Conteúdo Automático */}
+          <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar sm:pl-9">
+            {photo?.summary && (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-zinc-500">
+                  <Info size={14} className="text-zinc-400" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest">Informações</span>
+                </div>
+                <div className="p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800">
+                  <p className="text-sm text-zinc-300 leading-relaxed italic">
+                    {photo.summary}
+                  </p>
+                  <div className="mt-3 flex justify-end">
+                    <span className="text-[9px] text-zinc-600 uppercase font-bold tracking-tighter">Fonte: Wikipédia</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-zinc-500">
+                <Award size={14} className="text-zinc-400" />
+                <span className="text-[10px] font-bold uppercase tracking-widest">Diversidade</span>
+              </div>
+              <div className="p-4 rounded-2xl bg-zinc-900/30 border border-zinc-800/50">
+                <p className="text-sm text-zinc-400 leading-relaxed">
+                  {getDiversitySummary(node)}
+                </p>
+              </div>
+            </div>
+
+            {node.children && node.children.length > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-zinc-500">
+                  <Zap size={14} className="text-emerald-500" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest">Linhagens Principais</span>
+                </div>
+                <div className="grid grid-cols-1 gap-2">
+                  {node.children.slice(0, 8).map(child => (
+                    <div key={child.id} className="flex items-center justify-between p-3 rounded-xl bg-zinc-900/50 border border-zinc-800">
+                      <span className="text-sm font-bold text-zinc-200">{child.name}</span>
+                      <span className="text-[9px] uppercase tracking-tighter text-zinc-500 font-mono">
+                        {child.rank || (child.type === 'others' ? 'Diversos' : 'Clado')}
+                      </span>
+                    </div>
+                  ))}
+                  {node.children.length > 8 && (
+                    <p className="text-[10px] text-zinc-600 text-center italic">
+                      + {node.children.length - 8} outras linhagens
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <p className="text-[10px] text-zinc-700 italic text-center pt-4">
+              Nível hierárquico — sem card colecionável curado.
+            </p>
+          </div>
         </div>
-        <p className="hidden sm:block px-5 pb-4 text-xs italic text-zinc-600 leading-relaxed sm:pl-8">
-          Nó estrutural — sem dados específicos para este nível hierárquico.
-        </p>
       </div>
     );
   }
@@ -349,7 +422,7 @@ export default function TolCardPanel({
         {/* Conteúdo */}
         <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar sm:pl-9">
 
-          {photo && (
+          {photo?.url && (
             <div className="relative w-full h-44 overflow-hidden rounded-2xl bg-zinc-900 -mt-2">
               <img src={photo.url} alt={node.name} className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute bottom-0 left-0 right-0 px-2 py-1 bg-black/60 text-[8px] text-zinc-400 truncate">

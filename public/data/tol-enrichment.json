@@ -1,17 +1,17 @@
 {
-  "generated": "2026-04-13",
+  "generated": "2026-04-14",
   "phylopicBuild": 537,
   "silhouettes": {
     "luca": null,
-    "bacteria": "https://images.phylopic.org/images/d8c9f603-8930-4973-9a37-e9d0bc913a6b/vector.svg",
+    "bacteria": "https://images.phylopic.org/images/a905f3af-c8f9-470b-9496-7efb1e55e651/vector.svg",
     "archaea": "https://images.phylopic.org/images/3cabf30c-eed6-4dc4-824e-f7eac992f554/vector.svg",
-    "eukarya": "https://images.phylopic.org/images/6fe75b0b-1488-4193-8523-f240c2d59575/vector.svg",
-    "fungi": "https://images.phylopic.org/images/c6066aa4-fadd-45e0-b897-b16b37977e8e/vector.svg",
-    "plantae": "https://images.phylopic.org/images/91b6a357-3c72-446b-8d4e-bab352ec8ff7/vector.svg",
-    "protozoa": "https://images.phylopic.org/images/6fe75b0b-1488-4193-8523-f240c2d59575/vector.svg",
+    "eukarya": "https://images.phylopic.org/images/83b732d5-5534-4d68-8dcd-e07eec765e11/vector.svg",
+    "fungi": null,
+    "plantae": "https://images.phylopic.org/images/af5bcc70-fa2d-430c-b61d-fcff61d80d0b/vector.svg",
+    "protozoa": "https://images.phylopic.org/images/595359bd-6638-4900-8536-82b2ed511a25/vector.svg",
     "animalia": "https://images.phylopic.org/images/d148ee59-7247-4d2a-a62f-77be38ebb1c7/vector.svg",
     "porifera": "https://images.phylopic.org/images/ee668106-362a-4342-bbe5-472e8900d358/vector.svg",
-    "cnidaria": "https://images.phylopic.org/images/fbad419f-f123-45ac-92f4-d2df322b7afb/vector.svg",
+    "cnidaria": "https://images.phylopic.org/images/ae1697f9-686f-4e0d-b51b-47ac70c8856b/vector.svg",
     "bilateria": "https://images.phylopic.org/images/aff2ebff-518d-4540-8600-8ba9283e0c0c/vector.svg",
     "demospongiae": "https://images.phylopic.org/images/8b28733a-9eab-4510-9dcf-9235aaf44d14/vector.svg",
     "hexactinellida": "https://images.phylopic.org/images/3740465d-24a6-4b5b-b014-c3ae8d8bf8c7/vector.svg",
@@ -26,9 +26,9 @@
     "xenacoelomorpha": "https://images.phylopic.org/images/aff2ebff-518d-4540-8600-8ba9283e0c0c/vector.svg",
     "nephrozoa": "https://images.phylopic.org/images/1e80ed08-414c-4e12-9fed-3b5999e3ea73/vector.svg",
     "protostomia": "https://images.phylopic.org/images/32462d13-d61c-4d7c-914f-8c9f03ac5085/vector.svg",
-    "deuterostomia": "https://images.phylopic.org/images/1e80ed08-414c-4e12-9fed-3b5999e3ea73/vector.svg",
-    "spiralia": "https://images.phylopic.org/images/e770d8bf-57b3-4a66-ba1f-c7ab0571a154/vector.svg",
-    "ecdysozoa": "https://images.phylopic.org/images/ec8f7294-2f36-4fff-a67f-c1f09dd1ad07/vector.svg",
+    "deuterostomia": "https://images.phylopic.org/images/d5a234cc-4ca6-4186-9ed9-dedd2ca0a37d/vector.svg",
+    "spiralia": "https://images.phylopic.org/images/e9ca8d1d-36cd-48bc-aa6e-8303be2b78f6/vector.svg",
+    "ecdysozoa": "https://images.phylopic.org/images/239b2cf6-35fe-464e-8e9f-7cfaab33f5db/vector.svg",
     "platyhelminthes": "https://images.phylopic.org/images/b5cd9698-7ead-4934-920d-d9079bef6683/vector.svg",
     "lophotrochozoa": "https://images.phylopic.org/images/c1286ee6-8566-45de-8da5-93d06250d740/vector.svg",
     "turbellaria": "https://images.phylopic.org/images/855071e2-5ee8-494c-bb74-3495a010999e/vector.svg",
@@ -37,11 +37,11 @@
     "monogenea": "https://images.phylopic.org/images/719ddb52-3fec-423a-afb6-637015d3a5b0/vector.svg",
     "tricladida": "https://images.phylopic.org/images/68c8f47a-2d99-468d-9b85-1dc0e03a1740/vector.svg",
     "polycladida": "https://images.phylopic.org/images/9254ba7d-64ad-445d-83ff-45580e399c9f/vector.svg",
-    "planariidae": "https://images.phylopic.org/images/f800b25f-6528-43ba-88d6-79c51162fd19/vector.svg",
-    "dugesia_tigrina": "https://images.phylopic.org/images/cf8f907b-163f-444c-a550-ffe46be25d61/vector.svg",
+    "planariidae": "https://images.phylopic.org/images/b5cd9698-7ead-4934-920d-d9079bef6683/vector.svg",
+    "dugesia_tigrina": "https://images.phylopic.org/images/b5cd9698-7ead-4934-920d-d9079bef6683/vector.svg",
     "fasciolidae": "https://images.phylopic.org/images/607b10e4-e036-44fd-ad17-4395c6ecc0c6/vector.svg",
     "schistosomatidae": "https://images.phylopic.org/images/ef7c2cbf-d8dd-440c-9825-77863f93f35e/vector.svg",
-    "mollusca": "https://images.phylopic.org/images/e9ca8d1d-36cd-48bc-aa6e-8303be2b78f6/vector.svg",
+    "mollusca": "https://images.phylopic.org/images/d115b40d-efe3-487e-bed1-4f6aace5c814/vector.svg",
     "annelida": "https://images.phylopic.org/images/2dee030d-9f6d-4bab-87c4-c46869839b30/vector.svg",
     "brachiopoda": "https://images.phylopic.org/images/80639d7b-0856-45c1-ab44-7f075accda89/vector.svg",
     "bryozoa": "https://images.phylopic.org/images/191ad6ce-78f2-444d-b4ad-9c4162b1803f/vector.svg",
@@ -49,49 +49,49 @@
     "bivalvia": "https://images.phylopic.org/images/d92d2313-359a-4649-9cb8-5c4d84474f4b/vector.svg",
     "cephalopoda": "https://images.phylopic.org/images/8f7c46e0-ed5e-455f-b5ae-68168151d01d/vector.svg",
     "clitellata": "https://images.phylopic.org/images/08901b25-0da9-483e-9c11-a5258b783d40/vector.svg",
-    "errantia": "https://images.phylopic.org/images/18ec7d79-cf30-4393-8186-74be8627967f/vector.svg",
-    "oligochaeta": "https://images.phylopic.org/images/08901b25-0da9-483e-9c11-a5258b783d40/vector.svg",
-    "hirudinida": "https://images.phylopic.org/images/dd6f1159-a97c-480f-871f-65f1c88156d0/vector.svg",
+    "errantia": null,
+    "oligochaeta": "https://images.phylopic.org/images/f0d839a1-5a3e-42b2-828a-c5e536f0f7b7/vector.svg",
+    "hirudinida": "https://images.phylopic.org/images/98605a59-759b-4525-81bc-e103b963a526/vector.svg",
     "nematoda": "https://images.phylopic.org/images/103b38cc-ad0b-4d70-9a38-db277c9beca8/vector.svg",
     "chromadorea": "https://images.phylopic.org/images/103b38cc-ad0b-4d70-9a38-db277c9beca8/vector.svg",
     "enoplea": "https://images.phylopic.org/images/a68be31e-95e7-415a-8fb2-2a6fd3275cb8/vector.svg",
     "rhabditida": "https://images.phylopic.org/images/7a056405-8d3e-4b1e-9368-4df1e9437e47/vector.svg",
     "strongylida": null,
     "ascaridida": null,
-    "caenorhabditidae": null,
-    "caenorhabditis_elegans": "https://images.phylopic.org/images/7a056405-8d3e-4b1e-9368-4df1e9437e47/vector.svg",
+    "caenorhabditidae": "https://images.phylopic.org/images/103b38cc-ad0b-4d70-9a38-db277c9beca8/vector.svg",
+    "caenorhabditis_elegans": "https://images.phylopic.org/images/103b38cc-ad0b-4d70-9a38-db277c9beca8/vector.svg",
     "tardigrada": "https://images.phylopic.org/images/1a7ba4da-a5f9-489b-b30e-8cf56d579d8f/vector.svg",
     "arthropoda": "https://images.phylopic.org/images/239b2cf6-35fe-464e-8e9f-7cfaab33f5db/vector.svg",
-    "chelicerata": "https://images.phylopic.org/images/e1ea9e91-6ae1-45c2-b399-8d1892c01915/vector.svg",
+    "chelicerata": "https://images.phylopic.org/images/882a9d18-5724-44a9-b439-1b2686339a00/vector.svg",
     "myriapoda": "https://images.phylopic.org/images/fbb34126-2757-4201-9717-c5a0df3fdfb7/vector.svg",
     "pancrustacea": "https://images.phylopic.org/images/1d2c7cb7-4a62-4f4a-96ff-b62e225d6f91/vector.svg",
     "xiphosura": "https://images.phylopic.org/images/7e8438d2-f821-4755-b11a-a6370ecef303/vector.svg",
     "pycnogonida": "https://images.phylopic.org/images/e1ea9e91-6ae1-45c2-b399-8d1892c01915/vector.svg",
-    "arachnida": "https://images.phylopic.org/images/5e93251a-1294-47e0-862f-525b099d44a7/vector.svg",
-    "araneae": "https://images.phylopic.org/images/882a9d18-5724-44a9-b439-1b2686339a00/vector.svg",
+    "arachnida": "https://images.phylopic.org/images/7742cd64-4c67-443c-942c-fdf1c2681adf/vector.svg",
+    "araneae": "https://images.phylopic.org/images/7742cd64-4c67-443c-942c-fdf1c2681adf/vector.svg",
     "scorpiones": "https://images.phylopic.org/images/7742cd64-4c67-443c-942c-fdf1c2681adf/vector.svg",
     "acari": "https://images.phylopic.org/images/17172a50-685f-4f39-a0d1-c0495e33a2d0/vector.svg",
     "opiliones": "https://images.phylopic.org/images/16cbd295-6b0c-4a2d-af1a-8223506d7f60/vector.svg",
     "pseudoscorpiones": "https://images.phylopic.org/images/9ccaea11-774f-437b-8028-afd4ee880b36/vector.svg",
     "chilopoda": "https://images.phylopic.org/images/7e73ef98-7333-461d-8e3f-8f12c8d57e2d/vector.svg",
     "diplopoda": "https://images.phylopic.org/images/aa0eeb6f-3510-4410-b997-cda5a9b38a1e/vector.svg",
-    "crustacea": "https://images.phylopic.org/images/1d2c7cb7-4a62-4f4a-96ff-b62e225d6f91/vector.svg",
+    "crustacea": "https://images.phylopic.org/images/c80c9f0a-4370-404c-8716-38a684d52239/vector.svg",
     "hexapoda": "https://images.phylopic.org/images/ad6fc97e-b468-4f47-b9c6-2398f531441d/vector.svg",
     "malacostraca": "https://images.phylopic.org/images/0b6760dc-aa18-40c6-801d-3b1eb09b894e/vector.svg",
     "branchiopoda": "https://images.phylopic.org/images/51ba7d73-24fb-4bf5-9839-f2b3257ee2f3/vector.svg",
     "copepoda": "https://images.phylopic.org/images/be9c4ede-4f33-4800-a202-4c73f493b5e6/vector.svg",
     "thecostraca": "https://images.phylopic.org/images/131051a0-9053-4295-a90a-380a00170784/vector.svg",
     "entognatha": "https://images.phylopic.org/images/ad6fc97e-b468-4f47-b9c6-2398f531441d/vector.svg",
-    "insecta": "https://images.phylopic.org/images/4c7a9eb7-7a10-41fe-8677-e1fdbaca151f/vector.svg",
+    "insecta": "https://images.phylopic.org/images/956cf95f-9cbd-459b-a457-c80ba19877a4/vector.svg",
     "coleoptera": "https://images.phylopic.org/images/f8c4e148-3f5f-4a0c-ae7f-f0374fdc7c90/vector.svg",
     "lepidoptera": "https://images.phylopic.org/images/0fde2bb6-0472-4273-bf46-2d6073fa8fbc/vector.svg",
-    "hymenoptera": "https://images.phylopic.org/images/e3fde32c-34c2-4f67-8577-e546909f83e8/vector.svg",
+    "hymenoptera": "https://images.phylopic.org/images/956cf95f-9cbd-459b-a457-c80ba19877a4/vector.svg",
     "diptera": "https://images.phylopic.org/images/4114f782-f642-461b-a4af-d6ee2a490b24/vector.svg",
     "hemiptera": "https://images.phylopic.org/images/408b5725-338f-48b6-b57f-2317797752cb/vector.svg",
     "orthoptera": "https://images.phylopic.org/images/791a3515-d248-44f9-9914-71d77d166e31/vector.svg",
     "odonata": "https://images.phylopic.org/images/8af9c80d-92f9-4ba8-87c0-8ffa026c770c/vector.svg",
     "blattodea": "https://images.phylopic.org/images/b2e26249-80be-441b-8648-4c0361892ee0/vector.svg",
-    "echinodermata": "https://images.phylopic.org/images/4a56d23f-0725-4a13-bda7-665e0d5cf9b8/vector.svg",
+    "echinodermata": "https://images.phylopic.org/images/7e27ce06-1f4f-45d8-a359-dcba8fc54b9b/vector.svg",
     "hemichordata": "https://images.phylopic.org/images/e4fd3a29-a712-4822-981f-c268b54461a3/vector.svg",
     "chordata": "https://images.phylopic.org/images/d5a234cc-4ca6-4186-9ed9-dedd2ca0a37d/vector.svg",
     "asteroidea": "https://images.phylopic.org/images/7e27ce06-1f4f-45d8-a359-dcba8fc54b9b/vector.svg",
@@ -99,14 +99,14 @@
     "echinoidea": "https://images.phylopic.org/images/e5da6b25-f72b-43b5-ba79-3b8b9933116f/vector.svg",
     "holothuroidea": "https://images.phylopic.org/images/b84b253e-3111-42d0-aaa2-dfd981d1b4fc/vector.svg",
     "crinoidea": "https://images.phylopic.org/images/ab36081a-9d02-4d3a-9f18-feaddb440302/vector.svg",
-    "strongylocentrotus_purpuratus": "https://images.phylopic.org/images/de3e0cb3-8271-45c1-8bd5-77c6e74e438c/vector.svg",
+    "strongylocentrotus_purpuratus": "https://images.phylopic.org/images/e5da6b25-f72b-43b5-ba79-3b8b9933116f/vector.svg",
     "cephalochordata": "https://images.phylopic.org/images/6dec6424-7511-49b2-aac6-3da79d45c7f2/vector.svg",
     "urochordata": "https://images.phylopic.org/images/ebb9f3d3-09d2-47cb-8516-4718c20babf9/vector.svg",
     "vertebrata": "https://images.phylopic.org/images/f2e8bfa2-ebea-40f9-9f88-03ae5b97c1a0/vector.svg",
     "myxini": "https://images.phylopic.org/images/e820a299-38f4-4ae0-9c6c-cec867cdf767/vector.svg",
     "petromyzontida": "https://images.phylopic.org/images/97bc41b3-14fb-4c4f-b7e9-564b4c499f2d/vector.svg",
-    "gnathostomata": "https://images.phylopic.org/images/22f937e1-5441-413b-8331-51475518caaf/vector.svg",
-    "chondrichthyes": "https://images.phylopic.org/images/cdd1cf97-ba89-4e83-8797-ac6d79156ffa/vector.svg",
+    "gnathostomata": null,
+    "chondrichthyes": "https://images.phylopic.org/images/545d45f0-0dd1-4cfd-aad6-2b835223ea0d/vector.svg",
     "osteichthyes": "https://images.phylopic.org/images/c1bf8acf-7d75-48f3-a757-9ac4b5d37c3e/vector.svg",
     "tetrapoda": "https://images.phylopic.org/images/e092db11-fde4-4467-b611-fd64f854575b/vector.svg",
     "selachimorpha": "https://images.phylopic.org/images/a14db634-f3d1-437a-9d0b-21c03bfd0696/vector.svg",
@@ -120,18 +120,18 @@
     "siluriformes": "https://images.phylopic.org/images/5ea9815b-99cc-4741-98a1-37dbc05fd88e/vector.svg",
     "characiformes": "https://images.phylopic.org/images/199829d3-183a-4eb3-a35a-a8705d28cb56/vector.svg",
     "perciformes": "https://images.phylopic.org/images/7a79801e-0aae-4591-83e0-d0562f97aa0f/vector.svg",
-    "amphibia": "https://images.phylopic.org/images/4e30477a-f64c-4d2f-9a5e-92cb24fe528f/vector.svg",
+    "amphibia": "https://images.phylopic.org/images/01a21193-6599-463c-a5f0-75b6fe03189d/vector.svg",
     "amniota": "https://images.phylopic.org/images/61c59b94-6b48-40b4-ada1-3cc6c7543604/vector.svg",
     "anura": "https://images.phylopic.org/images/01a21193-6599-463c-a5f0-75b6fe03189d/vector.svg",
     "caudata": "https://images.phylopic.org/images/f00121ab-a5c5-4bb4-8b88-51bd16122916/vector.svg",
     "gymnophiona": "https://images.phylopic.org/images/4dd27c92-9daf-4217-b35d-03487bc4a96d/vector.svg",
-    "synapsida": "https://images.phylopic.org/images/61c59b94-6b48-40b4-ada1-3cc6c7543604/vector.svg",
-    "sauropsida": "https://images.phylopic.org/images/00b96cf3-1802-4bda-a6cc-76aea0f6f05e/vector.svg",
-    "mammalia": "https://images.phylopic.org/images/f4b6df56-f216-4a4c-9940-4105da8b462e/vector.svg",
-    "monotremata": "https://images.phylopic.org/images/6885c062-5deb-4ebf-a481-752186819108/vector.svg",
-    "theria": "https://images.phylopic.org/images/5906d52b-446c-4e87-b7ab-27feaa832aaa/vector.svg",
-    "marsupialia": "https://images.phylopic.org/images/f34ca418-a0d9-4ed7-bc3c-a74bcdeae443/vector.svg",
-    "placentalia": "https://images.phylopic.org/images/25689083-598c-430e-8c1f-4c3fcd779607/vector.svg",
+    "synapsida": "https://images.phylopic.org/images/1f3e74df-30e6-422b-9ce2-db7df199f11d/vector.svg",
+    "sauropsida": "https://images.phylopic.org/images/5dec03d9-66a2-4033-b1a9-6dbb3485199f/vector.svg",
+    "mammalia": "https://images.phylopic.org/images/e2015ba3-4f7e-4950-9bde-005e8678d77b/vector.svg",
+    "monotremata": "https://images.phylopic.org/images/61932f57-1fd2-49d9-bb86-042d6005581a/vector.svg",
+    "theria": null,
+    "marsupialia": "https://images.phylopic.org/images/91324e57-b3f1-42e0-abe3-43e5bc8aa4c6/vector.svg",
+    "placentalia": "https://images.phylopic.org/images/f4a2eba1-0840-436b-813d-0c5bd1314002/vector.svg",
     "rodentia": "https://images.phylopic.org/images/1701c916-c68a-4807-8666-c4b8b4bc6656/vector.svg",
     "chiroptera": "https://images.phylopic.org/images/0d386ce5-28e2-407c-b985-c1aac350bd1a/vector.svg",
     "eulipotyphla": "https://images.phylopic.org/images/3af82895-2953-428d-b529-f229231ab69f/vector.svg",
@@ -144,13 +144,13 @@
     "squamata": "https://images.phylopic.org/images/88177b24-a78b-4049-8280-cc4c74b5df46/vector.svg",
     "rhynchocephalia": "https://images.phylopic.org/images/598318f1-e488-443d-9d86-0d640c377ee7/vector.svg",
     "testudines": "https://images.phylopic.org/images/0bdf6f08-3b9e-41a3-aec2-5ae1ee3f0a47/vector.svg",
-    "archosauria": "https://images.phylopic.org/images/48d1f3ff-41b3-4659-98ac-fd09410c5757/vector.svg",
+    "archosauria": null,
     "crocodilia": "https://images.phylopic.org/images/dffda000-77cb-4251-b837-0cd2ab21ed5b/vector.svg",
-    "aves": "https://images.phylopic.org/images/6add767f-6ff7-486e-b4d5-ddce60fb8409/vector.svg",
+    "aves": "https://images.phylopic.org/images/d92c7d0d-cf43-409b-9159-f62a2111e6ae/vector.svg",
     "palaeognathae": "https://images.phylopic.org/images/c8a2a294-252e-49f0-91a4-9ec4cae5d044/vector.svg",
     "neognathae": "https://images.phylopic.org/images/6affa688-6da7-400b-8a28-ea2b4e5a02ba/vector.svg",
     "galloanserae": "https://images.phylopic.org/images/6affa688-6da7-400b-8a28-ea2b4e5a02ba/vector.svg",
-    "neoaves": "https://images.phylopic.org/images/c001637a-6463-43aa-a0f6-e97cb41d13ab/vector.svg",
+    "neoaves": null,
     "passeriformes": "https://images.phylopic.org/images/ee6da2e5-95c1-431c-876f-9c6d7650ee97/vector.svg",
     "apodiformes": "https://images.phylopic.org/images/508c7b5d-efe4-4491-b690-a4fb5dd0463f/vector.svg",
     "psittaciformes": "https://images.phylopic.org/images/b985eefe-7873-437b-93b6-e06673df564c/vector.svg",
@@ -161,236 +161,523 @@
     "sphenisciformes": "https://images.phylopic.org/images/535f31dc-2b8a-448d-af5f-3ea8b18da773/vector.svg"
   },
   "photos": {
+    "luca": {
+      "summary": "O último antepassado comum universal é a hipotética célula ancestral comum da qual se originaram os três domínios da vida — Bactéria, Archaea e Eukarya. Esta célula possuía uma bicamada lipídica; continha o código genético e ribossomas que traduziam DNA ou RNA em proteínas. Embora o momento em que o LUCA existiu não possa ser definitivamente determinado, a maioria dos estudos sugere que o LUCA existiu há 3,5 bilhões de anos e possivelmente tão cedo quanto há 4,3 bilhões de anos ou mais. A natureza deste ponto ou estágio de divergência permanece um tópico de pesquisa."
+    },
+    "bacteria": {
+      "summary": "Bactéria é um tipo de célula biológica. Elas constituem um grande domínio de micro-organismos procariontes. Possuindo tipicamente alguns micrômetros de comprimento, as bactérias podem ter diversos formatos, variando de esferas até bastões e espirais."
+    },
+    "archaea": {
+      "summary": "Archaea, em português:  arquea, arqueiaAO 1990 ou arquaia, é um domínio que agrupa microrganismos unicelulares procariontes, morfologicamente semelhantes a bactérias, mas genética e bioquimicamente tão distintas destas como dos eucariontes. Estes organismos foram inicialmente classificadas como um tipo ancestral de bactérias, recebendo o nome Archaebacteria, classificação agora considerada obsoleta, tendo o grupo sido renomeado para esclarecer que os seus membros estão filogeneticamente mais próximos dos eucariontes do que das bactérias. Porem, as moléculas de DNA das arqueias são organizadas em cromossomas circulares presentes no citoplasma, sem membrana envolvente, como equivalente nuclear. As células dos Archaea apresentam propriedades únicas que as separam dos outros dois domínios, estando o grupo presentemente divididos em três reinos e com um número crescente de filos reconhecidos. Sua taxonomia ainda não é bem estabelecida pois a maioria das espécies conhecidas ainda não foi isolada em laboratório, tendo sido detectadas apenas pelas sequências genéticas presentes em amostras ambientais. Não se sabe se estes organismos são capazes de produzir endósporos. Não é conhecido neste agrupamento qualquer patógeno que afete humanos."
+    },
+    "eukarya": {
+      "summary": "O domínio taxonômico Eukariota, Eukaria, Eukarya, Eukaryota, também referido como eucariotas ou eucariontes inclui todos os seres vivos com células eucarióticas, ou seja, com um núcleo celular cercado por uma membrana e com várias organelas. No núcleo está contida a maior parte do material genético, o DNA, enquanto uma parte menor está contida nas mitocôndrias. Seu DNA está associado a proteínas histónicas."
+    },
+    "fungi": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/260296784/medium.jpg",
+      "credit": "(c) Cho Fungi, some rights reserved (CC BY-NC), uploaded by Cho Fungi",
+      "summary": "O reino Fungi é um grupo de organismos eucariotas, que inclui micro-organismos tais como as leveduras, os bolores, bem como os mais familiares cogumelos."
+    },
+    "plantae": {
+      "url": "https://static.inaturalist.org/photos/221143410/medium.jpeg",
+      "credit": "(c) Rocío Ramírez Barrios, all rights reserved, uploaded by Rocío Ramírez Barrios",
+      "summary": "Plantas são os eucariotos que compõem o reino Plantae; elas são predominantemente fotossintéticas, o que significa que obtêm sua energia da luz solar, utilizando cloroplastos derivados da endossimbiose com cianobactérias para produzir açúcares a partir de dióxido de carbono e água, usando o pigmento verde clorofila. Exceções são as plantas parasitas que perderam os genes para clorofila e fotossíntese e obtêm sua energia de outras plantas ou fungos. A maioria das plantas é multicelular, com exceção de algumas algas verdes."
+    },
+    "protozoa": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/28906584/medium.jpg",
+      "credit": "(c) Иван Матершев, some rights reserved (CC BY-NC), uploaded by Иван Матершев",
+      "summary": "Protozoários ou Protozoa são microrganismos eucarióticos unicelulares e heterotróficos. Sua classificação é controversa, pois inclui diversos seres semelhantes que não possuem relação evolutiva, sendo assim um grupo polifilético que une diferentes tipos de organismos microscópicos que não se encaixam no reino Metazoa. Segundo Brusca & Brusca, protozoários são os seres eucariontes que não apresentam nível de organização tecidual como as plantas e os animais e não passam pelo processo de formação dos folhetos embrionários que ocorre nesses grupos. Fazem parte do reino Protista, junto com as algas unicelulares crisófitas, euglenófitas e pirrófitas de acordo com suas semelhanças mais evidentes."
+    },
+    "animalia": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/80678745/medium.jpg",
+      "credit": "no rights reserved, uploaded by Abhas Misraraj",
+      "summary": "Animais são organismos multicelulares eucarióticos que compõem o reino biológico Animalia. Com poucas exceções, consomem matéria orgânica, respiram oxigênio, possuem miócitos e são capazes de se mover, podem se reproduzir sexuadamente e se desenvolvem a partir de uma esfera oca de células, a blástula, durante o desenvolvimento embrionário. Os animais formam um clado, o que significa que surgiram de um único ancestral comum. Mais de 1,5 milhão de espécies animais vivas foram descritas, das quais cerca de 1,05 milhão são insetos, mais de 85 mil são moluscos e cerca de 65 mil são vertebrados. Estima-se que existam até 7,77 milhões de espécies animais na Terra. O comprimento do corpo dos animais varia de 8,5 μm (0,00033 in) para 33,6 m (110 ft). Eles possuem ecologias complexas e interações entre si e com seus ambientes, formando intrincadas teias alimentares. O estudo científico dos animais é conhecido como zoologia, enquanto o estudo do comportamento animal é conhecido como etologia."
+    },
     "porifera": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/117290419/medium.jpg",
-      "credit": "(c) Kerry Lewis, some rights reserved (CC BY-NC), uploaded by Kerry Lewis",
-      "license": "cc-by-nc"
+      "summary": "Porifera é um filo do reino Animalia, onde se enquadram os animais conhecidos como esponjas. As esponjas são organismos multicelulares sésseis que apresentam um sistema aquífero de canais e poros que gera correntes de água dirigidas por células flageladas características: os coanócitos."
     },
     "cnidaria": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4118/medium.jpg",
-      "credit": "(c) Giorgos Vintzileos, some rights reserved (CC BY-NC-ND)",
-      "license": "cc-by-nc-nd"
+      "summary": "Cnidaria é um filo de animais exclusivamente aquáticos, agrupando os organismos conhecidos pelo nome comum de cnidários, entre os quais estão as medusas e as alforrecas, as caravelas, as anémonas-do-mar, os corais-moles e as hidras de água doce.[carece de fontes?] São organismos multicelulares, com estrutura simples, caracterizados pela presença de uma estrutura celular chamada cnida, na maioria marinhos e na maioria de vida livre, habitando costas, fundos e as águas abertas dos oceanos, bem como parasitas. O taxon inclui atualmente mais de 11 000 espécies extantes. Alguns cnidários, como a espécie Polypodium hydriforme e os Myxozoa, evoluíram para formas parasitas. Os cnidários foram incluídos durante muito tempo em conjunto com os Ctenophora (ctenóforos) no filo Coelenterata, embora essa classificação há muito já tenha sido abandonada, deixando o nome obsoleto."
+    },
+    "bilateria": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/80678745/medium.jpg",
+      "credit": "no rights reserved, uploaded by Abhas Misraraj",
+      "summary": "Em zoologia, chama-se Bilateria a um clado que inclui os animais do sub-reino Eumetazoa que apresentam simetria bilateral. É o clado irmão de Cnidaria, um táxon de animais de simetria radial. Pode ser dividido em Xenacoelomorpha e Nephrozoa."
     },
     "demospongiae": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136085285/medium.jpg",
-      "credit": "(c) Michael Konecky, some rights reserved (CC BY-NC), uploaded by Michael Konecky",
-      "license": "cc-by-nc"
+      "summary": "Demospôngias é uma classe do filo Porifera que inclui a maior variedade das esponjas modernas. Diferenciam-se por possuírem um esqueleto de fibras de espongina, uma substância exclusiva destes animais."
+    },
+    "hexactinellida": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/88489658/medium.jpeg",
+      "credit": "(c) Sara Thiebaud, some rights reserved (CC BY-NC), uploaded by Sara Thiebaud",
+      "summary": "Hexactinellida é uma classe do filo Porifera (esponjas) caracterizada por possuir um esqueleto de espículas de sílica, e são comumente chamadas de esponjas-de-vidro. O nome da classe é devido ao fato das espículas possuírem seis pontas, distribuídas em seis eixos. Frequentemente algumas das espículas se fundem e o esqueleto adquire um aspecto de treliça sendo constituído de fibras silicosas longas semelhantes a fibras de vidro soltas."
+    },
+    "calcarea": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/14681238/medium.jpg",
+      "credit": "(c) rithik, some rights reserved (CC BY-NC), uploaded by rithik",
+      "summary": "Calcarea é uma classe de esponjas que se distingue dos outros poríferos pelos seus indivíduos serem constituídos por espículas calcárias de calcite. O grupo já foi designado como Calcispongiae ou esponjas calcáreas. As espículas têm aproximadamente o mesmo tamanho e podem ser monoaxônicas ou possuir três ou quatro pontas; o edifício tridimensional assim construído representa o esqueleto do animal, que não possui fibras de espongina. Possuem representantes dos três graus de estrutura de esponjas: asconoide, siconoide e leuconoide. A maioria das esponjas calcáreas tem menos de 10 cm de comprimento, não sendo tão grandes quanto as esponjas das outras classes. Existem esponjas calcáreas por todos os oceanos do mundo, a maioria restrita a águas costeiras relativamente rasas. Há cerca de 150 espécies de esponjas calcárias."
     },
     "amphimedon_queenslandica": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/315348116/medium.jpg",
-      "credit": "(c) uwkwaj, some rights reserved (CC BY-NC), uploaded by uwkwaj",
-      "license": "cc-by-nc"
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/154760564/medium.jpeg",
+      "credit": "(c) Sylvain Le Bris, some rights reserved (CC BY-NC), uploaded by Sylvain Le Bris"
     },
     "anthozoa": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4440362/medium.jpg",
-      "credit": "(c) David R, some rights reserved (CC BY-NC)",
-      "license": "cc-by-nc"
+      "summary": "Anthozoa ou antozoários é a classe do filo Cnidaria que inclui os corais e anémonas do mar, sendo a maior classe dos Cnidaria, contendo mais de 6 000 espécies. Os antozoários distinguem-se dos restantes cnidários por terem uma vida inteiramente séssil, sem estado livre de medusa. São formadores de corais."
+    },
+    "scyphozoa": {
+      "url": "https://static.inaturalist.org/photos/13185688/medium.jpg",
+      "credit": "(c) Pat Webster @underwaterpat, all rights reserved, uploaded by Pat Webster @underwaterpat",
+      "summary": "Scyphozoa é uma classe de organismos exclusivamente marinhos do filo Cnidaria. Assim como os outros organismos do subfilo Medusozoa, possuem duas fases de vida predominantes, uma medusa pelágica planctônica e um pólipo séssil bentônico. A sinapomorfia principal do grupo, que o difere dos demais tipos de águas-vivas, é a presença de um tipo específico de reprodução, denominada estrobilização. Habitam diversos ambientes, desde águas rasas a profundidades abissais. São conhecidas, atualmente, cerca de 244 espécies de medusas cifozoárias, ocorrendo 20 em território brasileiro, sendo uma delas endêmica."
+    },
+    "cubozoa": {
+      "url": "https://static.inaturalist.org/photos/429212562/medium.jpg",
+      "credit": "(c) pleahy, all rights reserved",
+      "summary": "Cubozoa é um grupo do filo Cnidaria, que inclui os animais chamados de cubozoários ou cubomedusas. Originalmente agrupada como uma ordem dentro da classe Scyphozoa, Cubozoa foi elevada ao status de classe, uma vez revelada a magnitude das diferenças entre ela e outros grupos de cnidários."
+    },
+    "hydrozoa": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/224965745/medium.jpg",
+      "credit": "(c) Alex Shure, some rights reserved (CC BY-NC), uploaded by Alex Shure",
+      "summary": "Hydrozoa é uma classe do filo Cnidaria. Com cerca de 3.770 espécies conhecidas. Os membros dessa classe são medusóides ou polipóides ou exibem ambas as formas em seu ciclo de vida."
     },
     "scleractinia": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/80425547/medium.jpg",
-      "credit": "(c) Damien Brouste, some rights reserved (CC BY-NC), uploaded by Damien Brouste",
-      "license": "cc-by-nc"
+      "summary": "Scleractinia ou Madreporaria é uma ordem de cnidários antozoários da subclasse Hexacorallia. Inclui os verdadeiros corais, conhecidos popularmente como corais-pétreos ou escleractinianos."
+    },
+    "actiniaria": {
+      "url": "https://static.inaturalist.org/photos/48519610/medium.jpg",
+      "credit": "(c) Pat Webster @underwaterpat, all rights reserved, uploaded by Pat Webster @underwaterpat",
+      "summary": "Actiniaria é uma ordem de cnidários antozoários da subclasse Hexacorallia. Inclui as anêmonas-do-mar."
     },
     "xenacoelomorpha": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/354682818/medium.jpg",
-      "credit": "(c) Donald Davesne, some rights reserved (CC BY), uploaded by Donald Davesne",
-      "license": "cc-by"
+      "summary": "Xenacoelomorpha é um pequeno filo de animais invertebrados bilaterianos, dividido em dois subfilos irmãos: Xenoturbellida e Acoelomorpha. Este novo filo foi nomeado em fevereiro de 2011 e sugerido com base em sinapomorfias morfológicas, que foi então confirmado por análises filogenômicas de dados moleculares."
+    },
+    "nephrozoa": {
+      "summary": "Nephrozoa é um importante clado de bilaterias, dividido em protostomias e os deuterostomias, contendo quase todos os filos animais e mais de um milhão de espécies existentes. Seu clado irmão é o Xenacoelomorpha. A Ambulacraria era anteriormente pensado para ser irmão do Xenacoelomorpha, formando o Xenambulacraria como Deuterostômios basais, ou Bilateria basal invalidando Nephrozoa e Deuterostomes em estudos anteriores. O celoma, o trato digestivo, os órgãos excretores e os cordões nervosos se desenvolveram nos Nefrozoários. Argumenta-se que, como os protonefrídios são encontrados apenas em protostômios, eles não podem ser considerados uma sinapomorfia desse grupo. Isso tornaria Nephrozoa um nome impróprio, deixando Eubilateria como o nome desse clado."
+    },
+    "protostomia": {
+      "summary": "Protostomia é um clado de animais com simetria bilateral e três camadas germinativas. O nome do grupo deriva do fato que no desenvolvimento embrionário a boca é formada antes do ânus. Na língua portuguesa, o termo protostómios (português europeu) ou protostômios (português brasileiro) é utilizado para denominar o grupo."
+    },
+    "deuterostomia": {
+      "summary": "Deuterostômios (português brasileiro) ou deuterostómios (português europeu), é um grupo de animais ligados por diversos aspectos embrionários peculiares, como a forma de clivagem, a forma de suas larvas, o desenvolvimento do celoma e pelas aberturas embrionárias que irão originar a boca (posteriormente) e ânus (primeiramente)."
+    },
+    "spiralia": {
+      "summary": "Spiralia é a denominação de um clado extremamente diverso e amplo, e inclui-se nele nemertideos, anelideos, moluscos, platelmintos\n, e incluem basicamente os animais que tem logo nas primeiras clivagens do seu desenvolvimento embrionário a característica de segmentação total dos blastômeros em espiral."
+    },
+    "ecdysozoa": {
+      "summary": "Ecdysozoa é um clado de animais protostômios que reúne os artrópodes, nemátodes e outros sete filos. Inclui organismos que têm de se desfazer do exosqueleto \"apertado\" e formar um novo para poderem crescer, um processo designado muda ou ecdise. O grupo foi definido por Aguinaldo e colaboradores em 1997, baseado em análise molecular principalmente de genes 18S RNA ribossomal. Dunn e colaboradores em 2008, confirmaram a monofilia do clado."
     },
     "platyhelminthes": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/6308/medium.jpg",
-      "credit": "(c) Doug Anderson, some rights reserved (CC BY-NC)",
-      "license": "cc-by-nc"
+      "summary": "Platyhelminthes, comumente designados por platelmintes, platelmintas, platelmintos ou vermes planos, é um filo de invertebrados com simetria bilateral, não-segmentados, protostómios, de corpo mole e relativamente simples. A par com os nematelmintas e anelídeos, são considerados vermes."
+    },
+    "lophotrochozoa": {
+      "summary": "Lophotrochozoa é um dos dois ou três grandes grupos de animais protostómios. Inclui os filos listados na secção abaixo."
+    },
+    "turbellaria": {
+      "summary": "Turbellaria é uma das classes de Platyhelminthes. O nome \"Turbellaria\" refere-se aos \"redemoinhos\" de partículas microscópicas criadas perto das peles de espécies aquáticas pelo movimento de seus cílios."
     },
     "cestoda": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/347272677/medium.jpg",
-      "credit": "anonymous, no known copyright restrictions (public domain)",
-      "license": "pd"
+      "summary": "Cestoda é uma classe do filo Platyhelminthes que se caracterizam pela ausência do sistema digestório. Os alimentos são absorvidos pela pele, que tem revestimento semelhante aos dos trematódeos. Todos os representantes desta classe são parasitas internos."
     },
     "trematoda": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/79566824/medium.jpg",
-      "credit": "(c) Maria Vasilyeva, some rights reserved (CC BY-NC), uploaded by Maria Vasilyeva",
-      "license": "cc-by-nc"
+      "summary": "Trematoda do filo Platyhelminthes composta por cerca de 18 mil a 24 mil espécies de endo- e ectoparasitas. Os tremátodes podem infestar moluscos e vertebrados, sendo a escolha do hospedeiro dependente da espécie. Normalmente eles parasitam dois hospedeiros, um intermediário e outro permanente. Alguns destes organismos causam doenças graves no hospedeiro. Dividido em duas subclasses: Digenea e Aspidogastrea."
     },
-    "planariidae": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/198841826/medium.jpg",
-      "credit": "(c) sumie-dh, some rights reserved (CC BY-NC), uploaded by sumie-dh",
-      "license": "cc-by-nc"
+    "monogenea": {
+      "url": "https://static.inaturalist.org/photos/33253941/medium.jpg",
+      "credit": "(c) Fërnœndo Gön Mër, all rights reserved, uploaded by Fërnœndo Gön Mër",
+      "summary": "Monogenea é uma classe de vermes do filo Platyhelminthes, maioritariamente ectoparasitas de organismos aquáticos, que atacam principalmente peixes e anfíbios. São comuns na pele, barbatanas, guelras e brânquias dos peixes e menos comuns na bexiga e no recto de alguns vertebrados ectotérmicos. Considerados durante largo tempo como uma ordem da classe Trematoda, foram separados, entre outros motivos, por apresentarem um ciclo de vida com um único hospedeiro, enquanto que os Digenea apresentam de dois a quatro. Estima-se que existam cerca de 25 000 espécies de Monogenea."
     },
-    "dugesia_tigrina": null,
+    "tricladida": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/8683094/medium.jpg",
+      "credit": "(c) Dinesh Valke, some rights reserved (CC BY-SA)",
+      "summary": "Os tricládidos (Tricladida) constituem uma ordem biológica de turbelários não parasitas, de vida livre. Podem viver em ambiente aquáticos marinhos, de água doce e terrestres."
+    },
+    "polycladida": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/98231002/medium.jpg",
+      "credit": "(c) Richard Ling, some rights reserved (CC BY-SA)",
+      "summary": "Polycladida ou Policládidos é uma ordem de vermes achatados de vida livre (não-parasitas) que pertencem ao filo Platyhelminthes, classe Turbellaria. Nessa ordem estão incluídos uma enorme variedade de vermes marinhos que exibem cores de rara beleza."
+    },
+    "dugesia_tigrina": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/94640190/medium.jpg",
+      "credit": "(c) mgreilhuber, some rights reserved (CC BY-NC), uploaded by mgreilhuber"
+    },
+    "fasciolidae": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/31631937/medium.jpeg",
+      "credit": "(c) gustavo-peretti, some rights reserved (CC BY-NC), uploaded by gustavo-peretti",
+      "summary": "Fasciolidae é uma família de trematóides e inclui vários parasitas envolvidos na veterinária e ciências médicas. Fasciolidae é dividido em cinco gêneros por Olsen et al. 2003. A família de várias espécies estão localizadas no fígado, vesículae intestino. Seu ciclo de vida inclui um hospedeiro intermediário, de água doce, caramujos da família Lymnaeidae."
+    },
     "schistosomatidae": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1323053/medium.jpg",
-      "credit": "(c) Chen M, some rights reserved (CC BY)",
-      "license": "cc-by"
+      "summary": "Schistosomatidae é uma família de trematódeos digenéticos com ciclos de vida parasitários complexos. Estágios imaturos de desenvolvimento de esquistossomos são encontrados em moluscos e adultos ocorrem em vertebrados. O grupo mais bem estudado, os vermes sanguíneos do gênero Schistosoma, infectam e causam doenças em humanos. Outros gêneros que infectam vertebrados não humanos podem causar erupções cutâneas leves em humanos."
     },
     "mollusca": {
-      "url": "https://static.inaturalist.org/photos/58051104/medium.jpg",
-      "credit": "(c) Ian Shaw, all rights reserved, uploaded by Ian Shaw",
-      "license": ""
+      "summary": "Os moluscos constituem um grande filo de animais invertebrados, marinhos, de água doce ou terrestres. O filo Mollusca é o segundo filo com a maior diversidade de espécies, depois dos Artrópodes, e inclui uma variedade de animais muito familiares, como as ostras, as lulas, os polvos e os caramujos. A maior parte dos moluscos são aquáticos, mas existem muitas formas terrestres como os caracóis. É um Filo extremamente diverso, tanto em número de espécies quanto em variedade de formas e de hábitos, e possui extrema importância comercial e cultural, uma vez que vários destes animais fazem parte do nosso dia a dia e estão presentes na alimentação de diversos povos."
     },
     "annelida": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/163489709/medium.jpeg",
-      "credit": "(c) Sylvain Le Bris, some rights reserved (CC BY-NC), uploaded by Sylvain Le Bris",
-      "license": "cc-by-nc"
+      "summary": "Anelídeos, também conhecido como vermes anelares ou vermes segmentados, é um vasto filo com mais de 17.000 espécies incluindo vermes, minhocas e sanguessugas. Estes animais podem ser encontrados tanto em ambientes terrestres quanto aquáticos. São animais com simetria bilateral, triblásticos, celomados e invertebrados. Esse filo é dividido em dois grupos, conhecidos por “Polychaeta” e Clitellata, sendo este último constituído por Oligochaeta (minhocas) e Hirudinea (sanguessugas)."
+    },
+    "brachiopoda": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/294328270/medium.jpg",
+      "credit": "(c) Alex Shure, some rights reserved (CC BY-NC), uploaded by Alex Shure",
+      "summary": "Brachiopoda é um filo do reino Animalia constituído por animais solitários, exclusivamente marinhos e bentônicos. Apresentam corpo mole incluso numa carapaça composta por duas valvas, à semelhança dos moluscos bivalves, no entanto os dois grupos são bastante distintos. A concha, de natureza fosfatada ou carbonatada, pode apresentar ornamentações diversas. O grupo é representado por cerca de 4.500 gêneros, dos quais apenas 120 são viventes. A maioria dos gêneros extintos são do Paleozoico."
+    },
+    "bryozoa": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/307188482/medium.jpg",
+      "credit": "(c) Ken Koll, some rights reserved (CC BY-NC), uploaded by Ken Koll",
+      "summary": "O filo Ectoprocta compreende um dos grupos de invertebrados mais diversos, abundantes e complexos. Devido a sua fragilidade e seu pequeno tamanho tendem a ser menos familiares do que outros grupos zoológicos. No passado eram conhecidos como briozoários ou \"animais-musgo\", denominação que incluia também os Entoprocta. No entanto, devido ao fato de os entoproctos serem pseudocelomados e possuírem o ânus localizado no interior da coroa de tentáculos, eles têm sido geralmente separados dos ectoproctos, os quais, à semelhança dos demais lofoforados, são eucelomados e possuem o ânus fora do círculo de tentáculos."
     },
     "gastropoda": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/18576101/medium.jpg",
-      "credit": "(c) danolsen, some rights reserved (CC BY-NC)",
-      "license": "cc-by-nc"
+      "summary": "Gastropoda, conhecidos como gastrópodes, é uma grande classe taxonómica do filo Mollusca que agrupa os animais conhecidos por caracóis, lesmas, lapas e búzios. A classe Gastropoda inclui 65 000–85 000 espécies extantes, com grande variedade morfológica e tamanhos que vão do submicroscópico a várias dezenas de centímetros. Com espécies terrestres, de água doce e marinhas, constitui o agrupamento taxonómico com maior sucesso do filo Mollusca. O grupo está abundantemente presente no registo fóssil desde o final do Cambriano (Furongiano)."
     },
     "bivalvia": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/43139115/medium.jpeg",
-      "credit": "(c) Matthew Connors, some rights reserved (CC BY-NC-SA), uploaded by Matthew Connors",
-      "license": "cc-by-nc-sa"
+      "summary": "Em biologia, bivalvia anteriormente Pelecypoda e Lamellibranchia, é a classe do filo Mollusca que inclui os animais aquáticos popularmente designados por bivalves. Estes organismos caracterizam-se pela presença de uma concha carbonatada formada por duas valvas. Esta concha protege o corpo do molusco, entre elas há o pé muscular e os sifões inalantes e exalantes para a entrada e saída da água, que traz oxigênio, depois absorvido por difusão direta pelas lâminas branquiais, assim como alimento e também aumenta o risco de intoxicações, pois este tipo de alimentação é comum em animais fixos representando um grande risco caso a ostra ou marisco entre em contato com poluição. O grupo surgiu no Câmbrico e é atualmente muito diversificado, com cerca de 15 000 espécies. A separação das diferentes subclasses faz-se pelo tipo e estrutura das brânquias nos organismos vivos, e pelas características das valvas nos bivalves fósseis. O mexilhão, a amêijoa e a conquilha são exemplos populares de bivalves que servem como alimento ao Homem. As ostras são também a origem das pérolas."
     },
     "cephalopoda": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/32158737/medium.jpg",
-      "credit": "(c) mbartick, some rights reserved (CC BY-NC)",
-      "license": "cc-by-nc"
+      "summary": "Um Cefalópode é qualquer membro da classe de moluscos Cephalopoda, como a lula, o polvo, a sépia ou o náutilo. Esses animais exclusivamente marinhos são caracterizados por simetria bilateral do corpo, uma cabeça proeminente e um conjunto de braços ou tentáculos modificados a partir do pé primitivo dos moluscos. Pescadores às vezes chamam os cefalópodes de “peixes-de-tinta”, em referência à habilidade comum que possuem de expelir tinta. O estudo dos cefalópodes é um ramo da malacologia conhecido como teutologia."
     },
-    "errantia": null,
-    "oligochaeta": null,
-    "hirudinida": null,
+    "clitellata": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/106154331/medium.jpg",
+      "credit": "(c) dhfischer, some rights reserved (CC BY), uploaded by dhfischer",
+      "summary": "Clitellata é, assim como os Polychaeta, uma classe de Annelida com aproximadamente 6000 espécies representantes. É dividida em 2 grandes grupos: \"Oligochaeta\" e Hirudinomorpha. Têm poucas cerdas, ou nenhuma; estruturas sensoriais cefálicas reduzidas; corpo externamente homônomo, exceto pelo clitelo. A maioria é representada por anelídeos terrestres ou de água doce, embora também existam muitas espécies marinhas. Incluem minhocas, sanguessugas além de muitas formas pequenas e inconspícuas. Nenhum clitelado apresenta parapódios, nem apêndices cefálicos e pigidiais."
+    },
+    "errantia": {
+      "summary": "Errantia, ocasionalmente Aciculata, é uma subclasse de poliquetas vermes. Esses vermes são encontrados em todo o mundo em ambientes marinhos e água salobra."
+    },
+    "oligochaeta": {
+      "summary": "Oligochaeta é uma subclasse de Clitellata que compreende cerca de 5000 espécies, a maioria vivente em água doce ou ambientes terrestres. Cerca de 200 espécies invadiram com sucesso águas salobras e marinhas. Possuem o corpo formado por um prostômio reduzido, um peristômio, número váriavel de segmentos, geralmente homônomos, e um pigídio. Apresentam uma cintura glandular chamada clitelo, que possui função reprodutiva. Ao contrário de seus parentes Polychaeta, não possuem parapódios e apresentam poucas cerdas, importantes para sua locomoção. Os animais mais conhecidos deste grupo são as minhocas, nome comum dado para as espécies da subordem Lumbricina, porém que também pode ser utilizado em senso amplo para todos os oligoquetas terrestres."
+    },
     "nematoda": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/15069637/medium.jpg",
-      "credit": "(c) David Cappaert, some rights reserved (CC BY-NC), uploaded by David Cappaert",
-      "license": "cc-by-nc"
+      "summary": "Nematoda são um filo de animais cilíndricos espetacularmente alongados. São animais triblásticos, protostômios, pseudocelomados. Seu corpo cilíndrico, alongado e não segmentado exibe simetria bilateral. Possuem sistema digestivo completo, sistemas circulatório e respiratório; sistema excretor composto por dois canais longitudinais ; sistema nervoso parcialmente centralizado, com anel nervoso ao redor da faringe."
     },
-    "caenorhabditidae": null,
+    "chromadorea": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/2713257/medium.JPG",
+      "credit": "(c) Juan Cruzado Cortés, some rights reserved (CC BY-SA), uploaded by Juan Cruzado Cortés",
+      "summary": "Chromadorea é uma clase do filo Nematoda. Anterormente a classe era tratada como uma subclasse na montagem parafilética Adenophorea, que foi abandonada por autores modernos. Também era suspeito que Chromadorea não é monofilético; pelo menos o Monhysterida parece ser uma linhagem distinta e bem mais antiga do que o resto."
+    },
+    "enoplea": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/45512022/medium.jpeg",
+      "credit": "(c) tmuise, some rights reserved (CC BY-NC), uploaded by tmuise",
+      "summary": "Enoplea (enopleanos) é uma classe, que com as classes Secernentea e Chromadorea compõem o filo Nematoda na taxonomia atual. Os Enoplea são considerados um grupo mais ancestral do que os Chromadorea, e os pesquisadores se referem a seus membros como os \"nematóides divergentes ancestrais\", em comparação com os \"nematóides divergentes mais recentemente\" de Chromadorea."
+    },
+    "rhabditida": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1171412/medium.jpg",
+      "credit": "(c) Bob Goldstein, UNC Chapel Hill http://bio.unc.edu/people/faculty/goldstein/, some rights reserved (CC BY-SA)",
+      "summary": "Rhabditida é uma ordem de nematódeos microbívoros de vida livre, zooparasitas e parasitas vegetais."
+    },
+    "strongylida": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1171412/medium.jpg",
+      "credit": "(c) Bob Goldstein, UNC Chapel Hill http://bio.unc.edu/people/faculty/goldstein/, some rights reserved (CC BY-SA)",
+      "summary": "\n\nA ordem Strongylida engloba uma variedade de nematoides parasitas, conhecidos por sua diversidade morfológica, ampla distribuição e impacto na saúde animal e humana. Estes vermes, que pertencem à classe Secernentea e à superordem Strongyloide, apresentam características distintivas em sua anatomia e ciclo de vida que os tornam adaptados para parasitar uma ampla gama de hospedeiros mamíferos. Os nematoides da ordem Strongylida possuem corpos alongados e cilíndricos, não segmentados, variando em tamanho de milímetros a centímetros. Sua boca é notável por possuir três lábios, que desempenham um papel essencial na fixação do parasita nos tecidos do hospedeiro e na ingestão de nutrientes para sua sobrevivência e reprodução. O ciclo de vida dos Strongylida inicia-se com a eliminação de ovos nas fezes do hospedeiro infectado. Estes ovos, ao serem liberados no ambiente, passam por estágios de desenvolvimento até eclodirem em larvas infectantes. As larvas, por sua vez, podem penetrar no hospedeiro por via cutânea, oral ou ingestão, dando continuidade ao ciclo e perpetuando a infestação."
+    },
+    "ascaridida": {
+      "summary": "A ordem Ascaridida inclui várias famílias de vermes parasitas com três \"lábios\" na extremidade anterior. Eles eram anteriormente classificados na subclasse Rhabditia por alguns especialistas, mas aspectos morfológicos e de sequenciamento de DNA mostraram de forma inequívoca que pertencem aos Spiruria."
+    },
     "caenorhabditis_elegans": {
       "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/28187914/medium.jpg",
       "credit": "(c) AJC1, some rights reserved (CC BY-NC-SA)",
-      "license": "cc-by-nc-sa"
+      "summary": "Caenorhabditis elegans é uma espécie de nematódeo da família Rhabditidae que mede cerca de 1 milímetro de comprimento, e vive em ambientes temperados. Tornou-se um importante modelo para o estudo da biologia, especialmente a biologia do desenvolvimento, desde a década de 1970."
+    },
+    "tardigrada": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/30619320/medium.jpg",
+      "credit": "(c) Olga Medvezhonkova, some rights reserved (CC BY-NC), uploaded by Olga Medvezhonkova",
+      "summary": "Tardigrada é um filo de animais microscópicos segmentados, relacionados com os artrópodes. Popularmente são conhecidos como ursos-d'água ou como tardígrados, aportuguesamento derivado do nome do filo. Foram descritos pela primeira vez por J.A.E. Goeze em 1773. O nome Tardigrada foi dado por Spallanzani em 1777. São em maioria fitófagos, mas alguns são predadores, como o Milnesium tardigradum."
     },
     "arthropoda": {
-      "url": "https://static.inaturalist.org/photos/294541916/medium.jpg",
-      "credit": "(c) peter_yeeles, all rights reserved",
-      "license": ""
+      "summary": "Artrópodes são um filo de animais invertebrados que possuem exoesqueleto rígido e vários pares de apêndices articulados, cujo número varia de acordo com a classe."
+    },
+    "chelicerata": {
+      "summary": "Chelicerata é um grande subfilo do filo Arthropoda (artrópodes), sendo o outro grande subfilo Mandibulata. Esta linhagem de animais artrópodes inclui o grupo das aranhas, escorpiões, carrapatos, ácaros, o grupo das aranhas-do-mar e o grupo dos límulos. Como demais animais artrópodes, os quelicerados o corpo subdividido em segmentos, com pernas articuladas, todo recoberto por um exoesqueleto feito de uma mistura de quitina e proteínas."
     },
     "myriapoda": {
-      "url": "https://static.inaturalist.org/photos/253344286/medium.jpeg",
-      "credit": "(c) Jarrod Todd, all rights reserved, uploaded by Jarrod Todd",
-      "license": ""
+      "summary": "Myriapoda é um subfilo de artrópodes que inclui animais alongados e segmentados com elevado número de pernas, mais popularmente conhecidos como centopeias, lacraias e piolhos-de-cobra. Etimologicamente, o nome miriápodes deriva dos termos do grego clássico μυρίος e πούς, claramente remetendo a estas características únicas destes animais. Todos miriápodes são animais terrestres comuns, normalmente encontrados na terra úmida, onde alguns vivem como predadores de outros pequenos animais e outros são detritívoros de matéria orgânica caído ao solo. São amplamente distribuídos, normalmente encontradiços sob pedras e troncos apodrecidos."
     },
-    "arachnida": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/67339865/medium.jpeg",
-      "credit": "(c) harshithjv, some rights reserved (CC BY-NC-SA), uploaded by harshithjv",
-      "license": "cc-by-nc-sa"
-    },
-    "araneae": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/269162938/medium.jpeg",
-      "credit": "(c) Craig Biegler, some rights reserved (CC BY-NC), uploaded by Craig Biegler",
-      "license": "cc-by-nc"
-    },
-    "crustacea": {
+    "pancrustacea": {
       "url": "https://static.inaturalist.org/photos/59799843/medium.jpg",
       "credit": "(c) James Spitznas, all rights reserved, uploaded by James Spitznas",
-      "license": ""
+      "summary": "Tetraconata é um clado que agrupa as classes de Artrópodes mandibulados Crustacea e Hexapoda, e o nome desse grupo se refere aos omatídeos compostos de quatro compartimentalizações presentes em muitos de seus membros. Esse grupo contrasta a hipótese Atelocerata, em qual Myriapoda e Hexapoda são grupos irmãos e Crustacea se torna mais distante. Desde 2010 o clado é considerado bem-aceito pelos taxonomistas."
+    },
+    "xiphosura": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/108988275/medium.jpg",
+      "credit": "(c) leafgreeny, some rights reserved (CC BY-NC)",
+      "summary": "Xiphosura é uma ordem de artrópodes merostomados das águas rasas asiáticas e da América do Norte. Apresentam um corpo divido em prossoma e opistossoma com carapaça arqueada em forma de ferradura e pernas com sete artículos."
+    },
+    "pycnogonida": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/78907506/medium.jpg",
+      "credit": "(c) Adam, some rights reserved (CC BY-NC), uploaded by Adam",
+      "summary": "Os picnogônidos (Pycnogonida), também chamados pantópodes (Pantopoda), são uma classe de artrópodes conhecidos popularmente como aranhas-do-mar."
+    },
+    "arachnida": {
+      "summary": "Os aracnídeos são uma classe de animais artrópodes que inclui, dentre os bichos melhor conhecidos pela população por aranhas, carrapatos e ácaros, escorpiões e pseudoescorpiões, e os opiliões. O nome desta classe de animais tem origem vem do grego antigo ἀράχνη, que remete na mitologia grega à entidade Arachne, que teria sido uma humana castigada pelos deuses transformada em uma aranha. A classe historicamente levou o nome pois foram as aranhas os primeiros representantes formalmente descritos."
+    },
+    "araneae": {
+      "summary": "Araneae é como se denomina tecnicamente a ordem de artrópodes da classe Arachnida que inclui as espécies de animais conhecidas popularmente por aranhas. As aranhas apresentam distribuição natural em todos os continentes, ocorrendo em praticamente todos os tipos de habitats terrestres. Apresentam o corpo subdividido em duas partes : o cefalotórax e o abdómen, que se interligam por uma curta estrutura cilíndrica chamada de pedicelo; apresentam no cefalotórax oito pernas e quelíceras, que maioritariamente são capazes de injetar veneno. Diferentemente de outros grupos de artrópodes como os insectos, as aranhas não apresentam antenas; apresentam sistema nervoso bem desenvolvido e centralizado, considerado o mais centralizado dentre os grupos de artrópodes viventes. No seu abdomen localizam-se glândulas de seda chamadas de fiandeiras, capazes de produzir seda, com a qual tecem teias com grande variabilidade morfológica e de tamanho."
+    },
+    "scorpiones": {
+      "url": "https://static.inaturalist.org/photos/81244270/medium.jpg",
+      "credit": "(c) Chad Keates, all rights reserved, uploaded by Chad Keates",
+      "summary": "Escorpiões são aracnídeos predadores com oito patas, um par de pinças e uma cauda segmentada e estreita, frequentemente curvada caracteristicamente sobre o dorso e sempre terminando em um ferrão. A história evolutiva dos escorpiões remonta a 435 milhões de anos. Eles vivem principalmente em desertos, mas se adaptaram a uma ampla gama de condições ambientais e podem ser encontrados em todos os continentes, exceto na Antártida. Existem mais de 2 500 espécies descritas, com 22 famílias extantes (vivas) reconhecidas até o momento. A sua taxonomia está sendo revisada para levar em conta os estudos genômicos do século XXI."
+    },
+    "acari": {
+      "url": "https://static.inaturalist.org/photos/169130772/medium.jpg",
+      "credit": "(c) Benjamin Fabian, all rights reserved, uploaded by Benjamin Fabian",
+      "summary": "Acari pode referir-se a:Acari — município no Rio Grande do Norte, Brasil\nAcari — bairro da cidade do Rio de Janeiro\nAcarí (distrito) — distrito do Peru\nRio Acari — rio do Rio de Janeiro\nRio Acari (Amazonas) — rio do Amazonas\nChacina de Acari — crime perpetado no Rio de Janeiro\nEstação Acari/Fazenda Botafogo — estação de metrô\nViação Acari — empresa de ônibusAcari ou Cacajao — gênero de macaco\nAcari ou Cascudo (peixe) — peixe de água doce brasileiro\nAcarina — subclasse de artrópodes a que pertencem os ácaros e carrapatos"
+    },
+    "opiliones": {
+      "url": "https://static.inaturalist.org/photos/72693276/medium.jpeg",
+      "credit": "(c) Edgardo Flores, all rights reserved, uploaded by Edgardo Flores",
+      "summary": "Opilião são artrópodes da classe dos aracnídeos. É a terceira ordem mais numerosa dos aracnídeos, superada apenas pela ordem dos Acari e Araneae."
+    },
+    "pseudoscorpiones": {
+      "summary": "Pseudoscorpionida, popularmente conhecidos como falso-escorpiões, pseudoescorpiões, escorpiões de livro, é uma ordem de aracnídeos. O grupo inclui mais de 3300 espécies descritas. É um grupo muito comum no ambiente mas difícil de ser observado por se esconder na serrapilheira e apresentar tamanho diminuto."
+    },
+    "chilopoda": {
+      "summary": "Os Quilópodes são animais invertebrados terrestres conhecidos popularmente como centopeias ou lacraias, que movimentam-se rapidamente pelo solo como predadores, e que são bastante temidos por suas mordeduras peçonhentas. São animais achatados dorsoventralmente que podem variar de 3 até pouco mais de 30 cm de comprimento, apresentando um número de pares de pernas que varia de 15 a 191. São normalmente encontrados em solo de matas, vivendo associadas a matéria orgânica como o húmus, debaixo de troncos ou rochas, mas também podem ser encontradas deserto, cavernas, no litoral, e ocasionalmente perto de residências humanas. A maioria apresenta uma coloração marrom ou amarela, mas algumas espécies tropicais apresentam uma coloração aposemática (aposematismo), como vermelha, preta, laranja, verde ou violeta."
+    },
+    "diplopoda": {
+      "summary": "Os diplópodes (Diplopoda) são animais artrópodes de solo, geralmente pequenos, alongados e escuros, vulgarmente conhecidos por piolhos-de-cobra, embuás, gongolos, maria-café, dentre outros nomes populares.. Ocorrem em ambientes úmidos ricos em matéria orgânica, sob pouca luminosidade, donde vivem e se alimentam por serem geralmente detritívoros de vegetação caída em decomposição. Os diplópodes são inofensivos para os seres humanos e animais domesticados, exceto que alguns podem configurar-se como pragas nos jardins, principalmente em estufas vegetais, por danificarem brotos de plantas, e por alguns raros casos de acidentes por intoxicação química."
+    },
+    "crustacea": {
+      "summary": "Os crustáceos são animais invertebrados artrópodes. Entre eles estão alguns dos animais mais comuns que conhecemos, como siris, caranguejos, tatuzinhos-de-jardim, lagostas, cracas e camarões. Há mais de 67 000 espécies descritas de crustáceos da fauna atual, e provavelmente um número 5 ou 10 vezes maior de espécies estão ainda para serem descobertas e catalogadas. Eles se apresentam como alguns dos animais mais abundantes, diversificados e com maior distribuição nos oceanos."
+    },
+    "hexapoda": {
+      "summary": "O subfilo Hexapoda compreende a maior parte das espécies de artrópodes e incluí todas as espécies de insetos, além de três pequenos grupos de artrópodes ápteros: Collembola, Protura e Diplura. Atualmente compreende as classes Entognatha e Insecta. As ordens Zygentoma e Archaeognatha são de insetos sem asas tendo como grupos irmãos os insetos alados, da subclasse Pterygota. Os Hexapodas são nomeados de acordo com sua característica mais distinta: Um tórax com três pares de pernas. A maior parte dos outros artrópodes possuem mais do que três pares de pernas."
+    },
+    "malacostraca": {
+      "summary": "Malacóstracos (Malacostraca) é uma classe do subfilo Crustacea, pertencente ao filo Arthropoda, com aproximadamente 40.200 espécies, sendo que grande parte destas é de conhecimento popular, como exemplo os caranguejos, lagostas, camarões e o krill."
+    },
+    "branchiopoda": {
+      "summary": "Os branquiópodes é uma classe que constitui um grupo de organismos morfologicamente diverso, com cerca de 1180 espécies conhecidas entre viventes e fósseis, cujo aparecimento data do período do Cambriano Superior. Seus representantes possuem tamanho reduzido e são todos aquáticos, principalmente de águas epicontinentais. Habitando em sua maioria ambientes de água doce, os branquiópodes tem como hábito de vida ocorrer em locais úmidos e efêmeros, ou seja, locais em que a água está presente em um determinado período de tempo e ausente no outro. Estes animais são capazes de produzir ovos resistentes à dessecação que podem perdurar por anos ou décadas até encontrar condições ideais de desenvolvimento."
+    },
+    "copepoda": {
+      "summary": "Os copépodes são um grupo de crustáceos muito importantes na composição da fauna de invertebrados aquáticos. Há cerca de 12 000 espécies conhecidas, divididas entre dez ordens; dessas, 7 500 são de vida livre, sendo 1 200 próprias de águas continentais."
+    },
+    "thecostraca": {
+      "summary": "Thecostraca é uma subclasse de invertebrados marinhos que contém cerca de 1320 espécies. Muitas das espécies possuem larvas planctónicas, que depois se tornam sésseis ou parasitas quando adultas."
+    },
+    "entognatha": {
+      "summary": "Entognatha é uma classe de artrópodes ametabólicos, que em conjunto com os insectos, formam os hexápodes. Não possuem asas e como tal não são considerados insectos, embora sejam relacionados com eles. As três ordens que pertencem a este grupo são os Collembola, Diplura e Protura. É aceite que a condição de hexápodes destes animais evoluiu independentemente dos insectos. Mais ainda, esta condição evoluiu independentemente dentro de cada grupo. Estas três ordens não são proximamente relacionadas e os Entognatha são considerados como um grupo polifilético."
     },
     "insecta": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/18333696/medium.jpeg",
-      "credit": "(c) TOUROULT Julien, some rights reserved (CC BY), uploaded by TOUROULT Julien",
-      "license": "cc-by"
+      "summary": "Insetos são invertebrados hexápodes da classe Insecta. Eles constituem o maior grupo dentro do filo dos artrópodes. Os insetos possuem um exoesqueleto quitinoso, um corpo dividido em três partes, três pares de patas articuladas, olhos compostos e um par de antenas. São o grupo animal mais diverso, com mais de um milhão de espécies descritas; eles representam mais da metade de todas as espécies animais. O sistema nervoso dos insetos consiste em um cérebro e um cordão nervoso ventral. A maioria se reproduz por meio da postura de ovos. Os insetos respiram ar através de um sistema de orifícios pareados ao longo de seus flancos, conectados a pequenos tubos que levam o ar diretamente aos tecidos. O sangue, portanto, não transporta oxigênio; ele está contido apenas parcialmente em vasos sanguíneos, e parte dele circula em uma hemocela aberta. A visão dos insetos é feita principalmente por meio de seus olhos compostos, com ocelos adicionais. Muitos insetos conseguem ouvir, utilizando órgãos timpânicos, que podem estar localizados nas patas ou em outras partes do corpo. Seu olfato é percebido por meio de receptores, geralmente nas antenas e nas peças bucais."
     },
     "coleoptera": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/15152305/medium.jpg",
-      "credit": "(c) Wynand Uys, some rights reserved (CC BY), uploaded by Wynand Uys",
-      "license": "cc-by"
+      "summary": "Os coleópteros (Coleoptera) compõem uma ordem muito diversa de insetos, entre os quais os mais populares são os besouros e as joaninhas. No entanto, essa ordem compreende também escaravelhos, gorgulhos entre outros. “Coleoptera” é uma palavra de origem grega, unindo koleos (estojo) e pteron (asas) que, em tradução livre, significa ‘estojo de asa’. Esse nome é explicado através da morfologia desses animais: o par de asas anteriores (externo) é esclerotizado e funciona como uma capa rígida, conhecida como élitro, visando proteção. O outro par de asas, posteriores e internas às asas rígidas, é mais delicado, membranoso, e serve para voar."
     },
     "lepidoptera": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/36127/medium.jpg",
-      "credit": "(c) Anita, some rights reserved (CC BY-NC)",
-      "license": "cc-by-nc"
+      "summary": "Lepidópteros (Lepidoptera) é uma ordem de insetos que inclui as borboletas e mariposas. Os lepidópteros compõem a segunda maior diversidade de insetos do planeta e são encontrados em quase todas as regiões do mundo, principalmente em locais tropicais. São estimadas 180 000 espécies de lepidópteros distribuídas em 34 superfamílias e 130 famílias. Deles, 12% são borboletas, sendo a segunda maior ordem de insetos em número de espécies. No Brasil, mais de 5 000 espécies já foram descritas."
     },
     "hymenoptera": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/301992102/medium.jpeg",
-      "credit": "(c) Riley-Brendan Walsh, some rights reserved (CC BY-NC), uploaded by Riley-Brendan Walsh",
-      "license": "cc-by-nc"
+      "summary": "Himenópteros (Hymenoptera) são uma das maiores ordens viventes de insetos, compreendendo os grupos de insetos entendidos pelos leigos como as vespas, as abelhas e as formigas, além de diversos outros insetos menos populares. Mais especificamente, incluem aqueles insetos conhecidos como abelhas, zangões, cabas, marimbondos, mamangavas, cavalos-do-cão, formigas-feiticeiras, oncinhas, formigas saúvas, dentre muitos outros nomes populares. O nome da ordem Hymenoptera deriva do grego hymen para finas, membranosas e ptera, para asas, aludindo ao fato de quase todas espécies apresentarem dois pares de delicadas asas membranosas e transparentes, em que o primeiro par é sempre maior do que o posterior. Lembrando que, no entanto, existem muitos casos de himenópteros sem asas, como as operárias das formigas e as fêmeas das vespas \"oncinhas\" da família Mutillidae."
     },
     "diptera": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/145526721/medium.jpg",
-      "credit": "(c) Katja Schulz, some rights reserved (CC BY), uploaded by Katja Schulz",
-      "license": "cc-by"
+      "summary": "Os dípteros é a quarta ordem mais diversa pertencente à classe dos insectos, com aproximadamente 150 mil espécies descritas em 158 famílias, sendo cerca de 8,7 mil presentes em território brasileiro. Deste grupo fazem parte moscas, mosquitos, varejeiras, pernilongos, borrachudos e mutucas."
+    },
+    "hemiptera": {
+      "summary": "Hemípteros é a maior e mais diversa ordem de paraneoptera, que inclui aproximadamente 119 mil espécies em todo mundo, dentre estas estão: as cigarras, percevejos, pulgões e cochonilhas. São insetos hemimetábolos, ou seja, que apresentam ninfas muito semelhantes aos insetos adultos e que não passam por metamorfose completa. Variam de 0,5 mm a 15 cm de comprimento, a coloração é geralmente uniforme. Caracterizam-se pelo aparelho bucal em forma de um rostro, constituído pelo lábio articulado onde se alojam as demais peças bucais sugadoras."
+    },
+    "orthoptera": {
+      "summary": "Os ortópteros formam uma ordem de insetos cujos membros incluem os gafanhotos, grilos, esperanças, wetas e paquinhas. O grupo Orthoptera é dividido em duas subordens, Caelifera e Ensifera, que juntas englobam mais de 30 mil espécies. Estes insetos encontram-se espalhados pelo mundo todo, sendo ausentes apenas nas regiões polares. Alguns são de grande importância econômica, como por exemplo na culinária de alguns países. O primeiro registro fóssil de ortópteros data do Carbonífero."
+    },
+    "odonata": {
+      "summary": "Odonatos é uma ordem de insetos que inclui animais popularmente conhecidos como lavadeira, lava-bunda, libélula, jacinta, cavalo-de-judeu, cavalinho-do-diabo, zigue-zague e donzelinha. O nome da ordem refere-se aos dentes fortes e robustos presentes nas mandíbulas dos adultos, caracterizando o hábito predatório desses insetos."
+    },
+    "blattodea": {
+      "summary": "Blatódeos (Blattodea) é uma ordem de insetos que inclui as baratas e as térmitas. Anteriormente, as térmitas estavam incluídas numa ordem separada, Isoptera, mas as evidências genéticas e moleculares sugerem um parentesco intímo com as baratas, mudando a antiga ordem Isoptera para a posição de subordem, tendo ambos grupos evoluído a partir de um antepassado comum. Blattodea e os louva-a-deus são agora considerados parte da superordem Dictyoptera. Blattodea inclui aproximadamente 4 400 espécies de baratas em quase 500 géneros, e cerca de 3 000 espécies de térmitas em aproximadamente 300 géneros."
     },
     "echinodermata": {
-      "url": "https://static.inaturalist.org/photos/22930217/medium.jpg",
-      "credit": "(c) Lesley Clements, all rights reserved",
-      "license": ""
+      "summary": "Os Echinodermata, também denominados equinodermos, equinodermes ou equinodermas, são animais deuterostômios exclusivamente marinhos e bentônicos. Tais seres são representantes do filo Echinodermata. São animais de vida livre, exceto por alguns crinóides que vivem fixos a um substrato rochoso (sésseis) e de simetria radial que também apresentam sua exceção, os comatulídeos, que se locomovem utilizando os braços. Este filo surgiu no período Cambriano recente e contém cerca de 7.000 espécies viventes e 13.000 extintas."
     },
     "hemichordata": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1482686/medium.jpeg",
-      "credit": "(c) 2013 Moorea Biocode, some rights reserved (CC BY-NC-SA)",
-      "license": "cc-by-nc-sa"
+      "summary": "Os Hemichordata ou hemicordados é um filo de pequenos animais marinhos. Várias subdivisões já foram propostas para Bilateria, os Hemichordatos já foram considerados um subfilo dos cordados e se assemelham com os equinodermos. A presença de fendas branquiais e uma suposta notocorda fez com que os Hemichordatos fossem incluídos aos Chordados.\nEstes se apresentam em duas classes, os Enteropneusta e os Pterobranchia. Porém um terceiro grupo é estudado por biólogos, são os Planctosphaeroidea. São de difícil classificação pois possuem poucas espécies viventes, cerca de 100 espécies. Os mais conhecidos fazem parte do gênero Balanoglossus da classe Enteropneusta."
     },
     "chordata": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/80551845/medium.jpg",
-      "credit": "no rights reserved, uploaded by Abhas Misraraj",
-      "license": "cc0"
+      "summary": "Os cordados constituem um filo dentro do reino Animalia que inclui os vertebrados, os anfioxos e os tunicados. Estes animais são caracterizados pela presença de uma simetria bilateral, notocorda, sistema digestivo completo, um tubo nervoso dorsal, fendas branquiais e uma cauda pós-anal, em pelo menos uma fase de sua vida. Os cordados compartilham características com muitos animais invertebrados sem notocorda, quanto ao plano estrutural, tais como simetria bilateral, eixo anteroposterior, metamerismo e cefalização. O grupo abrange animais adaptados para a vida na água, na terra e no ar.\nOs cordados, juntamente com dois outros filos, o Hemichordata e o Echinodermata, formam o grupo dos deuterostômios (Deuterostomia), ligados por diversos aspectos embrionários peculiares, na forma de suas larvas, pelo desenvolvimentos das aberturas embrionárias e da cavidade peritonial ou peritônio. Internamente os cordados são divididos em três subfilos: Urochordata, Cephalochordata e Vertebrata, principalmente com base nas características da notocorda. Nos urocordados, o estágio larval tem notocorda e tubo neural, ambas desaparecendo no estágio adulto. Os cefalocordados têm notocorda e tubo neural, mas sem vértebras. Já nos vertebrados, exceto nas feiticeiras (Myxini), a notocorda foi reduzida e o tubo neural foi circundado por uma coluna vertebral cartilaginosa ou óssea."
     },
     "asteroidea": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/162318518/medium.jpg",
-      "credit": "(c) Hans Hillewaert, some rights reserved (CC BY-SA)",
-      "license": "cc-by-sa"
+      "summary": "A estrela-do-mar é um animal equinoderme em forma de estrela pertencente à classe Asteroidea e ao subfilo Asterozoa. Existem cerca de 1.900 espécies de estrela-do-mar em todos os oceanos do mundo, dos trópicos até as gélidas águas polares. Elas são encontradas desde a zona intermareal, descendo para as profundezas abissais, 6.000m abaixo da superfície. Entre seus parentes mais próximos podemos citar: o ouriço-do-mar, a bolacha-do-mar e o pepino-do-mar, e em uma classificação mais recente as margaridas-do-mar que são uma infraclasse de Asteroidea."
     },
     "echinoidea": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4108/medium.jpg",
-      "credit": "(c) cassimano, some rights reserved (CC BY-NC-SA)",
-      "license": "cc-by-nc-sa"
+      "summary": "Echinoidea Leske, 1778 é uma classe de organismos pertencentes ao filo Echinodermata que agrupa invertebrados marinhos dioicos de corpo globoso ou disciforme, geralmente espinhosos, com 3-10 cm de diâmetro, revestidos por um tegumento coriáceo. A coloração mais comum é o negro, mas são frequentes tons relativamente discretos de verde, castanho, púrpura, azul e vermelho. São animais que se movem lentamente, recorrendo a pés ambulacrários retractéis, alimentando-se maioritariamente de detritos, de algas e de uma grande variedade de pequenos invertebrados. O taxon tem distribuição cosmopolita nos mares, entre a zona entremarés e, pelo menos, os 5 000 m de profundidade. Está dividido em 12 ordens que incluem cerca de 950 espécies extantes, mas estima-se em mais de 13 000 as espécies extintas catalogadas no registo fóssil. Servem de alimento a um grande número de predadores e as suas ovas são consideradas um pitéu (iguaria) na gastronomia de algumas regiões marítimas."
+    },
+    "holothuroidea": {
+      "summary": "Holothuroidea é a classe de equinodermos que inclui os animais conhecidos como pepinos-do-mar ou holotúrias. Em oposição aos outros equinodermes, possuem corpo delgado, alongado em um eixo oral-aboral.\nO número conhecido de espécies holoturianas é de cerca de 1 711, sendo o maior número na região da Ásia-Pacífico."
+    },
+    "crinoidea": {
+      "summary": "Crinoidea é uma classe de equinodermos que inclui os organismos conhecidos como crinoides, lírios-do-mar e comatulídeos. Os Crinóides recentemente foram denominados os ancestrais comum da classe dos Echinodermata. Os crinóides são animais exclusivamente marinhos que ocupam todas as profundezas até aos 6000 metros. Atualmente, a classe conta com apenas algumas centenas de espécies mas o registo geológico mostra uma biodiversidade muito maior dentro do grupo."
     },
     "strongylocentrotus_purpuratus": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/338665145/medium.jpeg",
-      "credit": "(c) Dave, some rights reserved (CC BY-NC), uploaded by Dave",
-      "license": "cc-by-nc"
+      "summary": "Strongylocentrotus purpuratus é uma espécie de ouriço-do-mar da família Strongylocentrotidae."
     },
     "cephalochordata": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1094470/medium.jpg",
-      "credit": "(c) Bernadette, some rights reserved (CC BY-NC), uploaded by Bernadette",
-      "license": "cc-by-nc"
+      "summary": "Os Cefalocordados,Cephalochordata ou Acrania são um subfilo de cordados marinhos, pequenos e pisciformes, ao qual pertecem os anfioxos. Existem cerca de 30 espécies de cefalocordados, além de prováveis espécies ainda não identificadas. Eles são um importante objeto de estudo na zoologia por proporcionarem indicações sobre a origem dos vertebrados."
     },
-    "urochordata": null,
+    "vertebrata": {
+      "summary": "Os vertebrados constituem um subfilo de animais cordados, compreendendo os peixes, anfíbios, répteis, aves e mamíferos. Caracterizam-se pela presença de coluna vertebral segmentada e de crânio que lhes protege o cérebro."
+    },
     "myxini": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/217947026/medium.jpg",
-      "credit": "(c) John D Reynolds, some rights reserved (CC BY-NC), uploaded by John D Reynolds",
-      "license": "cc-by-nc"
+      "summary": "Myxini é uma classe de peixes marinhos, de águas frias, com forma de enguia e sem maxilas. Não possui um verdadeiro esqueleto interno: o corpo é sustentado pela corda dorsal e o crânio é incompleto, uma vez que o cérebro está protegido apenas por uma bainha fibrosa, que pode ser chamado também de crânio rudimentar, formado por cartilagens e recoberto por tecido membranoso. De acordo com estudos recentes, estes peixes são classificados dentro do clado Hyperotreti, que pode ser considerado um subfilo dos Cordados. Há aproximadamente 15 espécies viventes de Myxiniformes, todas exclusivamente marinhas, atingindo até um metro de comprimento, são alongadas, sem escamas e de coloração rósea a púrpura. São conhecidos como peixes-bruxas, enguias-de-casulo, enguias-de-muco, feiticeiras, mixinas ou bruxas-do-mar."
+    },
+    "petromyzontida": {
+      "summary": "Lampreia é o nome comum dado a diversas espécies de peixes ciclóstomos de água doce ou anádromos, com forma de enguias, mas sem maxilas, pertencentes à família Petromyzontidae da ordem dos Petromyzontiformes. Nestes peixes, a boca está transformada numa ventosa circular, com o diâmetro do corpo, reforçada por um anel de cartilagem e armada com uma língua-raspadora igualmente cartilaginosa. Várias espécies de lampreia são consumidas como alimento."
+    },
+    "gnathostomata": {
+      "summary": "Os gnatostomados constituem uma superclasse de animais vertebrados, onde são reunidos os peixes que possuem mandíbula e os tetrápodes. Divergem com superclasse dos ágnatos, que não possuem mandíbula."
     },
     "chondrichthyes": {
-      "url": "https://static.inaturalist.org/photos/177202542/medium.jpeg",
-      "credit": "(c) Sarichia Cacciatore, all rights reserved, uploaded by Sarichia Cacciatore",
-      "license": ""
+      "summary": "Os condríctios ou peixes cartilagíneos, que incluem os tubarões, as raias e as quimeras, muitas vezes classificadas como Seláceos, são peixes geralmente oceânicos que possuem um esqueleto totalmente formado por cartilagem, mas coberta por um tecido específico, a cartilagem prismática calcificada."
+    },
+    "osteichthyes": {
+      "summary": "Os Osteichthyes, ou peixes ósseos, representam o maior grupo de vertebrados, tanto em número de espécies como em número de indivíduos. Através a radiação adaptativa, eles desenvolveram uma enorme variação de formas e estruturas. Esses animais são abundantes em águas doces ou salgadas, em águas rasas ou profundas. Suas características mais marcantes são escamas dermais, opérculo cobrindo a câmara branquial em cada lado, esqueleto ósseo, boca terminal, vesícula gasosa, nadadeira caudal homocerca e dois pares de nadadeiras medianas."
+    },
+    "tetrapoda": {
+      "summary": "Os tetrápodes (Tetrapoda) constituem uma superclasse de vertebrados terrestres, possuidores de quatro membros. Os Tetrapoda evoluíram dos peixes de nadadeira lobada há cerca de 395 milhões de anos, no Período Devoniano, conquistando o ambiente terrestre."
+    },
+    "selachimorpha": {
+      "summary": "Tubarão ou cação é um tipo de peixe de esqueleto cartilaginoso e um corpo hidrodinâmico pertencente à superordem Selachimorpha. Os primeiros tubarões conhecidos viveram há aproximadamente 400 milhões de anos."
+    },
+    "batoidea": {
+      "summary": "Raias, arraias ou peixes batoides são peixes cartilaginosos marinhos classificados na infraclasse Batoidea da classe Elasmobranchii, grupo que também contêm os tubarões. As raias têm o corpo achatado dorsiventralmente e, por consequência, as fendas branquiais encontram-se por baixo da cabeça – essa é a principal característica que distingue os peixes batoides dos tubarões. Vivem normalmente no fundo do mar (demersais), embora algumas, como a jamanta, sejam pelágicas."
+    },
+    "holocephali": {
+      "summary": "Holocephali é uma subclasse de peixes cartilaginosos da classe Chondrichthyes, da qual apenas resta uma ordem extante, os Chimaeriformes, com cerca de 50 espécies marinhas. O grupo foi muito diverso em épocas passadas, embora a maioria dos peritos considere este táxon, quando alargado para incluir o registo fóssil, como um grupo potencialmente parafilético."
+    },
+    "sarcopterygii": {
+      "summary": "Os Sarcopterygii ou peixes com nadadeiras lobadas (português brasileiro) ou peixes com barbatanas lobadas (português europeu), pertencem ao grupo dos Osteichthyes, juntamente com os Actinopterygii."
     },
     "actinopterygii": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/252526503/medium.jpg",
-      "credit": "(c) uwkwaj, some rights reserved (CC BY-NC), uploaded by uwkwaj",
-      "license": "cc-by-nc"
+      "summary": "Os Actinopterygii ou actinopterígeos são uma classe de peixes com nadadeiras suportadas por \"raios\" ou lepidotríquias, esqueleto interno tipicamente calcificado e aberturas branquiais protegidas por um opérculo ósseo. São o grupo dominante dos vertebrados, com mais de 27 mil espécies presentes em todos os ambientes aquáticos. São tratados tradicionalmente como uma subclasse de Osteichthyes, ou peixes com ossos, mas como aquele grupo é parafilético, eles podem ser tratados como uma classe verdadeira."
+    },
+    "chondrostei": {
+      "summary": "Chondrostei é uma subclasse de peixes não-Neopterygii com nadadeiras raiadas. Embora o termo originalmente se referisse ao agrupamento parafilético de todos os peixes com nadadeiras raiadas não-Neopterygii, ele foi redefinido por Patterson em 1982 para ser um clado que abrange os Acipenseriformes e seus parentes extintos."
+    },
+    "teleostei": {
+      "summary": "Os teleósteos (Teleostei) é uma das três infraclasses da classe Actinopterygii, os peixes actinopterígios. O nome é derivado do grego. Deste grupo diverso, que surgiu no Triássico com 26.840 espécies restaram cerca de 40 peixes ósseos e 448 famílias, onde a maioria dos peixes vivos são membros deste grupo. As outras duas infraclasses, Holostei e Chondrostei, podem ser parafiléticos."
+    },
+    "cypriniformes": {
+      "summary": "Os Cypriniformes são uma ordem de peixes actinopterígeos."
+    },
+    "siluriformes": {
+      "summary": "Siluriformes é uma ordem de peixes da classe Actinopterygii. Popularmente são conhecidos como peixes-gato, bagres ou cascudos. Podem ser marinhos ou de água doce. Têm, geralmente, em comum a presença de grandes barbilhos aos lados da boca, fazendo lembrar os bigodes de um gato, mas tal não acontece para todos os elementos da ordem que se distingue por determinadas características do crânio e da bexiga natatória. Não têm escamas. Encontram-se praticamente por todo o planeta exceto na Antártica. Variam muito em tamanho, incluindo desde alguns dos vertebrados de menores dimensões, como o único parasita vertebrado a atacar o ser humano, até ao Pangasianodon gigas, o maior peixe de água doce até hoje identificado."
+    },
+    "characiformes": {
+      "summary": "Characiformes é uma ordem de peixes actinopterígeos, constituída por aproximadamente 270 gêneros e mais 1700 espécies entre os quais estão piranha, lambari, curimba, dourado. O grupo é exclusivo de ambientes de água doce e tem distribuição gondwanica, com representantes na África e na América. Esta Ordem destaca-se tanto pela grande diversidade de espécies, como pela grande diversidade morfológica, ecológica e de amplitude de tamanho, como por exemplo Hydrocynus goliath que é um predador de grande porte alcançando aproximadamente um metro e meio de comprimento total, e Cyanogaster noctiva que possui aproximadamente 15 milímetros."
+    },
+    "perciformes": {
+      "summary": "A ordem dos perciformes, também denominados Percomorpha ou Acanthopteri, incluem cerca de 40% de todos os peixes ósseos e constituem a maior ordem de vertebrados. Nesta ordem estão classificados cerca de 7000 espécies diferentes, presentes em quase todos os ecossistemas aquáticos. A sua aparição deu-se no fim do período Cretáceo."
     },
     "amphibia": {
-      "url": "https://static.inaturalist.org/photos/20797296/medium.jpg",
-      "credit": "(c) Andrés Mauricio Forero Cano, all rights reserved, uploaded by Andrés Mauricio Forero Cano",
-      "license": ""
+      "summary": "Anfíbios constituem uma classe de animais vertebrados, ectotérmicos que não possuem bolsa amniótica agrupados na classe Amphibia. A característica mais marcante dos seres vivos da classe é o seu ciclo de vida dividido em duas fases: uma aquática e outra terrestre, apesar de haver exceções. Atualmente existem cerca de 8483 espécies vivas de anfíbios segundo a referência mundial de anfíbios, o site Amphibian Species of the World. Todos os anfíbios existentes (vivos) pertencem à subclasse monofilética Lissamphibia, com três ordens vivas: Anura, Urodela (salamandras) e Gymnophiona (cecílias)."
+    },
+    "amniota": {
+      "summary": "Amniotas são um clado que incluí todos os animais cujos embriões são rodeados por uma membrana amniótica. Os amniotas são um grupo de vertebrados tetrápodes que incluem os mamíferos (Synapsida) e os sauropsídeos."
+    },
+    "anura": {
+      "summary": "Um anuro é qualquer membro de um grupo diversificado e amplamente carnívoro de anfíbios que compõem a ordem Anura. A ordem inclui sapos, rãs e pererecas. O mais antigo fóssil \"proto-anuro\" apareceu no início do Triássico de Madagascar, mas a datação do relógio molecular sugere que suas origens podem se estender ainda mais para o Permiano, há 265 milhões de anos. A maioria dos anuros adultos é caracterizada por corpo curto, olhos salientes, língua inserida anteriormente, membro posterior mais longo do que o anterior e ausência de cauda."
+    },
+    "caudata": {
+      "summary": "Os caudados são um grupo de anfíbios que inclui os urodelos e as espécies extintas mais próximas das salamandras do que dos anuros. Os animais deste grupo mantêm a cauda durante toda a vida. Os mais antigos gêneros conhecidos deste grupo são Kokartus e Marmorerpeton, que viveram no período Jurássico, há cerca de 167 milhões de anos."
+    },
+    "gymnophiona": {
+      "summary": "Gymnophiona ou Apoda é uma ordem de anfíbios que inclui cerca de 175 espécies, distribuídas em 5 ou 6 famílias, variando por classificação. São encontrados na América do Sul e na América Central, na África, e no Sudeste Asiático. Os gimnofionos caracterizam-se pela ausência de patas. A maioria das espécies possui a pele segmentada em anéis e um estilo de vida predominantemente fossorial, o que as leva a ser frequentemente confundidas com minhocas, havendo inclusive algumas sendo chamadas de minhocoçu (minhoca-grande) em algumas regiões do Brasil. No entanto, são vertebrados e não anelídeos. Há também frequente confusão com as cobras, especialmente as espécies maiores. São conhecidos popularmente pelos nomes de cobra-cega, cobra-pilão, ibicara, mãe-de-saúva, pilão e ubijara."
+    },
+    "synapsida": {
+      "summary": "Synapsida é um grupo diverso de vertebrados tetrápodes incluindo todos os mamíferos e seus parentes extintos. É um dos dois clados principais do grupo Amniota, o outro é o Sauropsida, mais diverso e contendo todos os répteis e, consequentemente, as aves atuais. Diferentemente dos demais amniotas, os sinapsídeos possuem uma única fenestra temporal, ou seja, a abertura na porção inferior da calvária, formando um arco ósseo atrás e sob cada órbita ocular. Esta fenestra temporal distinta se desenvolveu quando sinapsídeos e sauropsídeos divergiram, há cerca de 318 milhões de anos atrás, em meio à época do Carbonífero Pensilvânico."
+    },
+    "sauropsida": {
+      "summary": "Sauropsida é um grupo de amniotas que inclui todos os répteis existentes, seus antepassados fósseis e tudo o que descende dos primeiros saurópsidas, incluindo os dinossauros, que incluem as aves. Sauropsida se distingue da Synapsida, o grupo dos chamados sinápsidas, que incluem os mamíferos e os seus antepassados fósseis."
     },
     "mammalia": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/80551250/medium.jpg",
-      "credit": "no rights reserved, uploaded by Abhas Misraraj",
-      "license": "cc0"
+      "summary": "Mamífero é um animal vertebrado da classe Mammalia. Os mamíferos são caracterizados pela presença de glândulas mamárias produtoras de leite para alimentar seus filhotes, uma ampla região neocortical do cérebro, pelos ou cabelos e três ossículos do ouvido médio. Essas características os distinguem dos répteis e das aves, dos quais seus ancestrais divergiram no Carbonífero, há mais de 300 milhões de anos. Cerca de 6.640 espécies de mamíferos existentes foram descritas e divididas em 27 ordens. O estudo dos mamíferos é chamado de mamalogia. As maiores ordens de mamíferos, em número de espécies, são os roedores, os morcegos e os eulipotíflos. As três seguintes são os primatas, os artiodátilos e os carnívoros."
     },
     "monotremata": {
-      "url": "https://static.inaturalist.org/photos/184480260/medium.jpeg",
-      "credit": "(c) mark_spence, all rights reserved, uploaded by mark_spence",
-      "license": ""
+      "summary": "Os monotremados (Monotremata) constituem uma ordem de mamíferos que põem ovos, diferindo significativamente com os modos reprodutivos de marsupiais e placentários. Eles retêm muitas características de seus ancestrais terapsídeos, porém apresentam várias características mamíferas importantes, como a presença de pelos, coração tetracameral, três ossículos auditivos e glândulas mamárias com produção de leite. Encontrados na Austrália, Tasmânia e Nova Guiné, os monotremados provavelmente originaram-se durante o Mesozoico, quando se separaram da vertente dos térios. Compreendendo duas famílias, três gêneros e cinco espécies viventes, esta ordem constitui uma das mais distintas entre os mamíferos atuais."
+    },
+    "theria": {
+      "summary": "Theria é uma subclasse de mamíferos que integra as infraclasses Marsupialia e Placentalia. O grupo distingue-se dos Prototheria (monotremados) pela capacidade de dar à luz crias desenvolvidas total ou parcialmente no corpo das fêmeas, sem recorrer à proteção de ovos."
     },
     "marsupialia": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/258631365/medium.png",
-      "credit": "(c) Friendly_Female_Koala.JPG, some rights reserved (CC BY-SA)",
-      "license": "cc-by-sa"
+      "summary": "O marsupial é uma infraclasse de mamíferos que se distinguem dos demais de sua classe, como os monotremados e placentários, por sua anatomia e fisiologia reprodutiva: são vivíparos com finalização do desenvolvimento no marsúpio; isto é, são animais que apresentam, em sua maioria e nos indivíduos do sexo feminino, uma dobra de pele a qual origina uma bolsa ou marsúpio provido com glândulas mamárias. Há outras diferenças morfológicas, principalmente reprodutivas, entre elas a presença de duas vaginas na fêmea, e um pênis bifurcado nos machos. Os filhotes nascem precocemente com aparência embrionária e logo se prendem às glândulas mamárias da mãe, a fim de completarem seus desenvolvimentos."
     },
     "placentalia": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/83336736/medium.jpg",
-      "credit": "no rights reserved, uploaded by Abhas Misraraj",
-      "license": "cc0"
+      "summary": "Os placentários constituem uma infraclasse de animais mamíferos. As fêmeas possuem mamilos para amamentar as crias e todo o desenvolvimento das crias se processa no interior do útero, onde o feto é alimentado a partir da placenta. É esta estratégia reprodutiva que separa o grupo dos monotremados, que põem ovos, e dos marsupiais, onde o desenvolvimento da cria é feito essencialmente no marsúpio."
+    },
+    "rodentia": {
+      "summary": "Os roedores constituem a mais numerosa ordem de mamíferos com placenta contendo mais de 2000 espécies, o que corresponde a cerca de 40% das espécies da classe dos mamíferos. A maior parte são de pequenas proporções, o camundongo-pigmeu Africano tem 6 cm de comprimento e pesa 7 g. Por outro lado, o maior deles, a capivara, pode pesar até 80 kg. Acredita-se que o extinto Phoberomys pattersoni teria pesado 700 kg. Roedores são encontrados em grande número em todos os continentes, exceto a Antártida, na maioria das ilhas e em todos os habitats, com exceção dos oceanos. Juntamente com os morcegos (Chiroptera), foram os únicos mamíferos placentários a colonizar a Austrália independentemente da introdução humana."
+    },
+    "chiroptera": {
+      "summary": "O morcego é um animal mamífero da ordem Chiroptera, cujos integrantes apresentam uma fina membrana de pele entre os dedos, a qual se estende até as patas e se conecta às laterais do corpo, formando as asas. Distinguem-se das aves, pois estas possuem penas suportadas por ossos. Os morcegos são os únicos mamíferos com voo verdadeiro. No Brasil, o morcego pode ser raramente chamado pelos seus nomes indígenas andirá ou guandira."
+    },
+    "eulipotyphla": {
+      "summary": "Insectivora é uma ordem obsoleta de mamíferos placentários, não mais utilizada nos sistemas de classificação atuais. Em sua história abrigou diversos grupos de animais, como as toupeiras, os musaranhos, os musaranhos-elefantes, os musaranhos-arborícolas, os tenrecos, as toupeiras-douradas e os lêmures-voadores, além de diversas formas fósseis. Era constituída por mamíferos primitivos, geralmente de pequeno porte e de hábitos insetívoros."
+    },
+    "primates": {
+      "summary": "A ordem dos primatas é um grupo de mamíferos que compreende os popularmente chamados de macacos, símios, lêmures e os seres humanos. É dividida informalmente em símios e prossímios. Os primatas surgiram de ancestrais arborícolas nas florestas tropicais; muitas das características dessa ordem são adaptações a esse modo de vida. Entretanto, alguns primatas são parcialmente arborícolas."
+    },
+    "carnivora": {
+      "summary": "Os carnívoros constituem uma ordem de animais mamíferos placentários, encontrados em quase todo o mundo. Suas características comuns são a presença de pés com quatro ou cinco dedos, apresentando garras; machos com báculo; e dentes adaptados para cortar, com presença de caninos fortes, cônicos e pontiagudos."
+    },
+    "artiodactyla": {
+      "summary": "Os artiodátilos ou artiodáctilos, também chamados de cetartiodáctilos, constituem uma ordem de mamíferos ungulados com um número par de dedos nas patas.[carece de fontes?] É um grupo muito variado, com cerca de 360 espécies descritas. Incluem vários animais bem conhecidos, como o boi, a cabra, a ovelha, o camelo, o porco, a girafa, o hipopótamo, a orca, a jubarte, a lhama, os antílopes, entre outros, muitos deles com grande importância econômica para o ser humano."
+    },
+    "cetacea": {
+      "summary": "Os cetáceos constituem uma infraordem de animais predominantemente marinhos e pertencentes à classe dos mamíferos. O nome da ordem deriva do grego ketos que significa monstro marinho.\nOs cetáceos estão divididos em duas parvordens:As baleias sem dentes são caracterizadas pelas cerdas bucais, que são estruturas parecidas com peneiras localizadas na parte superior da boca e são feitas de queratina. As baleias utilizam as \"cerdas\" para filtrar plâncton da água. Elas compreendem as maiores espécies de animais.\nAs baleias com dentes têm dentes e se alimentam de peixes e lulas. Uma habilidade notável deste grupo é a de localizar a suas presas por ecolocalização."
+    },
+    "lepidosauria": {
+      "summary": "Os Lepidosauria formam um dos maiores grupos da Reptilia, contendo mais de 4.000 espécies de lagartos e 2.700 espécies de serpentes, além das duas espécies de tuataras. São tetrápodes predominantemente terrestres, com algumas espécies secundariamente aquáticas ou marinhas, principalmente entre algumas serpentes e os extintos Mosasauridae. O tegumento dos Lepidosauria é coberto por escamas e é relativamente impermeável à água. Os tuataras e a maioria dos lagartos possuem quatro membros, mas a redução ou perda completa dos membros é comum entre lagartos e todas as serpentes são ápodas. Apresentam fenda cloacal transversal, ao invés da fenda longitudinal que caracteriza os outros tetrápodes."
+    },
+    "archelosauria": {
+      "summary": "Archelosauria é um clado que agrupa tartarugas e arcossauros e seus parentes mais próximos, excluindo os lepidossauros. A maioria das análises filogenéticas baseadas em dados moleculares tem apoiado uma relação de grupo irmão entre tartarugas e arcossauros. Por outro lado, Archelosauria não foi historicamente apoiado pela maioria das análises morfológicas, que, em vez disso, apontaram as tartarugas como descendentes de parerépteis, diápsidos de divergência precoce fora de Sauria, ou parentes próximos dos lepidossauros dentro do clado Ankylopoda. Algumas análises morfológicas recentes também encontraram suporte para Archelosauria."
+    },
+    "squamata": {
+      "summary": "Squamata popularmente conhecido como Escamados, é uma ordem pertencente à classe dos répteis e tem sido historicamente dividido em 3 clados: as serpentes, os lagartos, e as anfisbenas. Esta ordem é considerada uma das mais diversas entre os vertebrados, somando mais de 10 000 espécies. Seus representantes são caracterizados por ter o corpo recoberto por escamas, ausência da barra temporal inferior do crânio e, nos machos, presença de hemipênis, possibilitando a fecundação interna. Apresentam também desenvolvimento direto, com oviparidade ou viviparidade. Assim como os outros répteis, são ectotérmicos. Squamates são os répteis vivos com tamanhos mais variados, variando desde Sphaerodactylus ariasae, com 16 mm, até a píton-reticulada, com 6,5 m. Os mosassauros, agora extintos, atingiam comprimentos superiores a 14 m."
+    },
+    "rhynchocephalia": {
+      "summary": "Rhynchocephalia (\"cabeça-de-bico\") é uma ordem de répteis semelhantes a lagartos que inclui apenas uma espécie viva, o tuatara da Nova Zelândia. Apesar de sua atual falta de diversidade, durante o Mesozoico os Rhynchocephalia eram um grupo rico em espécies, com alta diversidade morfológica e ecológica. O registro mais antigo do grupo data do Triássico Médio, há cerca de 244 milhões de anos, e eles já haviam alcançado distribuição global no Jurássico Inferior. A maioria dos Rhynchocephalia pertence à subordem Sphenodontia (\"dentes-em-cunha\"). Seus parentes vivos mais próximos são os lagartos e as serpentes da ordem Squamata, com as duas ordens agrupadas na superordem Lepidosauria."
+    },
+    "testudines": {
+      "summary": "Os Testudines, quelónios ou tartarugas são uma ordem de répteis pertencentes ao clado Testudinata. Correspondem a 14 famílias que possuem em torno de 356 espécies, que ocorrem em regiões tropicais e temperadas, algumas delas ameaçadas de extinção. Os nomes populares cágado, jabuti e tartarugas não fazem parte da classificação taxonômica. A ordem dos Testudines está dividida filogeneticamente em dois grandes grupos: Cryptodira e Pleurodira. A posição filogenética dentre os Amniota permanece um enigma, sendo considerados por alguns autores como próximos de lepidossauros ou arcossauros."
+    },
+    "archosauria": {
+      "summary": "Archosauria é o nome dado a um grupo monofilético de vertebrados diapsídeos, formado pelas ordens atuais Dinosauria que inclui as aves e Crocodylomorpha que atualmente inclui os crocodilos, jacarés e gaviais, e por diversas extintas como Pterosauromorpha, Ornithischia, Saurosuchus, Sauropodomorpha entre outros. A linhagem surge entre o fim do Permiano e o Triássico inferior, onde se tornam o grupo dominante e mais diverso. O grupo passa por uma rápida diversificação acarretando grande quantidade de espécies e ecologia, incluindo representantes cursoriais, semi aquáticos, marinhos, fossoriais e voadores. Mais tarde os arcossauros sofrem com a extinção do Cretáceo, principalmente Pseudosuchia. Atualmente é um dos grupos de Tetrapoda mais diverso e estima-se existir cerca de 20.000 espécies descritas, incluindo as aves e os Crocodylia. É sabido que esses animais apresentam alta taxa de atividade metabólica, muito evidenciado pela sua postura progressivamente mais ortógrado ou ereto, disposição dos ossos na cintura e adaptações morfológicas para a ventilação unidirecional."
+    },
+    "crocodilia": {
+      "summary": "Os crocodilianos ou crocodilos são os répteis da ordem Crocodilia, na qual existem 24 espécies vivas e numerosos fósseis. São répteis maioritariamente grandes, predadores e semiaquáticos. Pertencem a esta ordem os crocodilos, os aligátores e caimões e os gaviais. Embora por vezes a palavra crocodilo seja utilizada vulgarmente para se referir a todos os membros da ordem, propriamente falando só são verdadeiros crocodilos os da família dos crocodilídeos (Crocodylidae). Surgiram há 83,5 milhões de anos no Cretáceo tardio e são os parentes vivos mais próximos das aves, dado que os dois grupos são os únicos sobreviventes do grande grupo Archosauria. O clado Pseudosuchia, que é membro do grupo total da ordem, surgiu há uns 250 milhões de anos no Triássico, diversificando-se durante o Mesozoico."
     },
     "aves": {
-      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/2967053/medium.jpg",
-      "credit": "(c) Greg Lasley, some rights reserved (CC BY-NC), uploaded by Greg Lasley",
-      "license": "cc-by-nc"
+      "summary": "Aves são uma classe de seres vivos vertebrados endotérmicos caracterizada pela presença de penas, um bico sem dentes, oviparidade de casca rígida, elevado metabolismo, um coração com quatro câmaras e um esqueleto pneumático resistente e leve. As aves estão presentes em todas as regiões do mundo e variam significativamente de tamanho, desde os 5 cm do colibri até aos 2,75 m da avestruz. São a classe de tetrápodes com o maior número de espécies vivas, aproximadamente dez mil, das quais mais de metade são passeriformes. As aves apresentam asas, que são mais ou menos desenvolvidas dependendo da espécie. Os únicos grupos conhecidos sem asas são as moas e as aves-elefante, ambos extintos. As asas, que evoluíram a partir dos membros anteriores, oferecem às aves a capacidade de voar, embora a especiação tenha produzido aves não voadoras, como as avestruzes, pinguins e diversas aves endémicas insulares. Os sistemas digestivo e respiratório das aves estão adaptados ao voo. Algumas espécies de aves que habitam em ecossistemas aquáticos, como os pinguins e a família dos patos, desenvolveram a capacidade de nadar."
+    },
+    "palaeognathae": {
+      "summary": "Os paleognatas compõem um dos clados viventes da classe Aves, sendo considerados uma superordem juntamente com os Neognathae. Os Palaeognathae e os Neognathae formam as Neornithes, as aves modernas. A divisão interna dos Palaeognathas viventes é entre dois grupos: Ratitas, que incluem avestruz, emas, casuares e quiwis, e o segundo grupo Tinamídeos. Além dessas aves viventes, há também grupos extintos como as gigantescas aves elefantes Aepyornithidae endêmicas de Madagascar, e as Moas Dinornithiformes, aves não voadoras que eram endêmicas da Nova Zelândia."
+    },
+    "neognathae": {
+      "summary": "Neognatas (Neognathae) são aves que possuem asas bem desenvolvidas e o osso esterno com quilha. Os estudos filogenéticos mais recentes dividem-nas em dois clados: Galloanserae e Neoaves."
+    },
+    "galloanserae": {
+      "summary": "O clado de aves batizado de Galloanserae ou galoânseras inclui as ordens Galliformes, Craciformes e Anseriformes, e provavelmente os grupos extintos dos Diatrymiformes e Dromornithiformes. São o grupo mais basal das Neornithes, sendo o outro constituído pelas Neoaves.\nEtimologia: Latim gallus \"galo\" e anser \"ganso\"."
+    },
+    "neoaves": {
+      "summary": "Neoaves é um clado que consiste em todas as aves modernas, com exceção de Palaeognathae e Galloanserae. Este grupo é definido no PhyloCode por George Sangster e colegas em 2022 como \"o clado coroa mais inclusivo contendo Passer domesticus, mas não Gallus gallus\". Quase 95% das aproximadamente 10.000 espécies conhecidas de aves existentes pertencem aos Neoaves."
+    },
+    "passeriformes": {
+      "summary": "As Passeriformes são uma grande ordem da classe aves, que compreendem a mais numerosa das ordens, incluindo quase 6 000 espécies, mais da metade do total das espécies de aves existentes, possuindo grande diversificação morfológica, ecológica, biológica e comportamental. Membros desta ordem são conhecidos como \"pássaros\". Geralmente, têm pequenas a médias dimensões, canoras, com alimentação baseada em sementes, frutos, pequenos invertebrados, como anelídeos e crustáceos, e alguns vertebrados, como peixes, roedores e até mesmo filhotes de outras aves."
+    },
+    "apodiformes": {
+      "summary": "Apodiformes é uma ordem de aves de pequeno porte, caracterizadas pelo bico longo e asas afiladas. Estes animais têm um metabolismo muito acelerado, asas muito longas, úmero curto, músculos de voo muito desenvolvidos, penas secundárias curtas, 10 penas caudais, pés muito pequenos com garras recurvadas."
+    },
+    "psittaciformes": {
+      "summary": "Psittaciformes ou, na sua forma aportuguesada, psitaciformes, são uma Ordem de aves que inclui mais de 360 espécies e de 80 géneros das famílias Psittacidae, Strigopidae, Psittaculidae e Cacatuidae."
+    },
+    "strigiformes": {
+      "summary": "Estrigiformes são aves da ordem Strigiformes, que inclui aves de rapina, tais como corujas, mochos e murucututu. São caçadoras eficientes, usando sobretudo seus olhos extremamente aguçados e movimentos rápidos. Além disso, são extremamente atentas ao ambiente, têm grande capacidade de girar o pescoço e voar silenciosamente devido a penas especiais muito macias e numerosas que compõem suas asas. São providas, muitas vezes, de penachos na zona superior da cabeça, olhos grandes e frontais. Tais aves possuem, em sua maioria, hábitos notívagos, alimentando-se de pequenos mamíferos, insetos, aranhas, peixes e outras aves. Engolem suas refeições por inteiro e depois regurgitam os restos alimentares que não puderam ser digeridos em pelotas com pelos e fragmentos de ossos."
+    },
+    "accipitriformes": {
+      "summary": "Os Accipitriformes são um grupo de aves, tradicionalmente incluída nos Falconiformes mas actualmente elevada a uma ordem própria. A taxonomia exacta do grupo ainda não está bem definida, nomeadamente sobre se a família Cathartidae deve ser incluída ou catalogada à parte."
+    },
+    "falconiformes": {
+      "summary": "Falconiformes é uma ordem de cerca de 65 espécies que inclui os falcões. Na antiga Taxonomia de Sibley-Ahlquist a família falconidae foi estendida nos Ciconiiformes, e por muito tempo os Falconiformes foram incluidos junto com as famílias Acciptridae, Pandionidae e Saggitaridae. Estudos recentes feitos por Hackett e colaboradores mostram que os Falconiformes são parentes dos papagaios e pássaros."
+    },
+    "columbiformes": {
+      "summary": "Columbiformes é uma ordem de aves que inclui uma unica família: Columbidae, que inclui variadas espécies de pombos, rolas e seus afins."
+    },
+    "sphenisciformes": {
+      "summary": "O pinguim é uma ave da família Spheniscidae, altamente modificadas para a uma vida aquática, sendo suas asas adaptadas para promover impulso através da água. Essas aves estão amplamente distribuídas pelas águas mais frias do hemisfério sul, especialmente na Antártida e ilhas dos mares austrais, chegado à Terra do Fogo, Ilhas Malvinas e África do Sul, entre outros. Apesar da maior diversidade de pinguins encontrar-se na Antártida e regiões polares, há também espécies que habitam nos trópicos como por exemplo o pinguim-das-galápagos, nas Ilhas Galápagos. Considerando o número de indivíduos, a maioria ocorre nas proximidades da Antártida, porém apenas as espécies Pygoscelis adeliae e Aptenodytes forsteri estão restritas a essa região, de forma que a maioria das 18 espécies está distribuída entre 45ºS e 60°S, com grande diversidade ocorrendo na Nova Zelândia e em ilhas ao redor."
     }
   }
 }

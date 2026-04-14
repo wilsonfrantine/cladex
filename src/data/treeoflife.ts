@@ -142,7 +142,7 @@ const TOL_DATA: TolNodeFlat[] = [
   { id: 'calcarea',         parentId: 'porifera',     name: 'Calcarea',         rank: 'class',      type: 'collapsed', collapsedLabel: 'Esponjas calcárias', speciesCount: 700 },
 
   // ── Demospongiae ─────────────────────────────────────────────────────────────
-  { id: 'amphimedon_queenslandica', parentId: 'demospongiae', name: 'Amphimedon queenslandica', rank: 'species', type: 'card', latinName: 'Amphimedon queenslandica', speciesCount: 1 },
+  { id: 'amphimedon_queenslandica', parentId: 'demospongiae', name: 'Amphimedon queenslandica', rank: 'species', type: 'card', latinName: 'Amphimedon queenslandica', speciesCount: 1, cardTaxon: 'demospongiae' },
 
   // ── Cnidaria ─────────────────────────────────────────────────────────────────
   { id: 'anthozoa',         parentId: 'cnidaria',     name: 'Anthozoa',         rank: 'class',      type: 'card',      cardTaxon: 'anthozoa',      unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 7500,
@@ -190,7 +190,7 @@ const TOL_DATA: TolNodeFlat[] = [
   { id: 'planariidae',      parentId: 'tricladida',   name: 'Planariidae',   rank: 'family', type: 'card',      cardTaxon: 'planaria', unlockModule: 'metazoa', unlockMinCorrect: 5, speciesCount: 80 },
 
   // ── Planariidae ──────────────────────────────────────────────────────────────
-  { id: 'dugesia_tigrina',  parentId: 'planariidae',  name: 'Dugesia tigrina', rank: 'species', type: 'card', latinName: 'Dugesia tigrina', speciesCount: 1 },
+  { id: 'dugesia_tigrina',  parentId: 'planariidae',  name: 'Dugesia tigrina', rank: 'species', type: 'card', latinName: 'Dugesia tigrina', speciesCount: 1, cardTaxon: 'planaria' },
 
   // ── Trematoda ────────────────────────────────────────────────────────────────
   { id: 'fasciolidae',      parentId: 'trematoda',    name: 'Fasciolidae',    rank: 'family', type: 'collapsed', collapsedLabel: 'Fasciola hepatica', speciesCount: 70 },
@@ -235,7 +235,7 @@ const TOL_DATA: TolNodeFlat[] = [
   { id: 'caenorhabditidae', parentId: 'rhabditida',   name: 'Caenorhabditidae', rank: 'family',     type: 'card',      cardTaxon: 'celegans',      unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 20 },
 
   // ── Caenorhabditidae ─────────────────────────────────────────────────────────
-  { id: 'caenorhabditis_elegans', parentId: 'caenorhabditidae', name: 'Caenorhabditis elegans', rank: 'species', type: 'card', latinName: 'Caenorhabditis elegans', speciesCount: 1 },
+  { id: 'caenorhabditis_elegans', parentId: 'caenorhabditidae', name: 'Caenorhabditis elegans', rank: 'species', type: 'card', latinName: 'Caenorhabditis elegans', speciesCount: 1, cardTaxon: 'nematoda' },
   { id: 'tardigrada',       parentId: 'ecdysozoa',    name: 'Tardigrada',       rank: 'phylum',     type: 'collapsed', collapsedLabel: 'Tardígrados',             speciesCount: 1300 },
   { id: 'arthropoda',       parentId: 'ecdysozoa',    name: 'Arthropoda',       rank: 'phylum',     type: 'card',      cardTaxon: 'arthropoda',    unlockModule: 'arthropoda', unlockMinCorrect: 5, speciesCount: 1100000 },
 
@@ -298,7 +298,7 @@ const TOL_DATA: TolNodeFlat[] = [
   { id: 'crinoidea',        parentId: 'echinodermata', name: 'Crinoidea',       rank: 'class',      type: 'collapsed', collapsedLabel: 'Crinóides', speciesCount: 600 },
 
   // ── Echinoidea ───────────────────────────────────────────────────────────────
-  { id: 'strongylocentrotus_purpuratus', parentId: 'echinoidea', name: 'Strongylocentrotus purpuratus', rank: 'species', type: 'card', latinName: 'Strongylocentrotus purpuratus', speciesCount: 1 },
+  { id: 'strongylocentrotus_purpuratus', parentId: 'echinoidea', name: 'Strongylocentrotus purpuratus', rank: 'species', type: 'card', latinName: 'Strongylocentrotus purpuratus', speciesCount: 1, cardTaxon: 'echinoidea' },
 
   // ── Chordata ─────────────────────────────────────────────────────────────────
   { id: 'cephalochordata',  parentId: 'chordata',     name: 'Cephalochordata',  rank: 'subphylum',  type: 'card',      cardTaxon: 'cephalochordata', unlockModule: 'chordata-basal', unlockMinCorrect: 5, speciesCount: 30 },
@@ -344,19 +344,19 @@ const TOL_DATA: TolNodeFlat[] = [
   { id: 'gymnophiona',      parentId: 'amphibia',     name: 'Gymnophiona',      rank: 'order',      type: 'collapsed', collapsedLabel: 'Cobras-cegas',            speciesCount: 200 },
 
   // ── Amniota ──────────────────────────────────────────────────────────────────
-  { id: 'synapsida',        parentId: 'amniota',      name: 'Synapsida',                            type: 'internal',  speciesCount: 6500 },
-  { id: 'sauropsida',       parentId: 'amniota',      name: 'Sauropsida',       rank: 'class',      type: 'internal',  speciesCount: 20000 },
+  { id: 'synapsida',        parentId: 'amniota',      name: 'Synapsida',        latinName: 'Synapsida',     phylopicQuery: 'Dimetrodon',      type: 'internal',  speciesCount: 6500 },
+  { id: 'sauropsida',       parentId: 'amniota',      name: 'Sauropsida',       rank: 'class',              latinName: 'Sauropsida',          type: 'internal',  speciesCount: 20000 },
 
   // ── Synapsida ────────────────────────────────────────────────────────────────
-  { id: 'mammalia',         parentId: 'synapsida',    name: 'Mammalia',         rank: 'class',      type: 'card',      cardTaxon: 'mammalia',      unlockModule: 'amniota', unlockMinCorrect: 5,  speciesCount: 6500 },
+  { id: 'mammalia',         parentId: 'synapsida',    name: 'Mammalia',         rank: 'class',              latinName: 'Mammalia',            type: 'card',      cardTaxon: 'mammalia',      unlockModule: 'amniota', unlockMinCorrect: 5,  speciesCount: 6500 },
 
   // ── Mammalia ─────────────────────────────────────────────────────────────────
-  { id: 'monotremata',      parentId: 'mammalia',     name: 'Monotremata',      rank: 'order',      type: 'card',      cardTaxon: 'platypus',      unlockModule: 'amniota', unlockMinCorrect: 12, speciesCount: 5 },
-  { id: 'theria',           parentId: 'mammalia',     name: 'Theria',           rank: 'subclass',   type: 'internal',  speciesCount: 6495 },
+  { id: 'monotremata',      parentId: 'mammalia',     name: 'Monotremata',      rank: 'order',              latinName: 'Monotremata',         type: 'card',      cardTaxon: 'platypus',      unlockModule: 'amniota', unlockMinCorrect: 12, speciesCount: 5 },
+  { id: 'theria',           parentId: 'mammalia',     name: 'Theria',           rank: 'subclass',           latinName: 'Theria',              type: 'internal',  speciesCount: 6495 },
 
   // ── Theria ───────────────────────────────────────────────────────────────────
-  { id: 'marsupialia',      parentId: 'theria',       name: 'Marsupialia',                          type: 'card',      cardTaxon: 'opossum',       unlockModule: 'amniota', unlockMinCorrect: 12, speciesCount: 330 },
-  { id: 'placentalia',      parentId: 'theria',       name: 'Placentalia',                          type: 'card',      cardTaxon: 'human',         unlockModule: 'amniota', unlockMinCorrect: 12, speciesCount: 6000, isComplete: true },
+  { id: 'marsupialia',      parentId: 'theria',       name: 'Marsupialia',      latinName: 'Marsupialia',   phylopicQuery: 'Didelphis',       type: 'card',      cardTaxon: 'opossum',       unlockModule: 'amniota', unlockMinCorrect: 12, speciesCount: 330 },
+  { id: 'placentalia',      parentId: 'theria',       name: 'Placentalia',      latinName: 'Placentalia',   phylopicQuery: 'Homo',            type: 'card',      cardTaxon: 'human',         unlockModule: 'amniota', unlockMinCorrect: 12, speciesCount: 6000, isComplete: true },
 
   // ── Placentalia ──────────────────────────────────────────────────────────────
   { id: 'rodentia',         parentId: 'placentalia',  name: 'Rodentia',         rank: 'order',      type: 'collapsed', collapsedLabel: 'Roedores',                speciesCount: 2200 },

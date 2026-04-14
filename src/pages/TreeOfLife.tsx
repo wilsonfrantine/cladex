@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 import TolViewer from '../components/TolViewer';
 import TolCardPanel from '../components/TolCardPanel';
 import { TREE_OF_LIFE, computeLockedIds, type TolNode } from '../data/treeoflife';
-import { TAXA_CARDS_BY_TAXON } from '../data/taxa-cards';
+import { TAXA_CARDS_BY_TAXON } from '../data/cards';
 import { useCladexStore } from '../store';
 import { fxManager } from '../audio/fx';
 
