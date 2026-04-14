@@ -88,6 +88,10 @@ interface CladexState {
   // Tree of Life state
   unlockedCards: string[];
 
+  // Dev tools (apenas em import.meta.env.DEV — não persistido)
+  devUnlockAll: boolean;
+  toggleDevUnlockAll: () => void;
+
   recordAnswer: (type: ExerciseType, correct: boolean, moduleId: string, question: string) => void;
   resetSession: () => void;
   saveTree: (newick: string, moduleId: string, label: string) => void;
@@ -115,6 +119,7 @@ export const useCladexStore = create<CladexState>()(
       answerHistory: [],
       unlockedCards: [],
       stickyNotes: [],
+      devUnlockAll: false,
 
       recordAnswer: (type, correct, moduleId, question) => {
         const currentAllTime = get().allTimeStats;
@@ -205,6 +210,11 @@ export const useCladexStore = create<CladexState>()(
       unlockCard: (id) => set((s) => ({
         unlockedCards: s.unlockedCards.includes(id) ? s.unlockedCards : [...s.unlockedCards, id]
       })),
+
+      toggleDevUnlockAll: () => {
+        if (!import.meta.env.DEV) return; // nunca ativa em produção
+        set((s) => ({ devUnlockAll: !s.devUnlockAll }));
+      },
     }),
     {
       name: 'cladex-storage',

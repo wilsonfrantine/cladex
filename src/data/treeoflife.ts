@@ -1,4 +1,4 @@
-export type TolNodeType = 'internal' | 'card' | 'collapsed' | 'placeholder';
+export type TolNodeType = 'internal' | 'card' | 'collapsed' | 'placeholder' | 'others';
 
 export type TolRank =
   | 'luca'
@@ -12,7 +12,9 @@ export type TolRank =
   | 'subclass'
   | 'superorder'
   | 'order'
-  | 'family';
+  | 'family'
+  | 'genus'
+  | 'species';
 
 export interface TolNode {
   id: string;
@@ -22,15 +24,80 @@ export interface TolNode {
   type: TolNodeType;
   children?: TolNode[];
   cardTaxon?: string;
+  /** Override de query para busca no PhyloPic (quando node.name não retorna resultado) */
+  phylopicQuery?: string;
   collapsedLabel?: string;
   collapsedIcon?: string;
   unlockModule?: string;
   unlockMinCorrect?: number;
   speciesCount?: number;
+  /** Grupo tem TODOS os filhos listados — suprime geração automática de nó "outros" */
+  isComplete?: boolean;
+  /** Diversidade não exibida neste nó; gera filho 'others' automaticamente */
+  othersCount?: {
+    orders?: number;
+    families?: number;
+    genera?: number;
+    species?: number;
+  };
 }
 
 interface TolNodeFlat extends Omit<TolNode, 'children'> {
   parentId: string | null;
+}
+
+function buildOthersLabel(c: TolNode['othersCount']): string {
+  const parts: string[] = [];
+  if (c?.orders)   parts.push(`${c.orders} ordens`);
+  if (c?.families) parts.push(`${c.families} famílias`);
+  if (c?.genera)   parts.push(`${c.genera} gêneros`);
+  if (c?.species)  parts.push(`~${c.species.toLocaleString('pt-BR')} spp`);
+  return `Outros: ${parts.join(' · ')}`;
+}
+
+function injectOthers(node: TolNode): void {
+  if (node.othersCount && !node.isComplete) {
+    const othersChild: TolNode = {
+      id: `${node.id}_others`,
+      name: buildOthersLabel(node.othersCount),
+      type: 'others',
+      speciesCount: node.othersCount.species ?? 0,
+    };
+    node.children = [...(node.children ?? []), othersChild];
+  }
+  node.children?.forEach(injectOthers);
+}
+
+/**
+ * Computa o conjunto de IDs bloqueados considerando herança hierárquica.
+ * Regras:
+ *   - nós estruturais (luca, internal, others) nunca bloqueiam filhos
+ *   - um card/placeholder com unlockModule é bloqueado se não estiver em unlockedCards
+ *   - filhos de um nó bloqueado também são bloqueados, exceto os que estão em unlockedCards
+ */
+export function computeLockedIds(
+  root: TolNode,
+  unlockedCards: string[],
+  devUnlockAll: boolean,
+): Set<string> {
+  if (devUnlockAll) return new Set<string>();
+  const locked = new Set<string>();
+  const unlockSet = new Set(unlockedCards);
+
+  function walk(n: TolNode, parentLocked: boolean): void {
+    const structural = n.id === 'luca' || n.type === 'internal' || n.type === 'others';
+    if (structural) {
+      n.children?.forEach(c => walk(c, false));
+      return;
+    }
+    const explicitlyUnlocked = unlockSet.has(n.id);
+    const selfLocked = !explicitlyUnlocked && (parentLocked || !!n.unlockModule);
+    if (selfLocked) locked.add(n.id);
+    n.children?.forEach(c => walk(c, selfLocked));
+  }
+
+  walk(root, false);
+  return locked;
 }
 
 function buildTree(nodes: TolNodeFlat[]): TolNode {
@@ -44,6 +111,7 @@ function buildTree(nodes: TolNodeFlat[]): TolNode {
       map[node.parentId]?.children!.push(node);
     }
   }
+  injectOthers(root);
   return root;
 }
 
@@ -63,9 +131,29 @@ const TOL_DATA: TolNodeFlat[] = [
   { id: 'animalia',         parentId: 'eukarya',      name: 'Animalia',         rank: 'kingdom',    type: 'internal',  speciesCount: 1500000 },
 
   // ── Animalia: filos basais ───────────────────────────────────────────────────
-  { id: 'porifera',         parentId: 'animalia',     name: 'Porifera',         rank: 'phylum',     type: 'card',      cardTaxon: 'porifera',      unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 8500 },
-  { id: 'cnidaria',         parentId: 'animalia',     name: 'Cnidaria',         rank: 'phylum',     type: 'card',      cardTaxon: 'cnidaria',      unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 11000 },
+  { id: 'porifera',         parentId: 'animalia',     name: 'Porifera',         rank: 'phylum',     type: 'card',      cardTaxon: 'porifera',      unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 8500, isComplete: true },
+  { id: 'cnidaria',         parentId: 'animalia',     name: 'Cnidaria',         rank: 'phylum',     type: 'card',      cardTaxon: 'cnidaria',      unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 11000, isComplete: true },
   { id: 'bilateria',        parentId: 'animalia',     name: 'Bilateria',                            type: 'internal',  speciesCount: 1450000 },
+
+  // ── Porifera ─────────────────────────────────────────────────────────────────
+  { id: 'demospongiae',     parentId: 'porifera',     name: 'Demospongiae',     rank: 'class',      type: 'card',      cardTaxon: 'demospongiae',  unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 7000,
+    othersCount: { families: 80, species: 6999 } },
+  { id: 'hexactinellida',   parentId: 'porifera',     name: 'Hexactinellida',   rank: 'class',      type: 'collapsed', collapsedLabel: 'Esponjas de vidro', speciesCount: 600 },
+  { id: 'calcarea',         parentId: 'porifera',     name: 'Calcarea',         rank: 'class',      type: 'collapsed', collapsedLabel: 'Esponjas calcárias', speciesCount: 700 },
+
+  // ── Demospongiae ─────────────────────────────────────────────────────────────
+  { id: 'amphimedon_queenslandica', parentId: 'demospongiae', name: 'Amphimedon queenslandica', rank: 'species', type: 'card', latinName: 'Amphimedon queenslandica', speciesCount: 1 },
+
+  // ── Cnidaria ─────────────────────────────────────────────────────────────────
+  { id: 'anthozoa',         parentId: 'cnidaria',     name: 'Anthozoa',         rank: 'class',      type: 'card',      cardTaxon: 'anthozoa',      unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 7500,
+    othersCount: { orders: 10, species: 5000 } },
+  { id: 'scyphozoa',        parentId: 'cnidaria',     name: 'Scyphozoa',        rank: 'class',      type: 'collapsed', collapsedLabel: 'Águas-vivas', speciesCount: 200 },
+  { id: 'cubozoa',          parentId: 'cnidaria',     name: 'Cubozoa',          rank: 'class',      type: 'collapsed', collapsedLabel: 'Cubozoários', speciesCount: 50 },
+  { id: 'hydrozoa',         parentId: 'cnidaria',     name: 'Hydrozoa',         rank: 'class',      type: 'collapsed', collapsedLabel: 'Hidróides e Sifonóforos', speciesCount: 3700 },
+
+  // ── Anthozoa ─────────────────────────────────────────────────────────────────
+  { id: 'scleractinia',     parentId: 'anthozoa',     name: 'Scleractinia',     rank: 'order',      type: 'card',      cardTaxon: 'scleractinia',  unlockModule: 'metazoa', unlockMinCorrect: 8,  speciesCount: 1500 },
+  { id: 'actiniaria',       parentId: 'anthozoa',     name: 'Actiniaria',       rank: 'order',      type: 'collapsed', collapsedLabel: 'Anêmonas-do-mar', speciesCount: 1000 },
 
   // ── Bilateria ────────────────────────────────────────────────────────────────
   { id: 'xenacoelomorpha',  parentId: 'bilateria',    name: 'Xenacoelomorpha',  rank: 'phylum',     type: 'card',      cardTaxon: 'xenacoelomorpha', unlockModule: 'metazoa', unlockMinCorrect: 8, speciesCount: 450 },
@@ -80,12 +168,34 @@ const TOL_DATA: TolNodeFlat[] = [
   { id: 'ecdysozoa',        parentId: 'protostomia',  name: 'Ecdysozoa',                            type: 'internal',  speciesCount: 1200000 },
 
   // ── Spiralia ─────────────────────────────────────────────────────────────────
-  { id: 'platyhelminthes',  parentId: 'spiralia',     name: 'Platyhelminthes',  rank: 'phylum',     type: 'card',      cardTaxon: 'platyhelminthes', unlockModule: 'metazoa', unlockMinCorrect: 5, speciesCount: 25000 },
+  { id: 'platyhelminthes',  parentId: 'spiralia',     name: 'Platyhelminthes',  rank: 'phylum',     type: 'card',      cardTaxon: 'platyhelminthes', unlockModule: 'metazoa', unlockMinCorrect: 5, speciesCount: 25000, isComplete: true },
   { id: 'lophotrochozoa',   parentId: 'spiralia',     name: 'Lophotrochozoa',                       type: 'internal',  speciesCount: 125000 },
 
   // ── Platyhelminthes ──────────────────────────────────────────────────────────
-  { id: 'turbellaria',      parentId: 'platyhelminthes', name: 'Turbellaria',                       type: 'placeholder', cardTaxon: 'planaria',    speciesCount: 4500 },
-  { id: 'cestoda',          parentId: 'platyhelminthes', name: 'Cestoda',                           type: 'placeholder', cardTaxon: 'taenia',      speciesCount: 6000 },
+  // isComplete: representa as 4 classes tradicionais (Turbellaria, Cestoda, Trematoda, Monogenea)
+  { id: 'turbellaria',      parentId: 'platyhelminthes', name: 'Turbellaria',  rank: 'class',       type: 'internal',  speciesCount: 4500,
+    othersCount: { orders: 7, families: 80, species: 3100 } },
+  { id: 'cestoda',          parentId: 'platyhelminthes', name: 'Cestoda',      rank: 'class',       type: 'card',      cardTaxon: 'taenia',      unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 6000 },
+  { id: 'trematoda',        parentId: 'platyhelminthes', name: 'Trematoda',    rank: 'class',       type: 'card',      cardTaxon: 'trematoda',   unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 18000,
+    othersCount: { families: 100, species: 17900 } },
+  { id: 'monogenea',        parentId: 'platyhelminthes', name: 'Monogenea',    rank: 'class',       type: 'collapsed', collapsedLabel: 'Ectoparasitas de peixes',  speciesCount: 5000 },
+
+  // ── Turbellaria (paraphylético; ~9 ordens, exibimos 2) ───────────────────────
+  { id: 'tricladida',       parentId: 'turbellaria',  name: 'Tricladida',    rank: 'order',  type: 'internal',  speciesCount: 800,
+    othersCount: { families: 14, species: 720 } },
+  { id: 'polycladida',      parentId: 'turbellaria',  name: 'Polycladida',   rank: 'order',  type: 'collapsed', collapsedLabel: 'Policládidas marinhas', speciesCount: 600 },
+  // turbellaria.othersCount declarado na entrada de turbellaria acima
+
+  // ── Tricladida ───────────────────────────────────────────────────────────────
+  { id: 'planariidae',      parentId: 'tricladida',   name: 'Planariidae',   rank: 'family', type: 'card',      cardTaxon: 'planaria', unlockModule: 'metazoa', unlockMinCorrect: 5, speciesCount: 80 },
+
+  // ── Planariidae ──────────────────────────────────────────────────────────────
+  { id: 'dugesia_tigrina',  parentId: 'planariidae',  name: 'Dugesia tigrina', rank: 'species', type: 'card', latinName: 'Dugesia tigrina', speciesCount: 1 },
+
+  // ── Trematoda ────────────────────────────────────────────────────────────────
+  { id: 'fasciolidae',      parentId: 'trematoda',    name: 'Fasciolidae',    rank: 'family', type: 'collapsed', collapsedLabel: 'Fasciola hepatica', speciesCount: 70 },
+  { id: 'schistosomatidae', parentId: 'trematoda',    name: 'Schistosomatidae', rank: 'family', type: 'card', cardTaxon: 'schistosoma', unlockModule: 'metazoa', unlockMinCorrect: 8, speciesCount: 23 },
+  // trematoda.othersCount declarado na entrada de trematoda acima
 
   // ── Lophotrochozoa ───────────────────────────────────────────────────────────
   { id: 'mollusca',         parentId: 'lophotrochozoa', name: 'Mollusca',       rank: 'phylum',     type: 'card',      cardTaxon: 'mollusca',      unlockModule: 'metazoa',  unlockMinCorrect: 5,  speciesCount: 85000 },
@@ -107,7 +217,25 @@ const TOL_DATA: TolNodeFlat[] = [
   { id: 'hirudinida',       parentId: 'clitellata',   name: 'Hirudinida',       rank: 'class',      type: 'card',      cardTaxon: 'hirudinida',    unlockModule: 'annelida', unlockMinCorrect: 5,  speciesCount: 700 },
 
   // ── Ecdysozoa ────────────────────────────────────────────────────────────────
-  { id: 'nematoda',         parentId: 'ecdysozoa',    name: 'Nematoda',         rank: 'phylum',     type: 'card',      cardTaxon: 'nematoda',      unlockModule: 'metazoa',  unlockMinCorrect: 5,  speciesCount: 25000 },
+  { id: 'nematoda',         parentId: 'ecdysozoa',    name: 'Nematoda',         rank: 'phylum',     type: 'card',      cardTaxon: 'nematoda',      unlockModule: 'metazoa',  unlockMinCorrect: 5,  speciesCount: 25000,
+    othersCount: { species: 1000 } },
+
+  // ── Nematoda ─────────────────────────────────────────────────────────────────
+  { id: 'chromadorea',      parentId: 'nematoda',     name: 'Chromadorea',      rank: 'class',      type: 'internal',  speciesCount: 21000,
+    othersCount: { orders: 8, species: 7000 } },
+  { id: 'enoplea',          parentId: 'nematoda',     name: 'Enoplea',          rank: 'class',      type: 'collapsed', collapsedLabel: 'Nematóides livres-aquáticos', speciesCount: 3000 },
+
+  // ── Chromadorea ──────────────────────────────────────────────────────────────
+  { id: 'rhabditida',       parentId: 'chromadorea',  name: 'Rhabditida',       rank: 'order',      type: 'internal',  speciesCount: 8000,
+    othersCount: { families: 40, species: 7980 } },
+  { id: 'strongylida',      parentId: 'chromadorea',  name: 'Strongylida',      rank: 'order',      type: 'collapsed', collapsedLabel: 'Ancilostomídeos, parasitas', speciesCount: 4000 },
+  { id: 'ascaridida',       parentId: 'chromadorea',  name: 'Ascaridida',       rank: 'order',      type: 'collapsed', collapsedLabel: 'Áscaris, parasitas intestinais', speciesCount: 2000 },
+
+  // ── Rhabditida ───────────────────────────────────────────────────────────────
+  { id: 'caenorhabditidae', parentId: 'rhabditida',   name: 'Caenorhabditidae', rank: 'family',     type: 'card',      cardTaxon: 'celegans',      unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 20 },
+
+  // ── Caenorhabditidae ─────────────────────────────────────────────────────────
+  { id: 'caenorhabditis_elegans', parentId: 'caenorhabditidae', name: 'Caenorhabditis elegans', rank: 'species', type: 'card', latinName: 'Caenorhabditis elegans', speciesCount: 1 },
   { id: 'tardigrada',       parentId: 'ecdysozoa',    name: 'Tardigrada',       rank: 'phylum',     type: 'collapsed', collapsedLabel: 'Tardígrados',             speciesCount: 1300 },
   { id: 'arthropoda',       parentId: 'ecdysozoa',    name: 'Arthropoda',       rank: 'phylum',     type: 'card',      cardTaxon: 'arthropoda',    unlockModule: 'arthropoda', unlockMinCorrect: 5, speciesCount: 1100000 },
 
@@ -157,9 +285,20 @@ const TOL_DATA: TolNodeFlat[] = [
   { id: 'blattodea',        parentId: 'insecta',      name: 'Blattodea',        rank: 'order',      type: 'collapsed', collapsedLabel: 'Baratas e Cupins',        speciesCount: 7500 },
 
   // ── Deuterostomia ────────────────────────────────────────────────────────────
-  { id: 'echinodermata',    parentId: 'deuterostomia', name: 'Echinodermata',   rank: 'phylum',     type: 'card',      cardTaxon: 'echinodermata', unlockModule: 'metazoa',       unlockMinCorrect: 5, speciesCount: 7000 },
+  { id: 'echinodermata',    parentId: 'deuterostomia', name: 'Echinodermata',   rank: 'phylum',     type: 'card',      cardTaxon: 'echinodermata', unlockModule: 'metazoa',       unlockMinCorrect: 5, speciesCount: 7000, isComplete: true },
   { id: 'hemichordata',     parentId: 'deuterostomia', name: 'Hemichordata',    rank: 'phylum',     type: 'card',      cardTaxon: 'hemichordata',  unlockModule: 'chordata-basal', unlockMinCorrect: 5, speciesCount: 130 },
   { id: 'chordata',         parentId: 'deuterostomia', name: 'Chordata',        rank: 'phylum',     type: 'card',      cardTaxon: 'chordata',      unlockModule: 'chordata-basal', unlockMinCorrect: 5, speciesCount: 65000 },
+
+  // ── Echinodermata ────────────────────────────────────────────────────────────
+  { id: 'asteroidea',       parentId: 'echinodermata', name: 'Asteroidea',      rank: 'class',      type: 'card',      cardTaxon: 'asteroidea',    unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 1900 },
+  { id: 'ophiuroidea',      parentId: 'echinodermata', name: 'Ophiuroidea',     rank: 'class',      type: 'collapsed', collapsedLabel: 'Ofiúros', speciesCount: 2100 },
+  { id: 'echinoidea',       parentId: 'echinodermata', name: 'Echinoidea',      rank: 'class',      type: 'card',      cardTaxon: 'echinoidea',    unlockModule: 'metazoa', unlockMinCorrect: 5,  speciesCount: 950,
+    othersCount: { families: 14, species: 949 } },
+  { id: 'holothuroidea',    parentId: 'echinodermata', name: 'Holothuroidea',   rank: 'class',      type: 'collapsed', collapsedLabel: 'Pepinos-do-mar', speciesCount: 1700 },
+  { id: 'crinoidea',        parentId: 'echinodermata', name: 'Crinoidea',       rank: 'class',      type: 'collapsed', collapsedLabel: 'Crinóides', speciesCount: 600 },
+
+  // ── Echinoidea ───────────────────────────────────────────────────────────────
+  { id: 'strongylocentrotus_purpuratus', parentId: 'echinoidea', name: 'Strongylocentrotus purpuratus', rank: 'species', type: 'card', latinName: 'Strongylocentrotus purpuratus', speciesCount: 1 },
 
   // ── Chordata ─────────────────────────────────────────────────────────────────
   { id: 'cephalochordata',  parentId: 'chordata',     name: 'Cephalochordata',  rank: 'subphylum',  type: 'card',      cardTaxon: 'cephalochordata', unlockModule: 'chordata-basal', unlockMinCorrect: 5, speciesCount: 30 },
@@ -196,7 +335,7 @@ const TOL_DATA: TolNodeFlat[] = [
   { id: 'perciformes',      parentId: 'teleostei',    name: 'Perciformes',      rank: 'order',      type: 'collapsed', collapsedLabel: 'Perch-like fishes',       speciesCount: 10000 },
 
   // ── Tetrapoda ────────────────────────────────────────────────────────────────
-  { id: 'amphibia',         parentId: 'tetrapoda',    name: 'Amphibia',         rank: 'class',      type: 'card',      cardTaxon: 'amphibia',      unlockModule: 'amniota', unlockMinCorrect: 5,  speciesCount: 8000 },
+  { id: 'amphibia',         parentId: 'tetrapoda',    name: 'Amphibia',         rank: 'class',      type: 'card',      cardTaxon: 'amphibia',      unlockModule: 'amniota', unlockMinCorrect: 5,  speciesCount: 8000, isComplete: true },
   { id: 'amniota',          parentId: 'tetrapoda',    name: 'Amniota',                              type: 'internal',  speciesCount: 22000 },
 
   // ── Amphibia ─────────────────────────────────────────────────────────────────
@@ -217,7 +356,7 @@ const TOL_DATA: TolNodeFlat[] = [
 
   // ── Theria ───────────────────────────────────────────────────────────────────
   { id: 'marsupialia',      parentId: 'theria',       name: 'Marsupialia',                          type: 'card',      cardTaxon: 'opossum',       unlockModule: 'amniota', unlockMinCorrect: 12, speciesCount: 330 },
-  { id: 'placentalia',      parentId: 'theria',       name: 'Placentalia',                          type: 'card',      cardTaxon: 'human',         unlockModule: 'amniota', unlockMinCorrect: 12, speciesCount: 6000 },
+  { id: 'placentalia',      parentId: 'theria',       name: 'Placentalia',                          type: 'card',      cardTaxon: 'human',         unlockModule: 'amniota', unlockMinCorrect: 12, speciesCount: 6000, isComplete: true },
 
   // ── Placentalia ──────────────────────────────────────────────────────────────
   { id: 'rodentia',         parentId: 'placentalia',  name: 'Rodentia',         rank: 'order',      type: 'collapsed', collapsedLabel: 'Roedores',                speciesCount: 2200 },
@@ -242,15 +381,26 @@ const TOL_DATA: TolNodeFlat[] = [
 
   // ── Archosauria ──────────────────────────────────────────────────────────────
   { id: 'crocodilia',       parentId: 'archosauria',  name: 'Crocodilia',       rank: 'order',      type: 'collapsed', collapsedLabel: 'Crocodilos e Jacarés',   speciesCount: 27 },
-  { id: 'aves',             parentId: 'archosauria',  name: 'Aves',             rank: 'class',      type: 'collapsed',                                            speciesCount: 10000 },
+  { id: 'aves',             parentId: 'archosauria',  name: 'Aves',             rank: 'class',      type: 'card',      cardTaxon: 'aves',          unlockModule: 'amniota', unlockMinCorrect: 5, speciesCount: 10000, isComplete: true },
 
   // ── Aves ─────────────────────────────────────────────────────────────────────
-  { id: 'palaeognathae',    parentId: 'aves',         name: 'Palaeognathae',                        type: 'collapsed', collapsedLabel: 'Avestruzes e Kiwis',     speciesCount: 60 },
-  { id: 'neognathae',       parentId: 'aves',         name: 'Neognathae',                           type: 'internal',  speciesCount: 9900 },
+  { id: 'palaeognathae',    parentId: 'aves',         name: 'Palaeognathae',    rank: 'superorder', type: 'collapsed', collapsedLabel: 'Avestruzes e Kiwis',     speciesCount: 60 },
+  { id: 'neognathae',       parentId: 'aves',         name: 'Neognathae',       rank: 'superorder', type: 'internal',  speciesCount: 9900 },
 
   // ── Neognathae ───────────────────────────────────────────────────────────────
   { id: 'galloanserae',     parentId: 'neognathae',   name: 'Galloanserae',                         type: 'collapsed', collapsedLabel: 'Galináceos e Patos',     speciesCount: 450 },
-  { id: 'neoaves',          parentId: 'neognathae',   name: 'Neoaves',                              type: 'collapsed', collapsedLabel: 'Aves modernas',           speciesCount: 9500 },
+  { id: 'neoaves',          parentId: 'neognathae',   name: 'Neoaves',                              type: 'internal',  speciesCount: 9500,
+    othersCount: { orders: 25, species: 1237 } },
+
+  // ── Neoaves — principais ordens ──────────────────────────────────────────────
+  { id: 'passeriformes',    parentId: 'neoaves',      name: 'Passeriformes',    rank: 'order',      type: 'collapsed', collapsedLabel: 'Pássaros canoros',        speciesCount: 6500 },
+  { id: 'apodiformes',      parentId: 'neoaves',      name: 'Apodiformes',      rank: 'order',      type: 'collapsed', collapsedLabel: 'Beija-flores e Andorinhões', speciesCount: 450 },
+  { id: 'psittaciformes',   parentId: 'neoaves',      name: 'Psittaciformes',   rank: 'order',      type: 'collapsed', collapsedLabel: 'Papagaios e Araras',      speciesCount: 400 },
+  { id: 'strigiformes',     parentId: 'neoaves',      name: 'Strigiformes',     rank: 'order',      type: 'collapsed', collapsedLabel: 'Corujas',                 speciesCount: 230 },
+  { id: 'accipitriformes',  parentId: 'neoaves',      name: 'Accipitriformes',  rank: 'order',      type: 'collapsed', collapsedLabel: 'Gaviões e Águias',        speciesCount: 250 },
+  { id: 'falconiformes',    parentId: 'neoaves',      name: 'Falconiformes',    rank: 'order',      type: 'collapsed', collapsedLabel: 'Falcões',                 speciesCount: 65 },
+  { id: 'columbiformes',    parentId: 'neoaves',      name: 'Columbiformes',    rank: 'order',      type: 'collapsed', collapsedLabel: 'Pombos e Rolas',          speciesCount: 350 },
+  { id: 'sphenisciformes',  parentId: 'neoaves',      name: 'Sphenisciformes',  rank: 'order',      type: 'collapsed', collapsedLabel: 'Pinguins',                speciesCount: 18 },
 ];
 
 export const TREE_OF_LIFE: TolNode = buildTree(TOL_DATA);

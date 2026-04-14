@@ -1,0 +1,396 @@
+{
+  "generated": "2026-04-13",
+  "phylopicBuild": 537,
+  "silhouettes": {
+    "luca": null,
+    "bacteria": "https://images.phylopic.org/images/d8c9f603-8930-4973-9a37-e9d0bc913a6b/vector.svg",
+    "archaea": "https://images.phylopic.org/images/3cabf30c-eed6-4dc4-824e-f7eac992f554/vector.svg",
+    "eukarya": "https://images.phylopic.org/images/6fe75b0b-1488-4193-8523-f240c2d59575/vector.svg",
+    "fungi": "https://images.phylopic.org/images/c6066aa4-fadd-45e0-b897-b16b37977e8e/vector.svg",
+    "plantae": "https://images.phylopic.org/images/91b6a357-3c72-446b-8d4e-bab352ec8ff7/vector.svg",
+    "protozoa": "https://images.phylopic.org/images/6fe75b0b-1488-4193-8523-f240c2d59575/vector.svg",
+    "animalia": "https://images.phylopic.org/images/d148ee59-7247-4d2a-a62f-77be38ebb1c7/vector.svg",
+    "porifera": "https://images.phylopic.org/images/ee668106-362a-4342-bbe5-472e8900d358/vector.svg",
+    "cnidaria": "https://images.phylopic.org/images/fbad419f-f123-45ac-92f4-d2df322b7afb/vector.svg",
+    "bilateria": "https://images.phylopic.org/images/aff2ebff-518d-4540-8600-8ba9283e0c0c/vector.svg",
+    "demospongiae": "https://images.phylopic.org/images/8b28733a-9eab-4510-9dcf-9235aaf44d14/vector.svg",
+    "hexactinellida": "https://images.phylopic.org/images/3740465d-24a6-4b5b-b014-c3ae8d8bf8c7/vector.svg",
+    "calcarea": "https://images.phylopic.org/images/63ebba6c-d9eb-4d9c-82d1-d9f0110f0d64/vector.svg",
+    "amphimedon_queenslandica": "https://images.phylopic.org/images/8b28733a-9eab-4510-9dcf-9235aaf44d14/vector.svg",
+    "anthozoa": "https://images.phylopic.org/images/23e078d5-e7d3-42e6-b747-16345db5379c/vector.svg",
+    "scyphozoa": "https://images.phylopic.org/images/ef63437d-d6f4-4583-9d75-a8c9b19a203d/vector.svg",
+    "cubozoa": "https://images.phylopic.org/images/9a9b00b8-6abc-491f-a3cf-2cc0dc65e4cf/vector.svg",
+    "hydrozoa": "https://images.phylopic.org/images/ae1697f9-686f-4e0d-b51b-47ac70c8856b/vector.svg",
+    "scleractinia": "https://images.phylopic.org/images/c87ed15e-120d-4a5a-97f5-2b86737f1fa4/vector.svg",
+    "actiniaria": "https://images.phylopic.org/images/b46a16df-5946-4049-9876-ab774b419966/vector.svg",
+    "xenacoelomorpha": "https://images.phylopic.org/images/aff2ebff-518d-4540-8600-8ba9283e0c0c/vector.svg",
+    "nephrozoa": "https://images.phylopic.org/images/1e80ed08-414c-4e12-9fed-3b5999e3ea73/vector.svg",
+    "protostomia": "https://images.phylopic.org/images/32462d13-d61c-4d7c-914f-8c9f03ac5085/vector.svg",
+    "deuterostomia": "https://images.phylopic.org/images/1e80ed08-414c-4e12-9fed-3b5999e3ea73/vector.svg",
+    "spiralia": "https://images.phylopic.org/images/e770d8bf-57b3-4a66-ba1f-c7ab0571a154/vector.svg",
+    "ecdysozoa": "https://images.phylopic.org/images/ec8f7294-2f36-4fff-a67f-c1f09dd1ad07/vector.svg",
+    "platyhelminthes": "https://images.phylopic.org/images/b5cd9698-7ead-4934-920d-d9079bef6683/vector.svg",
+    "lophotrochozoa": "https://images.phylopic.org/images/c1286ee6-8566-45de-8da5-93d06250d740/vector.svg",
+    "turbellaria": "https://images.phylopic.org/images/855071e2-5ee8-494c-bb74-3495a010999e/vector.svg",
+    "cestoda": "https://images.phylopic.org/images/635adf98-7093-499f-a244-028fe0c0a6d8/vector.svg",
+    "trematoda": "https://images.phylopic.org/images/6b324fc5-4f0a-41ee-8fe6-e52e86bf3d4e/vector.svg",
+    "monogenea": "https://images.phylopic.org/images/719ddb52-3fec-423a-afb6-637015d3a5b0/vector.svg",
+    "tricladida": "https://images.phylopic.org/images/68c8f47a-2d99-468d-9b85-1dc0e03a1740/vector.svg",
+    "polycladida": "https://images.phylopic.org/images/9254ba7d-64ad-445d-83ff-45580e399c9f/vector.svg",
+    "planariidae": "https://images.phylopic.org/images/f800b25f-6528-43ba-88d6-79c51162fd19/vector.svg",
+    "dugesia_tigrina": "https://images.phylopic.org/images/cf8f907b-163f-444c-a550-ffe46be25d61/vector.svg",
+    "fasciolidae": "https://images.phylopic.org/images/607b10e4-e036-44fd-ad17-4395c6ecc0c6/vector.svg",
+    "schistosomatidae": "https://images.phylopic.org/images/ef7c2cbf-d8dd-440c-9825-77863f93f35e/vector.svg",
+    "mollusca": "https://images.phylopic.org/images/e9ca8d1d-36cd-48bc-aa6e-8303be2b78f6/vector.svg",
+    "annelida": "https://images.phylopic.org/images/2dee030d-9f6d-4bab-87c4-c46869839b30/vector.svg",
+    "brachiopoda": "https://images.phylopic.org/images/80639d7b-0856-45c1-ab44-7f075accda89/vector.svg",
+    "bryozoa": "https://images.phylopic.org/images/191ad6ce-78f2-444d-b4ad-9c4162b1803f/vector.svg",
+    "gastropoda": "https://images.phylopic.org/images/369cb7a5-d8c6-4058-bee8-764050934ed1/vector.svg",
+    "bivalvia": "https://images.phylopic.org/images/d92d2313-359a-4649-9cb8-5c4d84474f4b/vector.svg",
+    "cephalopoda": "https://images.phylopic.org/images/8f7c46e0-ed5e-455f-b5ae-68168151d01d/vector.svg",
+    "clitellata": "https://images.phylopic.org/images/08901b25-0da9-483e-9c11-a5258b783d40/vector.svg",
+    "errantia": "https://images.phylopic.org/images/18ec7d79-cf30-4393-8186-74be8627967f/vector.svg",
+    "oligochaeta": "https://images.phylopic.org/images/08901b25-0da9-483e-9c11-a5258b783d40/vector.svg",
+    "hirudinida": "https://images.phylopic.org/images/dd6f1159-a97c-480f-871f-65f1c88156d0/vector.svg",
+    "nematoda": "https://images.phylopic.org/images/103b38cc-ad0b-4d70-9a38-db277c9beca8/vector.svg",
+    "chromadorea": "https://images.phylopic.org/images/103b38cc-ad0b-4d70-9a38-db277c9beca8/vector.svg",
+    "enoplea": "https://images.phylopic.org/images/a68be31e-95e7-415a-8fb2-2a6fd3275cb8/vector.svg",
+    "rhabditida": "https://images.phylopic.org/images/7a056405-8d3e-4b1e-9368-4df1e9437e47/vector.svg",
+    "strongylida": null,
+    "ascaridida": null,
+    "caenorhabditidae": null,
+    "caenorhabditis_elegans": "https://images.phylopic.org/images/7a056405-8d3e-4b1e-9368-4df1e9437e47/vector.svg",
+    "tardigrada": "https://images.phylopic.org/images/1a7ba4da-a5f9-489b-b30e-8cf56d579d8f/vector.svg",
+    "arthropoda": "https://images.phylopic.org/images/239b2cf6-35fe-464e-8e9f-7cfaab33f5db/vector.svg",
+    "chelicerata": "https://images.phylopic.org/images/e1ea9e91-6ae1-45c2-b399-8d1892c01915/vector.svg",
+    "myriapoda": "https://images.phylopic.org/images/fbb34126-2757-4201-9717-c5a0df3fdfb7/vector.svg",
+    "pancrustacea": "https://images.phylopic.org/images/1d2c7cb7-4a62-4f4a-96ff-b62e225d6f91/vector.svg",
+    "xiphosura": "https://images.phylopic.org/images/7e8438d2-f821-4755-b11a-a6370ecef303/vector.svg",
+    "pycnogonida": "https://images.phylopic.org/images/e1ea9e91-6ae1-45c2-b399-8d1892c01915/vector.svg",
+    "arachnida": "https://images.phylopic.org/images/5e93251a-1294-47e0-862f-525b099d44a7/vector.svg",
+    "araneae": "https://images.phylopic.org/images/882a9d18-5724-44a9-b439-1b2686339a00/vector.svg",
+    "scorpiones": "https://images.phylopic.org/images/7742cd64-4c67-443c-942c-fdf1c2681adf/vector.svg",
+    "acari": "https://images.phylopic.org/images/17172a50-685f-4f39-a0d1-c0495e33a2d0/vector.svg",
+    "opiliones": "https://images.phylopic.org/images/16cbd295-6b0c-4a2d-af1a-8223506d7f60/vector.svg",
+    "pseudoscorpiones": "https://images.phylopic.org/images/9ccaea11-774f-437b-8028-afd4ee880b36/vector.svg",
+    "chilopoda": "https://images.phylopic.org/images/7e73ef98-7333-461d-8e3f-8f12c8d57e2d/vector.svg",
+    "diplopoda": "https://images.phylopic.org/images/aa0eeb6f-3510-4410-b997-cda5a9b38a1e/vector.svg",
+    "crustacea": "https://images.phylopic.org/images/1d2c7cb7-4a62-4f4a-96ff-b62e225d6f91/vector.svg",
+    "hexapoda": "https://images.phylopic.org/images/ad6fc97e-b468-4f47-b9c6-2398f531441d/vector.svg",
+    "malacostraca": "https://images.phylopic.org/images/0b6760dc-aa18-40c6-801d-3b1eb09b894e/vector.svg",
+    "branchiopoda": "https://images.phylopic.org/images/51ba7d73-24fb-4bf5-9839-f2b3257ee2f3/vector.svg",
+    "copepoda": "https://images.phylopic.org/images/be9c4ede-4f33-4800-a202-4c73f493b5e6/vector.svg",
+    "thecostraca": "https://images.phylopic.org/images/131051a0-9053-4295-a90a-380a00170784/vector.svg",
+    "entognatha": "https://images.phylopic.org/images/ad6fc97e-b468-4f47-b9c6-2398f531441d/vector.svg",
+    "insecta": "https://images.phylopic.org/images/4c7a9eb7-7a10-41fe-8677-e1fdbaca151f/vector.svg",
+    "coleoptera": "https://images.phylopic.org/images/f8c4e148-3f5f-4a0c-ae7f-f0374fdc7c90/vector.svg",
+    "lepidoptera": "https://images.phylopic.org/images/0fde2bb6-0472-4273-bf46-2d6073fa8fbc/vector.svg",
+    "hymenoptera": "https://images.phylopic.org/images/e3fde32c-34c2-4f67-8577-e546909f83e8/vector.svg",
+    "diptera": "https://images.phylopic.org/images/4114f782-f642-461b-a4af-d6ee2a490b24/vector.svg",
+    "hemiptera": "https://images.phylopic.org/images/408b5725-338f-48b6-b57f-2317797752cb/vector.svg",
+    "orthoptera": "https://images.phylopic.org/images/791a3515-d248-44f9-9914-71d77d166e31/vector.svg",
+    "odonata": "https://images.phylopic.org/images/8af9c80d-92f9-4ba8-87c0-8ffa026c770c/vector.svg",
+    "blattodea": "https://images.phylopic.org/images/b2e26249-80be-441b-8648-4c0361892ee0/vector.svg",
+    "echinodermata": "https://images.phylopic.org/images/4a56d23f-0725-4a13-bda7-665e0d5cf9b8/vector.svg",
+    "hemichordata": "https://images.phylopic.org/images/e4fd3a29-a712-4822-981f-c268b54461a3/vector.svg",
+    "chordata": "https://images.phylopic.org/images/d5a234cc-4ca6-4186-9ed9-dedd2ca0a37d/vector.svg",
+    "asteroidea": "https://images.phylopic.org/images/7e27ce06-1f4f-45d8-a359-dcba8fc54b9b/vector.svg",
+    "ophiuroidea": "https://images.phylopic.org/images/f95dea80-ead0-4948-8ec7-14edf912ea87/vector.svg",
+    "echinoidea": "https://images.phylopic.org/images/e5da6b25-f72b-43b5-ba79-3b8b9933116f/vector.svg",
+    "holothuroidea": "https://images.phylopic.org/images/b84b253e-3111-42d0-aaa2-dfd981d1b4fc/vector.svg",
+    "crinoidea": "https://images.phylopic.org/images/ab36081a-9d02-4d3a-9f18-feaddb440302/vector.svg",
+    "strongylocentrotus_purpuratus": "https://images.phylopic.org/images/de3e0cb3-8271-45c1-8bd5-77c6e74e438c/vector.svg",
+    "cephalochordata": "https://images.phylopic.org/images/6dec6424-7511-49b2-aac6-3da79d45c7f2/vector.svg",
+    "urochordata": "https://images.phylopic.org/images/ebb9f3d3-09d2-47cb-8516-4718c20babf9/vector.svg",
+    "vertebrata": "https://images.phylopic.org/images/f2e8bfa2-ebea-40f9-9f88-03ae5b97c1a0/vector.svg",
+    "myxini": "https://images.phylopic.org/images/e820a299-38f4-4ae0-9c6c-cec867cdf767/vector.svg",
+    "petromyzontida": "https://images.phylopic.org/images/97bc41b3-14fb-4c4f-b7e9-564b4c499f2d/vector.svg",
+    "gnathostomata": "https://images.phylopic.org/images/22f937e1-5441-413b-8331-51475518caaf/vector.svg",
+    "chondrichthyes": "https://images.phylopic.org/images/cdd1cf97-ba89-4e83-8797-ac6d79156ffa/vector.svg",
+    "osteichthyes": "https://images.phylopic.org/images/c1bf8acf-7d75-48f3-a757-9ac4b5d37c3e/vector.svg",
+    "tetrapoda": "https://images.phylopic.org/images/e092db11-fde4-4467-b611-fd64f854575b/vector.svg",
+    "selachimorpha": "https://images.phylopic.org/images/a14db634-f3d1-437a-9d0b-21c03bfd0696/vector.svg",
+    "batoidea": "https://images.phylopic.org/images/465ee9b8-3a2d-4c3d-bf43-6301f50d1f2e/vector.svg",
+    "holocephali": "https://images.phylopic.org/images/993691c3-bb55-4e9f-96fb-ef96fc7faef9/vector.svg",
+    "sarcopterygii": "https://images.phylopic.org/images/91166939-7d87-4b51-9049-fb98e2fd7a5b/vector.svg",
+    "actinopterygii": "https://images.phylopic.org/images/7360374f-8860-44c5-b74b-af53ca1a8af4/vector.svg",
+    "chondrostei": "https://images.phylopic.org/images/6b1cea8d-376e-401f-bb2c-e41bfabceeca/vector.svg",
+    "teleostei": "https://images.phylopic.org/images/42a51ccb-36af-4f42-9a74-548e42014dbc/vector.svg",
+    "cypriniformes": "https://images.phylopic.org/images/02974d7f-f93c-4c59-b847-3b080368c168/vector.svg",
+    "siluriformes": "https://images.phylopic.org/images/5ea9815b-99cc-4741-98a1-37dbc05fd88e/vector.svg",
+    "characiformes": "https://images.phylopic.org/images/199829d3-183a-4eb3-a35a-a8705d28cb56/vector.svg",
+    "perciformes": "https://images.phylopic.org/images/7a79801e-0aae-4591-83e0-d0562f97aa0f/vector.svg",
+    "amphibia": "https://images.phylopic.org/images/4e30477a-f64c-4d2f-9a5e-92cb24fe528f/vector.svg",
+    "amniota": "https://images.phylopic.org/images/61c59b94-6b48-40b4-ada1-3cc6c7543604/vector.svg",
+    "anura": "https://images.phylopic.org/images/01a21193-6599-463c-a5f0-75b6fe03189d/vector.svg",
+    "caudata": "https://images.phylopic.org/images/f00121ab-a5c5-4bb4-8b88-51bd16122916/vector.svg",
+    "gymnophiona": "https://images.phylopic.org/images/4dd27c92-9daf-4217-b35d-03487bc4a96d/vector.svg",
+    "synapsida": "https://images.phylopic.org/images/61c59b94-6b48-40b4-ada1-3cc6c7543604/vector.svg",
+    "sauropsida": "https://images.phylopic.org/images/00b96cf3-1802-4bda-a6cc-76aea0f6f05e/vector.svg",
+    "mammalia": "https://images.phylopic.org/images/f4b6df56-f216-4a4c-9940-4105da8b462e/vector.svg",
+    "monotremata": "https://images.phylopic.org/images/6885c062-5deb-4ebf-a481-752186819108/vector.svg",
+    "theria": "https://images.phylopic.org/images/5906d52b-446c-4e87-b7ab-27feaa832aaa/vector.svg",
+    "marsupialia": "https://images.phylopic.org/images/f34ca418-a0d9-4ed7-bc3c-a74bcdeae443/vector.svg",
+    "placentalia": "https://images.phylopic.org/images/25689083-598c-430e-8c1f-4c3fcd779607/vector.svg",
+    "rodentia": "https://images.phylopic.org/images/1701c916-c68a-4807-8666-c4b8b4bc6656/vector.svg",
+    "chiroptera": "https://images.phylopic.org/images/0d386ce5-28e2-407c-b985-c1aac350bd1a/vector.svg",
+    "eulipotyphla": "https://images.phylopic.org/images/3af82895-2953-428d-b529-f229231ab69f/vector.svg",
+    "primates": "https://images.phylopic.org/images/f8d3e593-03b7-445e-aa9d-7cb440aa329f/vector.svg",
+    "carnivora": "https://images.phylopic.org/images/ec56fa32-947b-4f0c-976b-c456132f2d6e/vector.svg",
+    "artiodactyla": "https://images.phylopic.org/images/a40c4a8c-bdb3-49f9-acf7-a3abd520b97d/vector.svg",
+    "cetacea": "https://images.phylopic.org/images/e68270c1-3091-4aee-92ae-51341a40e94a/vector.svg",
+    "lepidosauria": "https://images.phylopic.org/images/51253dea-1fdb-4e00-84dd-c952074d3e78/vector.svg",
+    "archelosauria": "https://images.phylopic.org/images/40d7827a-b969-4f51-a1a5-490a293fcc0e/vector.svg",
+    "squamata": "https://images.phylopic.org/images/88177b24-a78b-4049-8280-cc4c74b5df46/vector.svg",
+    "rhynchocephalia": "https://images.phylopic.org/images/598318f1-e488-443d-9d86-0d640c377ee7/vector.svg",
+    "testudines": "https://images.phylopic.org/images/0bdf6f08-3b9e-41a3-aec2-5ae1ee3f0a47/vector.svg",
+    "archosauria": "https://images.phylopic.org/images/48d1f3ff-41b3-4659-98ac-fd09410c5757/vector.svg",
+    "crocodilia": "https://images.phylopic.org/images/dffda000-77cb-4251-b837-0cd2ab21ed5b/vector.svg",
+    "aves": "https://images.phylopic.org/images/6add767f-6ff7-486e-b4d5-ddce60fb8409/vector.svg",
+    "palaeognathae": "https://images.phylopic.org/images/c8a2a294-252e-49f0-91a4-9ec4cae5d044/vector.svg",
+    "neognathae": "https://images.phylopic.org/images/6affa688-6da7-400b-8a28-ea2b4e5a02ba/vector.svg",
+    "galloanserae": "https://images.phylopic.org/images/6affa688-6da7-400b-8a28-ea2b4e5a02ba/vector.svg",
+    "neoaves": "https://images.phylopic.org/images/c001637a-6463-43aa-a0f6-e97cb41d13ab/vector.svg",
+    "passeriformes": "https://images.phylopic.org/images/ee6da2e5-95c1-431c-876f-9c6d7650ee97/vector.svg",
+    "apodiformes": "https://images.phylopic.org/images/508c7b5d-efe4-4491-b690-a4fb5dd0463f/vector.svg",
+    "psittaciformes": "https://images.phylopic.org/images/b985eefe-7873-437b-93b6-e06673df564c/vector.svg",
+    "strigiformes": "https://images.phylopic.org/images/b4f3d9fb-4b03-4cba-89ee-039256936b6a/vector.svg",
+    "accipitriformes": "https://images.phylopic.org/images/8353477c-dc5d-44b6-ab3c-9d0cdf4d64f7/vector.svg",
+    "falconiformes": "https://images.phylopic.org/images/6cebf754-cb71-448d-a5bb-947157205264/vector.svg",
+    "columbiformes": "https://images.phylopic.org/images/fbdce36b-f525-40a2-90e9-c64a77626073/vector.svg",
+    "sphenisciformes": "https://images.phylopic.org/images/535f31dc-2b8a-448d-af5f-3ea8b18da773/vector.svg"
+  },
+  "photos": {
+    "porifera": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/117290419/medium.jpg",
+      "credit": "(c) Kerry Lewis, some rights reserved (CC BY-NC), uploaded by Kerry Lewis",
+      "license": "cc-by-nc"
+    },
+    "cnidaria": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4118/medium.jpg",
+      "credit": "(c) Giorgos Vintzileos, some rights reserved (CC BY-NC-ND)",
+      "license": "cc-by-nc-nd"
+    },
+    "demospongiae": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/136085285/medium.jpg",
+      "credit": "(c) Michael Konecky, some rights reserved (CC BY-NC), uploaded by Michael Konecky",
+      "license": "cc-by-nc"
+    },
+    "amphimedon_queenslandica": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/315348116/medium.jpg",
+      "credit": "(c) uwkwaj, some rights reserved (CC BY-NC), uploaded by uwkwaj",
+      "license": "cc-by-nc"
+    },
+    "anthozoa": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4440362/medium.jpg",
+      "credit": "(c) David R, some rights reserved (CC BY-NC)",
+      "license": "cc-by-nc"
+    },
+    "scleractinia": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/80425547/medium.jpg",
+      "credit": "(c) Damien Brouste, some rights reserved (CC BY-NC), uploaded by Damien Brouste",
+      "license": "cc-by-nc"
+    },
+    "xenacoelomorpha": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/354682818/medium.jpg",
+      "credit": "(c) Donald Davesne, some rights reserved (CC BY), uploaded by Donald Davesne",
+      "license": "cc-by"
+    },
+    "platyhelminthes": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/6308/medium.jpg",
+      "credit": "(c) Doug Anderson, some rights reserved (CC BY-NC)",
+      "license": "cc-by-nc"
+    },
+    "cestoda": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/347272677/medium.jpg",
+      "credit": "anonymous, no known copyright restrictions (public domain)",
+      "license": "pd"
+    },
+    "trematoda": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/79566824/medium.jpg",
+      "credit": "(c) Maria Vasilyeva, some rights reserved (CC BY-NC), uploaded by Maria Vasilyeva",
+      "license": "cc-by-nc"
+    },
+    "planariidae": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/198841826/medium.jpg",
+      "credit": "(c) sumie-dh, some rights reserved (CC BY-NC), uploaded by sumie-dh",
+      "license": "cc-by-nc"
+    },
+    "dugesia_tigrina": null,
+    "schistosomatidae": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1323053/medium.jpg",
+      "credit": "(c) Chen M, some rights reserved (CC BY)",
+      "license": "cc-by"
+    },
+    "mollusca": {
+      "url": "https://static.inaturalist.org/photos/58051104/medium.jpg",
+      "credit": "(c) Ian Shaw, all rights reserved, uploaded by Ian Shaw",
+      "license": ""
+    },
+    "annelida": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/163489709/medium.jpeg",
+      "credit": "(c) Sylvain Le Bris, some rights reserved (CC BY-NC), uploaded by Sylvain Le Bris",
+      "license": "cc-by-nc"
+    },
+    "gastropoda": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/18576101/medium.jpg",
+      "credit": "(c) danolsen, some rights reserved (CC BY-NC)",
+      "license": "cc-by-nc"
+    },
+    "bivalvia": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/43139115/medium.jpeg",
+      "credit": "(c) Matthew Connors, some rights reserved (CC BY-NC-SA), uploaded by Matthew Connors",
+      "license": "cc-by-nc-sa"
+    },
+    "cephalopoda": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/32158737/medium.jpg",
+      "credit": "(c) mbartick, some rights reserved (CC BY-NC)",
+      "license": "cc-by-nc"
+    },
+    "errantia": null,
+    "oligochaeta": null,
+    "hirudinida": null,
+    "nematoda": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/15069637/medium.jpg",
+      "credit": "(c) David Cappaert, some rights reserved (CC BY-NC), uploaded by David Cappaert",
+      "license": "cc-by-nc"
+    },
+    "caenorhabditidae": null,
+    "caenorhabditis_elegans": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/28187914/medium.jpg",
+      "credit": "(c) AJC1, some rights reserved (CC BY-NC-SA)",
+      "license": "cc-by-nc-sa"
+    },
+    "arthropoda": {
+      "url": "https://static.inaturalist.org/photos/294541916/medium.jpg",
+      "credit": "(c) peter_yeeles, all rights reserved",
+      "license": ""
+    },
+    "myriapoda": {
+      "url": "https://static.inaturalist.org/photos/253344286/medium.jpeg",
+      "credit": "(c) Jarrod Todd, all rights reserved, uploaded by Jarrod Todd",
+      "license": ""
+    },
+    "arachnida": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/67339865/medium.jpeg",
+      "credit": "(c) harshithjv, some rights reserved (CC BY-NC-SA), uploaded by harshithjv",
+      "license": "cc-by-nc-sa"
+    },
+    "araneae": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/269162938/medium.jpeg",
+      "credit": "(c) Craig Biegler, some rights reserved (CC BY-NC), uploaded by Craig Biegler",
+      "license": "cc-by-nc"
+    },
+    "crustacea": {
+      "url": "https://static.inaturalist.org/photos/59799843/medium.jpg",
+      "credit": "(c) James Spitznas, all rights reserved, uploaded by James Spitznas",
+      "license": ""
+    },
+    "insecta": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/18333696/medium.jpeg",
+      "credit": "(c) TOUROULT Julien, some rights reserved (CC BY), uploaded by TOUROULT Julien",
+      "license": "cc-by"
+    },
+    "coleoptera": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/15152305/medium.jpg",
+      "credit": "(c) Wynand Uys, some rights reserved (CC BY), uploaded by Wynand Uys",
+      "license": "cc-by"
+    },
+    "lepidoptera": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/36127/medium.jpg",
+      "credit": "(c) Anita, some rights reserved (CC BY-NC)",
+      "license": "cc-by-nc"
+    },
+    "hymenoptera": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/301992102/medium.jpeg",
+      "credit": "(c) Riley-Brendan Walsh, some rights reserved (CC BY-NC), uploaded by Riley-Brendan Walsh",
+      "license": "cc-by-nc"
+    },
+    "diptera": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/145526721/medium.jpg",
+      "credit": "(c) Katja Schulz, some rights reserved (CC BY), uploaded by Katja Schulz",
+      "license": "cc-by"
+    },
+    "echinodermata": {
+      "url": "https://static.inaturalist.org/photos/22930217/medium.jpg",
+      "credit": "(c) Lesley Clements, all rights reserved",
+      "license": ""
+    },
+    "hemichordata": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1482686/medium.jpeg",
+      "credit": "(c) 2013 Moorea Biocode, some rights reserved (CC BY-NC-SA)",
+      "license": "cc-by-nc-sa"
+    },
+    "chordata": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/80551845/medium.jpg",
+      "credit": "no rights reserved, uploaded by Abhas Misraraj",
+      "license": "cc0"
+    },
+    "asteroidea": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/162318518/medium.jpg",
+      "credit": "(c) Hans Hillewaert, some rights reserved (CC BY-SA)",
+      "license": "cc-by-sa"
+    },
+    "echinoidea": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/4108/medium.jpg",
+      "credit": "(c) cassimano, some rights reserved (CC BY-NC-SA)",
+      "license": "cc-by-nc-sa"
+    },
+    "strongylocentrotus_purpuratus": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/338665145/medium.jpeg",
+      "credit": "(c) Dave, some rights reserved (CC BY-NC), uploaded by Dave",
+      "license": "cc-by-nc"
+    },
+    "cephalochordata": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/1094470/medium.jpg",
+      "credit": "(c) Bernadette, some rights reserved (CC BY-NC), uploaded by Bernadette",
+      "license": "cc-by-nc"
+    },
+    "urochordata": null,
+    "myxini": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/217947026/medium.jpg",
+      "credit": "(c) John D Reynolds, some rights reserved (CC BY-NC), uploaded by John D Reynolds",
+      "license": "cc-by-nc"
+    },
+    "chondrichthyes": {
+      "url": "https://static.inaturalist.org/photos/177202542/medium.jpeg",
+      "credit": "(c) Sarichia Cacciatore, all rights reserved, uploaded by Sarichia Cacciatore",
+      "license": ""
+    },
+    "actinopterygii": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/252526503/medium.jpg",
+      "credit": "(c) uwkwaj, some rights reserved (CC BY-NC), uploaded by uwkwaj",
+      "license": "cc-by-nc"
+    },
+    "amphibia": {
+      "url": "https://static.inaturalist.org/photos/20797296/medium.jpg",
+      "credit": "(c) Andrés Mauricio Forero Cano, all rights reserved, uploaded by Andrés Mauricio Forero Cano",
+      "license": ""
+    },
+    "mammalia": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/80551250/medium.jpg",
+      "credit": "no rights reserved, uploaded by Abhas Misraraj",
+      "license": "cc0"
+    },
+    "monotremata": {
+      "url": "https://static.inaturalist.org/photos/184480260/medium.jpeg",
+      "credit": "(c) mark_spence, all rights reserved, uploaded by mark_spence",
+      "license": ""
+    },
+    "marsupialia": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/258631365/medium.png",
+      "credit": "(c) Friendly_Female_Koala.JPG, some rights reserved (CC BY-SA)",
+      "license": "cc-by-sa"
+    },
+    "placentalia": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/83336736/medium.jpg",
+      "credit": "no rights reserved, uploaded by Abhas Misraraj",
+      "license": "cc0"
+    },
+    "aves": {
+      "url": "https://inaturalist-open-data.s3.amazonaws.com/photos/2967053/medium.jpg",
+      "credit": "(c) Greg Lasley, some rights reserved (CC BY-NC), uploaded by Greg Lasley",
+      "license": "cc-by-nc"
+    }
+  }
+}
